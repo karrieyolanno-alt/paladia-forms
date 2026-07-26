@@ -172,8 +172,8 @@
             </p>
         </div>
 
-        <!-- Main Form Terminal -->
-        <form id="nationForm" action="https://formsubmit.co/karrieyolanno@gmail.com" method="POST" class="hud-card scanline rounded-3xl p-6 sm:p-10 shadow-2xl space-y-6">
+        <!-- Main Form Terminal (ENCTYPE added for file uploads) -->
+        <form id="nationForm" action="https://formsubmit.co/karrieyolanno@gmail.com" method="POST" enctype="multipart/form-data" class="hud-card scanline rounded-3xl p-6 sm:p-10 shadow-2xl space-y-6">
 
             <input type="hidden" name="_subject" id="formSubject" value="[คำขอสมัครประเทศใหม่]">
             <input type="hidden" name="_captcha" value="false">
@@ -395,6 +395,26 @@
                 </div>
             </div>
 
+            <!-- Field: อัปโหลดธงชาติ (National Flag Upload) -->
+            <div class="space-y-2 p-4 bg-slate-900/60 border border-slate-800 rounded-2xl">
+                <label for="flagFile" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
+                    <span><i class="fa-solid fa-flag text-cyan-400 mr-2"></i><span id="lbl_flagUpload">อัปโหลดรูปภาพธงชาติ (National Flag)</span></span>
+                    <span class="text-rose-400 font-sans">* จำเป็น</span>
+                </label>
+                <input type="file" name="ธงชาติ" id="flagFile" accept="image/*" required
+                    class="block w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-cyan-950 file:text-cyan-300 hover:file:bg-cyan-900 cursor-pointer">
+            </div>
+
+            <!-- Field: อัปโหลดแผนที่ (Map Upload - แสดงเฉพาะเมื่อเลือก Pink Country หรือ Empty Country) -->
+            <div id="mapUploadSection" class="hidden fade-in space-y-2 p-4 bg-slate-900/60 border border-rose-500/30 rounded-2xl">
+                <label for="mapFile" class="flex items-center justify-between text-xs font-semibold text-rose-300 tracking-wider">
+                    <span><i class="fa-solid fa-map text-rose-400 mr-2"></i><span id="lbl_mapUpload">อัปโหลดรูปภาพแผนที่ (Territory Map)</span></span>
+                    <span class="text-rose-400 font-sans">* จำเป็น</span>
+                </label>
+                <input type="file" name="แผนที่ดินแดน" id="mapFile" accept="image/*"
+                    class="block w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-950 file:text-rose-300 hover:file:bg-rose-900 cursor-pointer">
+            </div>
+
             <!-- Field 12: TikTok & Social Media -->
             <div class="space-y-1">
                 <label for="socialMedia" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
@@ -422,15 +442,6 @@
                     <div><span class="text-slate-500" id="lbl_badgeLang">ภาษา:</span> <span id="previewLang" class="text-purple-300 font-semibold">-</span></div>
                     <div><span class="text-slate-500" id="lbl_badgePop">ประชากร:</span> <span id="previewPop" class="text-emerald-400 font-semibold">-</span></div>
                 </div>
-            </div>
-
-            <!-- Tactical Image Attachment Directive Notice Box -->
-            <div class="p-4 sm:p-5 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border-l-4 border-amber-400 rounded-r-2xl space-y-2 text-amber-200 fade-in backdrop-blur-md">
-                <div class="flex items-center gap-2 font-bold text-amber-300 text-xs sm:text-sm tracking-wide">
-                    <i class="fa-solid fa-triangle-exclamation text-amber-400 animate-pulse"></i>
-                    <span id="lbl_noticeHeader">คำแนะนำการส่งไฟล์รูปภาพแนบ</span>
-                </div>
-                <div id="imageNoticeBox" class="text-xs sm:text-sm text-slate-300 space-y-1.5 leading-relaxed"></div>
             </div>
 
             <!-- Submit Button -->
@@ -464,14 +475,6 @@
                     <p id="modal_successDesc" class="text-slate-300 text-xs sm:text-sm">
                         ส่งคำขอสำเร็จ ข้อมูลการสถาปนาประเทศของคุณถูกจัดส่งไปยังระบบเรียบร้อยแล้ว
                     </p>
-                </div>
-
-                <div class="bg-amber-500/10 border border-amber-500/30 p-3.5 rounded-2xl text-amber-200 text-xs space-y-1">
-                    <div class="flex items-center gap-2 font-bold text-amber-300">
-                        <i class="fa-solid fa-bell"></i>
-                        <span id="modal_reminderHeader">อย่าลืมส่งรูปภาพแนบตามมาทางอีเมล!</span>
-                    </div>
-                    <p id="modalImageReminder" class="text-slate-300 leading-relaxed"></p>
                 </div>
 
                 <!-- สรุปข้อมูลที่จัดส่งไป -->
@@ -534,6 +537,8 @@
                 changePinkTitle: "ต้องการเปลี่ยนจากอันเดิมเป็นของคุณหรือไม่",
                 changeSelf: "เปลี่ยนเป็นของตนเอง",
                 keepOriginal: "ใช้อันเดิม",
+                flagUpload: "อัปโหลดรูปภาพธงชาติ (National Flag)",
+                mapUpload: "อัปโหลดรูปภาพแผนที่ (Territory Map)",
                 social: "User TikTok หรือโซเชียลมีเดียอื่นๆ",
                 badgeTitle: "สรุปข้อมูลลงทะเบียนเรียลไทม์",
                 badgeCountry: "ประเทศ:",
@@ -541,14 +546,9 @@
                 badgeDemonym: "สัญชาติ:",
                 badgeLang: "ภาษา:",
                 badgePop: "ประชากร:",
-                noticeHeader: "คำแนะนำการส่งไฟล์รูปภาพแนบ",
-                noticeUnclaimed: "📌 สำหรับตัวเลือก <strong class='text-cyan-300'>Unclaimed Land</strong>:<br>กรุณาส่งเฉพาะไฟล์รูปภาพ <strong class='text-white underline'>'ธงชาติ'</strong> เพียงอย่างเดียวมาทางอีเมลของผู้รับ (ไม่ต้องแนบแผนที่)",
-                noticeOther: "📌 สำหรับตัวเลือก <strong class='text-cyan-300'>{LAND}</strong>:<br>กรุณาส่งไฟล์รูปภาพทั้ง <strong class='text-white underline'>'แผนที่'</strong> และ <strong class='text-white underline'>'ธงชาติ'</strong> มาทางอีเมลของผู้รับ",
-                noticeDefault: "📌 กรุณาส่งไฟล์รูปภาพตามมาทางอีเมลของผู้รับดังนี้:<ul class='list-disc pl-5 space-y-1 text-slate-300 mt-1'><li>กรณีเลือก <strong class='text-rose-300'>Pink Country</strong> หรือ <strong class='text-indigo-300'>Empty Country</strong> : แนบภาพทั้ง <strong class='text-white'>'แผนที่'</strong> และ <strong class='text-white'>'ธงชาติ'</strong></li><li>กรณีเลือก <strong class='text-cyan-300'>Unclaimed Land</strong> : แนบเฉพาะภาพ <strong class='text-white'>'ธงชาติ'</strong> เท่านั้น (ไม่ต้องแนบแผนที่)</li></ul>",
                 submitText: "ยื่นคำขอและส่งข้อมูลไปยังระบบ",
                 successTitle: "ส่งคำขอสำเร็จเรียบร้อย!",
                 successDesc: "ส่งคำขอสำเร็จ ข้อมูลการสถาปนาประเทศของคุณถูกจัดส่งไปยังระบบเรียบร้อยแล้ว",
-                modalReminderHeader: "อย่าลืมส่งรูปภาพแนบตามมาทางอีเมล!",
                 modalSummaryTitle: "สรุปข้อมูลที่ถูกจัดส่ง:",
                 btnCopy: "คัดลอกสรุปคำตอบ",
                 viewHistory: "ดูประวัติคำตอบล่าสุด"
@@ -585,6 +585,8 @@
                 changePinkTitle: "Do you want to change from original to yours?",
                 changeSelf: "Change to Own",
                 keepOriginal: "Keep Original",
+                flagUpload: "Upload National Flag Image",
+                mapUpload: "Upload Territory Map Image",
                 social: "TikTok Handle or Other Social Media",
                 badgeTitle: "REAL-TIME PASSPORT REVIEW",
                 badgeCountry: "Nation:",
@@ -592,14 +594,9 @@
                 badgeDemonym: "Demonym:",
                 badgeLang: "Language:",
                 badgePop: "Population:",
-                noticeHeader: "ATTACHMENT INSTRUCTIONS",
-                noticeUnclaimed: "📌 For <strong class='text-cyan-300'>Unclaimed Land</strong>:<br>Please send ONLY the <strong class='text-white underline'>'National Flag'</strong> image via email (No map required).",
-                noticeOther: "📌 For <strong class='text-cyan-300'>{LAND}</strong>:<br>Please send both <strong class='text-white underline'>'Map'</strong> and <strong class='text-white underline'>'National Flag'</strong> images via email.",
-                noticeDefault: "📌 Please email image attachments:<ul class='list-disc pl-5 space-y-1 text-slate-300 mt-1'><li>For <strong class='text-rose-300'>Pink Country</strong> or <strong class='text-indigo-300'>Empty Country</strong>: Attach both 'Map' & 'Flag'</li><li>For <strong class='text-cyan-300'>Unclaimed Land</strong>: Attach 'Flag' ONLY</li></ul>",
                 submitText: "SUBMIT APPLICATION & TRANSMIT DATA",
                 successTitle: "TRANSMISSION SUCCESSFUL",
                 successDesc: "Application submitted! Your nation data has been transmitted to the system.",
-                modalReminderHeader: "DON'T FORGET TO EMAIL YOUR IMAGES!",
                 modalSummaryTitle: "TRANSMITTED SUMMARY:",
                 btnCopy: "COPY PAYLOAD",
                 viewHistory: "View Last Submission"
@@ -636,6 +633,8 @@
                 changePinkTitle: "Хотите изменить исходное на свое?",
                 changeSelf: "Изменить на свое",
                 keepOriginal: "Оставить как есть",
+                flagUpload: "Загрузить фото флага",
+                mapUpload: "Загрузить фото карты",
                 social: "TikTok или соцсети",
                 badgeTitle: "ОБЗОР В реальном времени",
                 badgeCountry: "Страна:",
@@ -643,14 +642,9 @@
                 badgeDemonym: "Демоним:",
                 badgeLang: "Язык:",
                 badgePop: "Население:",
-                noticeHeader: "ИНСТРУКЦИЯ ПО ВЛОЖЕНИЯМ",
-                noticeUnclaimed: "📌 Для <strong class='text-cyan-300'>Unclaimed Land</strong>:<br>Отправьте ТОЛЬКО фото <strong class='text-white underline'>'Флага'</strong> по email.",
-                noticeOther: "📌 Для <strong class='text-cyan-300'>{LAND}</strong>:<br>Отправьте фото <strong class='text-white underline'>'Карты'</strong> и <strong class='text-white underline'>'Флага'</strong> по email.",
-                noticeDefault: "📌 Отправьте изображения по email.",
                 submitText: "ОТПРАВИТЬ ЗАЯВКУ В СИСТЕМУ",
                 successTitle: "ОТПРАВКА УСПЕШНА",
                 successDesc: "Заявка отправлена! Данные переведены в систему.",
-                modalReminderHeader: "НЕ ЗАБУДЬТЕ ОТПРАВИТЬ ФОТО НА EMAIL!",
                 modalSummaryTitle: "ИТОГОВЫЕ ДАННЫЕ:",
                 btnCopy: "СКОПИРОВАТЬ ДАННЫЕ",
                 viewHistory: "Посмотреть историю"
@@ -687,6 +681,8 @@
                 changePinkTitle: "是否要将原有领土更改为您的？",
                 changeSelf: "更改为自己的",
                 keepOriginal: "保持原样",
+                flagUpload: "上传国旗图片",
+                mapUpload: "上传地图图片",
                 social: "TikTok 或其他社交媒体",
                 badgeTitle: "实时注册数据预览",
                 badgeCountry: "国家:",
@@ -694,14 +690,9 @@
                 badgeDemonym: "国民:",
                 badgeLang: "语言:",
                 badgePop: "人口:",
-                noticeHeader: "图片发送指引",
-                noticeUnclaimed: "📌 若选择 <strong class='text-cyan-300'>Unclaimed Land</strong>：<br>请仅将<strong class='text-white underline'>“国旗”</strong>图片通过邮箱发送",
-                noticeOther: "📌 若选择 <strong class='text-cyan-300'>{LAND}</strong>：<br>请将<strong class='text-white underline'>“地图”</strong>和<strong class='text-white underline'>“国旗”</strong>图片通过邮箱发送",
-                noticeDefault: "📌 请通过邮箱发送相关图片",
                 submitText: "提交申请并发送数据",
                 successTitle: "提交成功！",
                 successDesc: "申请已成功发送，您的数据已成功提交至系统。",
-                modalReminderHeader: "切记通过邮箱发送图片！",
                 modalSummaryTitle: "已发送数据摘要：",
                 btnCopy: "复制摘要",
                 viewHistory: "查看历史记录"
@@ -738,6 +729,8 @@
                 changePinkTitle: "¿Desea cambiar el original por el suyo?",
                 changeSelf: "Cambiar al propio",
                 keepOriginal: "Mantener original",
+                flagUpload: "Subir imagen de bandera",
+                mapUpload: "Subir imagen de mapa",
                 social: "TikTok o Redes Sociales",
                 badgeTitle: "VISTA PREVIA EN TIEMPO REAL",
                 badgeCountry: "País:",
@@ -745,14 +738,9 @@
                 badgeDemonym: "Gentilicio:",
                 badgeLang: "Idioma:",
                 badgePop: "Población:",
-                noticeHeader: "INSTRUCCIONES DE IMÁGENES",
-                noticeUnclaimed: "📌 Para <strong class='text-cyan-300'>Unclaimed Land</strong>:<br>Envíe SOLO la imagen de la <strong class='text-white underline'>'Bandera'</strong> por correo.",
-                noticeOther: "📌 Para <strong class='text-cyan-300'>{LAND}</strong>:<br>Envíe imágenes del <strong class='text-white underline'>'Mapa'</strong> y la <strong class='text-white underline'>'Bandera'</strong> por correo.",
-                noticeDefault: "📌 Por favor envíe las imágenes requeridas por correo.",
                 submitText: "ENVIAR SOLICITUD Y DATOS",
                 successTitle: "TRANSMISIÓN EXITOSA",
                 successDesc: "¡Solicitud enviada! Sus datos han sido procesados en el sistema.",
-                modalReminderHeader: "¡NO OLVIDE ENVIAR SUS IMÁGENES POR CORREO!",
                 modalSummaryTitle: "RESUMEN TRANSMITIDO:",
                 btnCopy: "COPIAR DATOS",
                 viewHistory: "Ver historial"
@@ -789,6 +777,8 @@
                 changePinkTitle: "Change from original? / เปลี่ยนจากอันเดิมหรือไม่",
                 changeSelf: "Change / เปลี่ยน",
                 keepOriginal: "Keep / ใช้อันเดิม",
+                flagUpload: "Upload Flag Image",
+                mapUpload: "Upload Map Image",
                 social: "Social Media / TikTok",
                 badgeTitle: "REAL-TIME REVIEW",
                 badgeCountry: "Nation:",
@@ -796,14 +786,9 @@
                 badgeDemonym: "Demonym:",
                 badgeLang: "Language:",
                 badgePop: "Population:",
-                noticeHeader: "ATTACHMENT DIRECTIVE",
-                noticeUnclaimed: "📌 For <strong class='text-cyan-300'>Unclaimed Land</strong>:<br>Send ONLY <strong class='text-white underline'>'Flag'</strong> image via email.",
-                noticeOther: "📌 For <strong class='text-cyan-300'>{LAND}</strong>:<br>Send both <strong class='text-white underline'>'Map'</strong> & <strong class='text-white underline'>'Flag'</strong> images via email.",
-                noticeDefault: "📌 Send required images via email.",
                 submitText: "SUBMIT APPLICATION / ยื่นคำขอ",
                 successTitle: "SUCCESSFUL / สำเร็จ",
                 successDesc: "Application submitted to system.",
-                modalReminderHeader: "SEND IMAGES VIA EMAIL!",
                 modalSummaryTitle: "SUMMARY:",
                 btnCopy: "COPY PAYLOAD",
                 viewHistory: "View History"
@@ -864,6 +849,9 @@
             document.getElementById('opt_changeSelf').innerText = t.changeSelf;
             document.getElementById('opt_keepOriginal').innerText = t.keepOriginal;
 
+            document.getElementById('lbl_flagUpload').innerText = t.flagUpload;
+            document.getElementById('lbl_mapUpload').innerText = t.mapUpload;
+
             document.getElementById('lbl_social').innerText = t.social;
 
             document.getElementById('lbl_badgeTitle').innerText = t.badgeTitle;
@@ -873,12 +861,10 @@
             document.getElementById('lbl_badgeLang').innerText = t.badgeLang;
             document.getElementById('lbl_badgePop').innerText = t.badgePop;
 
-            document.getElementById('lbl_noticeHeader').innerText = t.noticeHeader;
             document.getElementById('submitText').innerText = t.submitText;
 
             document.getElementById('modal_successTitle').innerText = t.successTitle;
             document.getElementById('modal_successDesc').innerText = t.successDesc;
-            document.getElementById('modal_reminderHeader').innerText = t.modalReminderHeader;
             document.getElementById('modal_summaryTitle').innerText = t.modalSummaryTitle;
             document.getElementById('modal_btnCopy').innerText = t.btnCopy;
             document.getElementById('lbl_viewHistory').innerText = t.viewHistory;
@@ -954,12 +940,15 @@
             const q9 = document.getElementById('q9_section');
             const q10 = document.getElementById('q10_section');
             const q11 = document.getElementById('q11_section');
-            const noticeBox = document.getElementById('imageNoticeBox');
+            const mapUploadSection = document.getElementById('mapUploadSection');
             const miroContainer = document.getElementById('miroLinkContainer');
+            const mapFile = document.getElementById('mapFile');
 
             q9.classList.add('hidden');
             q10.classList.add('hidden');
             q11.classList.add('hidden');
+            mapUploadSection.classList.add('hidden');
+            mapFile.required = false;
 
             setRequired('การแบ่งดินแดน', false);
             setRequired('UnclaimedList', false, true);
@@ -974,8 +963,11 @@
             if (selectedLand === 'Unclaimed Land') {
                 q10.classList.remove('hidden');
                 setRequired('UnclaimedList', true, true);
-                noticeBox.innerHTML = t.noticeUnclaimed;
             } else if (selectedLand === 'Empty Country' || selectedLand === 'Pink Country') {
+                // แสดงช่องอัปโหลดแผนที่เฉพาะเมื่อเลือก Empty Country หรือ Pink Country
+                mapUploadSection.classList.remove('hidden');
+                mapFile.required = true;
+
                 if (selectedLand === 'Empty Country') {
                     q9.classList.remove('hidden');
                     setRequired('การแบ่งดินแดน', true);
@@ -983,9 +975,6 @@
                     q11.classList.remove('hidden');
                     setRequired('การเปลี่ยน Pink Country', true);
                 }
-                noticeBox.innerHTML = t.noticeOther.replace('{LAND}', selectedLand);
-            } else {
-                noticeBox.innerHTML = t.noticeDefault;
             }
         }
 
@@ -1023,29 +1012,20 @@
             document.getElementById('formSubject').value = `[คำขอสมัครประเทศใหม่] - ${countryName}`;
 
             let extraQuestion = "";
-            let extraQuestionMail = "";
             if (landType === 'Empty Country') {
                 const divide = document.querySelector('input[name="การแบ่งดินแดน"]:checked')?.value;
                 extraQuestion = `<div><strong class="text-cyan-300">แบ่งดินแดน:</strong> ${divide || '-'}</div>`;
-                extraQuestionMail = `แบ่งดินแดน: ${divide || '-'}\n`;
             } else if (landType === 'Unclaimed Land') {
                 const unclaimed = document.getElementById('unclaimedList').value;
                 extraQuestion = `<div><strong class="text-cyan-300">Unclaimed Land ที่เลือก:</strong> ${unclaimed || '-'}</div>`;
-                extraQuestionMail = `Unclaimed Land ที่เลือก: ${unclaimed || '-'}\n`;
             } else if (landType === 'Pink Country') {
                 const pink = document.querySelector('input[name="การเปลี่ยน Pink Country"]:checked')?.value;
                 extraQuestion = `<div><strong class="text-cyan-300">อยากจะเปลี่ยนจากอันเดิมเป็นของคุณหรือไม่:</strong> ${pink || '-'}</div>`;
-                extraQuestionMail = `อยากจะเปลี่ยนจากอันเดิมเป็นของคุณหรือไม่: ${pink || '-'}\n`;
             }
 
             const socialMedia = document.getElementById('socialMedia').value;
-
-            const modalReminder = document.getElementById('modalImageReminder');
-            if (landType === 'Unclaimed Land') {
-                modalReminder.innerText = "เนื่องจากคุณเลือก Unclaimed Land กรุณาส่งเฉพาะรูปภาพ 'ธงชาติ' เพียงอย่างเดียวแนบมาทางอีเมล";
-            } else {
-                modalReminder.innerText = `เนื่องจากคุณเลือก ${landType} กรุณาส่งรูปภาพทั้ง 'แผนที่' และ 'ธงชาติ' แนบมาทางอีเมล`;
-            }
+            const flagFileName = document.getElementById('flagFile').files[0]?.name || 'ไม่มีไฟล์แนบ';
+            const mapFileName = document.getElementById('mapFile').files[0]?.name || 'ไม่มีไฟล์แนบ';
 
             const summaryHTML = `
                 <div><strong class="text-slate-400">ชื่อประเทศ:</strong> ${countryName}</div>
@@ -1057,6 +1037,8 @@
                 <div><strong class="text-slate-400">สีประจำชาติ:</strong> <span style="color:${nationalColor}">■</span> ${nationalColor}</div>
                 <div><strong class="text-slate-400">เลือกดินแดน:</strong> ${landType}</div>
                 ${extraQuestion}
+                <div><strong class="text-slate-400">ไฟล์ธงชาติ:</strong> ${flagFileName}</div>
+                <div><strong class="text-slate-400">ไฟล์แผนที่:</strong> ${mapFileName}</div>
                 <div><strong class="text-slate-400">Social Media / TikTok:</strong> ${socialMedia}</div>
             `;
 
@@ -1071,7 +1053,9 @@
 User ID Discord: ${discordUser}
 สีประจำชาติ: ${nationalColor}
 เลือกดินแดน: ${landType}
-${extraQuestionMail}Social Media / TikTok: ${socialMedia}
+ไฟล์ธงชาติ: ${flagFileName}
+ไฟล์แผนที่: ${mapFileName}
+Social Media / TikTok: ${socialMedia}
 ========================================`;
 
             localStorage.setItem('last_nation_submission', lastFormDataText);
@@ -1080,10 +1064,7 @@ ${extraQuestionMail}Social Media / TikTok: ${socialMedia}
 
             document.getElementById('summaryContent').innerHTML = summaryHTML;
 
-            const mailtoSubject = encodeURIComponent(`[คำขอสมัครประเทศใหม่] - ${countryName}`);
-            const formattedMailBody = lastFormDataText.replace(/\n/g, '%0D%0A');
-            document.getElementById('emailMailtoLink').href = `mailto:${ADMIN_EMAIL}?subject=${mailtoSubject}&body=${formattedMailBody}`;
-
+            // FormSubmit Endpoint Transmission (รองรับการส่งไฟล์แนบตรงไปยังอีเมล)
             try {
                 const formData = new FormData(form);
                 await fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
@@ -1111,22 +1092,6 @@ ${extraQuestionMail}Social Media / TikTok: ${socialMedia}
             setTimeout(() => {
                 copyBtn.innerHTML = originalHTML;
             }, 2000);
-        }
-
-        function openHistoryModal() {
-            const savedData = localStorage.getItem('last_nation_submission');
-            if (savedData) {
-                lastFormDataText = savedData;
-                const formattedHtml = savedData.replace(/\n/g, '<br>');
-                document.getElementById('summaryContent').innerHTML = `<div class="text-slate-200">${formattedHtml}</div>`;
-                
-                const mailtoSubject = encodeURIComponent(`[คำขอสมัครประเทศใหม่ - ประวัติล่าสุด]`);
-                const formattedMailBody = savedData.replace(/\n/g, '%0D%0A');
-                document.getElementById('emailMailtoLink').href = `mailto:${ADMIN_EMAIL}?subject=${mailtoSubject}&body=${formattedMailBody}`;
-                
-                playAudio('scan');
-                document.getElementById('successModal').classList.remove('hidden');
-            }
         }
 
         function closeModalOnly() {
