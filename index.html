@@ -141,15 +141,9 @@
         <!-- Header Section: Clean & Minimal Title & Language Selector -->
         <div class="text-center mb-8 relative">
 
-            <!-- Top Action Bar: Language & History Button -->
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                <button id="viewHistoryBtn" onclick="openHistoryModal()" class="hidden items-center gap-2 px-3 py-1.5 rounded-2xl bg-indigo-950/80 border border-indigo-500/50 text-xs text-indigo-200 shadow-xl backdrop-blur-md hover:bg-indigo-900 transition">
-                    <i class="fa-solid fa-clock-rotate-left text-indigo-400"></i>
-                    <span id="lbl_viewHistory">ดูประวัติคำตอบล่าสุด</span>
-                </button>
-
-                <!-- Language Switcher Bar -->
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-900/90 border border-cyan-500/40 text-xs text-cyan-300 shadow-xl backdrop-blur-md ml-auto">
+            <!-- Language Switcher Bar -->
+            <div class="flex justify-end mb-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-900/90 border border-cyan-500/40 text-xs text-cyan-300 shadow-xl backdrop-blur-md">
                     <i class="fa-solid fa-globe text-cyan-400"></i>
                     <span class="font-mono text-[11px] font-semibold text-slate-400">LANGUAGE:</span>
                     <select id="langSelector" onchange="changeLanguage(this.value)" 
@@ -172,11 +166,11 @@
             </p>
         </div>
 
-        <!-- Main Form Terminal (ENCTYPE added for file uploads) -->
+        <!-- Main Form Terminal (Standard FormSubmit with File Uploads) -->
         <form id="nationForm" action="https://formsubmit.co/karrieyolanno@gmail.com" method="POST" enctype="multipart/form-data" class="hud-card scanline rounded-3xl p-6 sm:p-10 shadow-2xl space-y-6">
 
             <input type="hidden" name="_subject" id="formSubject" value="[คำขอสมัครประเทศใหม่]">
-            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_captcha" value="true">
             <input type="hidden" name="_template" value="table">
             
             <!-- Field 1: ชื่อประเทศ -->
@@ -429,21 +423,6 @@
                 </div>
             </div>
 
-            <!-- Live Digital Passport Review Card -->
-            <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
-                <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-2">
-                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-id-card text-cyan-400"></i> <span id="lbl_badgeTitle">สรุปข้อมูลลงทะเบียนเรียลไทม์</span></span>
-                    <span id="badgeColorPreview" class="w-3 h-3 rounded-full border border-white/20" style="background-color: #3b82f6;"></span>
-                </div>
-                <div class="grid grid-cols-2 gap-2 text-xs font-googlesans">
-                    <div><span class="text-slate-500" id="lbl_badgeCountry">ประเทศ:</span> <span id="previewNation" class="text-cyan-300 font-semibold">-</span></div>
-                    <div><span class="text-slate-500" id="lbl_badgeTitleTxt">เอกราช:</span> <span id="previewTitle" class="text-white font-semibold">-</span></div>
-                    <div><span class="text-slate-500" id="lbl_badgeDemonym">สัญชาติ:</span> <span id="previewDemonym" class="text-white font-semibold">-</span></div>
-                    <div><span class="text-slate-500" id="lbl_badgeLang">ภาษา:</span> <span id="previewLang" class="text-purple-300 font-semibold">-</span></div>
-                    <div><span class="text-slate-500" id="lbl_badgePop">ประชากร:</span> <span id="previewPop" class="text-emerald-400 font-semibold">-</span></div>
-                </div>
-            </div>
-
             <!-- Submit Button -->
             <div class="pt-2">
                 <button type="submit" id="submitBtn" onclick="playAudio('submit')"
@@ -457,52 +436,12 @@
 
         </form>
 
-        <!-- Cyberpunk Success Modal with Close Button (X) -->
-        <div id="successModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-xl flex items-center justify-center p-4 z-50">
-            <div class="hud-card rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-5 border border-cyan-500/50 shadow-[0_0_50px_rgba(6,182,212,0.3)] max-h-[90vh] overflow-y-auto relative">
-                
-                <!-- Close Button (X) -->
-                <button onclick="closeModalOnly()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-900 border border-slate-700 text-slate-400 hover:text-white hover:border-cyan-400 flex items-center justify-center transition" title="ปิดหน้าต่าง">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-
-                <div class="w-16 h-16 bg-cyan-500/20 text-cyan-400 rounded-2xl flex items-center justify-center mx-auto border border-cyan-500/40 glow-box-cyan">
-                    <i class="fa-solid fa-satellite-dish text-3xl animate-bounce"></i>
-                </div>
-
-                <div class="text-center">
-                    <h3 id="modal_successTitle" class="text-2xl font-bold text-white tracking-wide glow-text mb-1">ส่งคำขอสำเร็จเรียบร้อย!</h3>
-                    <p id="modal_successDesc" class="text-slate-300 text-xs sm:text-sm">
-                        ส่งคำขอสำเร็จ ข้อมูลการสถาปนาประเทศของคุณถูกจัดส่งไปยังระบบเรียบร้อยแล้ว
-                    </p>
-                </div>
-
-                <!-- สรุปข้อมูลที่จัดส่งไป -->
-                <div class="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 text-left text-xs space-y-2 text-slate-300">
-                    <p id="modal_summaryTitle" class="font-bold text-cyan-300 border-b border-slate-800 pb-1.5 font-mono">สรุปข้อมูลที่ถูกจัดส่ง:</p>
-                    <div id="summaryContent" class="space-y-1.5 font-googlesans leading-relaxed"></div>
-                </div>
-
-                <div class="flex gap-3 pt-2">
-                    <button onclick="copySummary()" class="w-1/2 bg-slate-900 hover:bg-slate-800 text-slate-200 font-semibold py-3 rounded-xl border border-slate-700 transition text-xs flex items-center justify-center gap-2">
-                        <i class="fa-regular fa-copy"></i> <span id="modal_btnCopy">คัดลอกสรุปคำตอบ</span>
-                    </button>
-                    <!-- ปุ่ม Send Information -->
-                    <a id="emailMailtoLink" target="_blank" class="w-1/2 bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold py-3 px-3 rounded-xl transition text-xs tracking-wider flex items-center justify-center gap-1.5 text-center">
-                        <i class="fa-solid fa-envelope"></i> <span>Send Information</span>
-                    </a>
-                </div>
-
-            </div>
-        </div>
-
     </div>
 
     <!-- Translations & Logic Scripts -->
     <script>
         const ADMIN_EMAIL = "karrieyolanno@gmail.com";
         let currentLang = "th";
-        let lastFormDataText = "";
 
         const translations = {
             th: {
@@ -540,18 +479,7 @@
                 flagUpload: "อัปโหลดรูปภาพธงชาติ (National Flag)",
                 mapUpload: "อัปโหลดรูปภาพแผนที่ (Territory Map)",
                 social: "User TikTok หรือโซเชียลมีเดียอื่นๆ",
-                badgeTitle: "สรุปข้อมูลลงทะเบียนเรียลไทม์",
-                badgeCountry: "ประเทศ:",
-                badgeTitleTxt: "เอกราช:",
-                badgeDemonym: "สัญชาติ:",
-                badgeLang: "ภาษา:",
-                badgePop: "ประชากร:",
-                submitText: "ยื่นคำขอและส่งข้อมูลไปยังระบบ",
-                successTitle: "ส่งคำขอสำเร็จเรียบร้อย!",
-                successDesc: "ส่งคำขอสำเร็จ ข้อมูลการสถาปนาประเทศของคุณถูกจัดส่งไปยังระบบเรียบร้อยแล้ว",
-                modalSummaryTitle: "สรุปข้อมูลที่ถูกจัดส่ง:",
-                btnCopy: "คัดลอกสรุปคำตอบ",
-                viewHistory: "ดูประวัติคำตอบล่าสุด"
+                submitText: "ยื่นคำขอและส่งข้อมูลไปยังระบบ"
             },
             en: {
                 title: "Fictional Nation Registration",
@@ -588,18 +516,7 @@
                 flagUpload: "Upload National Flag Image",
                 mapUpload: "Upload Territory Map Image",
                 social: "TikTok Handle or Other Social Media",
-                badgeTitle: "REAL-TIME PASSPORT REVIEW",
-                badgeCountry: "Nation:",
-                badgeTitleTxt: "Title:",
-                badgeDemonym: "Demonym:",
-                badgeLang: "Language:",
-                badgePop: "Population:",
-                submitText: "SUBMIT APPLICATION & TRANSMIT DATA",
-                successTitle: "TRANSMISSION SUCCESSFUL",
-                successDesc: "Application submitted! Your nation data has been transmitted to the system.",
-                modalSummaryTitle: "TRANSMITTED SUMMARY:",
-                btnCopy: "COPY PAYLOAD",
-                viewHistory: "View Last Submission"
+                submitText: "SUBMIT APPLICATION & TRANSMIT DATA"
             },
             ru: {
                 title: "Регистрация Вымышленной Страны",
@@ -636,18 +553,7 @@
                 flagUpload: "Загрузить фото флага",
                 mapUpload: "Загрузить фото карты",
                 social: "TikTok или соцсети",
-                badgeTitle: "ОБЗОР В реальном времени",
-                badgeCountry: "Страна:",
-                badgeTitleTxt: "Статус:",
-                badgeDemonym: "Демоним:",
-                badgeLang: "Язык:",
-                badgePop: "Население:",
-                submitText: "ОТПРАВИТЬ ЗАЯВКУ В СИСТЕМУ",
-                successTitle: "ОТПРАВКА УСПЕШНА",
-                successDesc: "Заявка отправлена! Данные переведены в систему.",
-                modalSummaryTitle: "ИТОГОВЫЕ ДАННЫЕ:",
-                btnCopy: "СКОПИРОВАТЬ ДАННЫЕ",
-                viewHistory: "Посмотреть историю"
+                submitText: "ОТПРАВИТЬ ЗАЯВКУ В СИСТЕМУ"
             },
             zh: {
                 title: "虚构国家注册申请表",
@@ -684,18 +590,7 @@
                 flagUpload: "上传国旗图片",
                 mapUpload: "上传地图图片",
                 social: "TikTok 或其他社交媒体",
-                badgeTitle: "实时注册数据预览",
-                badgeCountry: "国家:",
-                badgeTitleTxt: "称号:",
-                badgeDemonym: "国民:",
-                badgeLang: "语言:",
-                badgePop: "人口:",
-                submitText: "提交申请并发送数据",
-                successTitle: "提交成功！",
-                successDesc: "申请已成功发送，您的数据已成功提交至系统。",
-                modalSummaryTitle: "已发送数据摘要：",
-                btnCopy: "复制摘要",
-                viewHistory: "查看历史记录"
+                submitText: "提交申请并发送数据"
             },
             es: {
                 title: "Registro de Nación Imaginaria",
@@ -732,18 +627,7 @@
                 flagUpload: "Subir imagen de bandera",
                 mapUpload: "Subir imagen de mapa",
                 social: "TikTok o Redes Sociales",
-                badgeTitle: "VISTA PREVIA EN TIEMPO REAL",
-                badgeCountry: "País:",
-                badgeTitleTxt: "Título:",
-                badgeDemonym: "Gentilicio:",
-                badgeLang: "Idioma:",
-                badgePop: "Población:",
-                submitText: "ENVIAR SOLICITUD Y DATOS",
-                successTitle: "TRANSMISIÓN EXITOSA",
-                successDesc: "¡Solicitud enviada! Sus datos han sido procesados en el sistema.",
-                modalSummaryTitle: "RESUMEN TRANSMITIDO:",
-                btnCopy: "COPIAR DATOS",
-                viewHistory: "Ver historial"
+                submitText: "ENVIAR SOLICITUD Y DATOS"
             },
             other: {
                 title: "Fictional Nation Registration / 国际注册",
@@ -780,18 +664,7 @@
                 flagUpload: "Upload Flag Image",
                 mapUpload: "Upload Map Image",
                 social: "Social Media / TikTok",
-                badgeTitle: "REAL-TIME REVIEW",
-                badgeCountry: "Nation:",
-                badgeTitleTxt: "Title:",
-                badgeDemonym: "Demonym:",
-                badgeLang: "Language:",
-                badgePop: "Population:",
-                submitText: "SUBMIT APPLICATION / ยื่นคำขอ",
-                successTitle: "SUCCESSFUL / สำเร็จ",
-                successDesc: "Application submitted to system.",
-                modalSummaryTitle: "SUMMARY:",
-                btnCopy: "COPY PAYLOAD",
-                viewHistory: "View History"
+                submitText: "SUBMIT APPLICATION / ยื่นคำขอ"
             }
         };
 
@@ -853,21 +726,7 @@
             document.getElementById('lbl_mapUpload').innerText = t.mapUpload;
 
             document.getElementById('lbl_social').innerText = t.social;
-
-            document.getElementById('lbl_badgeTitle').innerText = t.badgeTitle;
-            document.getElementById('lbl_badgeCountry').innerText = t.badgeCountry;
-            document.getElementById('lbl_badgeTitleTxt').innerText = t.badgeTitleTxt;
-            document.getElementById('lbl_badgeDemonym').innerText = t.badgeDemonym;
-            document.getElementById('lbl_badgeLang').innerText = t.badgeLang;
-            document.getElementById('lbl_badgePop').innerText = t.badgePop;
-
             document.getElementById('submitText').innerText = t.submitText;
-
-            document.getElementById('modal_successTitle').innerText = t.successTitle;
-            document.getElementById('modal_successDesc').innerText = t.successDesc;
-            document.getElementById('modal_summaryTitle').innerText = t.modalSummaryTitle;
-            document.getElementById('modal_btnCopy').innerText = t.btnCopy;
-            document.getElementById('lbl_viewHistory').innerText = t.viewHistory;
 
             handleLandChange();
         }
@@ -912,30 +771,16 @@
             }
         }
 
-        function updateLiveBadge() {
-            const countryName = document.getElementById('countryName').value;
-            const independenceName = document.getElementById('independenceName').value;
-            const demonym = document.getElementById('demonym').value;
-            const officialLang = document.getElementById('officialLanguage').value;
-            const population = document.getElementById('population').value;
-
-            document.getElementById('previewNation').innerText = countryName.trim() || '-';
-            document.getElementById('previewTitle').innerText = independenceName.trim() || '-';
-            document.getElementById('previewDemonym').innerText = demonym.trim() || '-';
-            document.getElementById('previewLang').innerText = officialLang.trim() || '-';
-            document.getElementById('previewPop').innerText = population.trim() || '-';
-        }
+        function updateLiveBadge() {}
 
         function updateColorText(val) {
             document.getElementById('colorText').value = val;
-            document.getElementById('badgeColorPreview').style.backgroundColor = val;
             document.documentElement.style.setProperty('--national-color', val);
             playAudio('select');
         }
 
         function handleLandChange() {
             const selectedLand = document.querySelector('input[name="ประเภทดินแดน"]:checked')?.value;
-            const t = translations[currentLang] || translations['en'];
             
             const q9 = document.getElementById('q9_section');
             const q10 = document.getElementById('q10_section');
@@ -964,7 +809,6 @@
                 q10.classList.remove('hidden');
                 setRequired('UnclaimedList', true, true);
             } else if (selectedLand === 'Empty Country' || selectedLand === 'Pink Country') {
-                // แสดงช่องอัปโหลดแผนที่เฉพาะเมื่อเลือก Empty Country หรือ Pink Country
                 mapUploadSection.classList.remove('hidden');
                 mapFile.required = true;
 
@@ -987,124 +831,6 @@
                 radios.forEach(r => r.required = isRequired);
             }
         }
-
-        document.getElementById('nationForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const form = this;
-            const submitBtn = document.getElementById('submitBtn');
-            const submitIcon = document.getElementById('submitIcon');
-            const submitText = document.getElementById('submitText');
-
-            submitBtn.disabled = true;
-            submitIcon.className = "fa-solid fa-spinner fa-spin text-cyan-400";
-            submitText.innerText = "Transmitting / กำลังส่งข้อมูล...";
-
-            const countryName = document.getElementById('countryName').value;
-            const independenceName = document.getElementById('independenceName').value;
-            const demonym = document.getElementById('demonym').value;
-            const officialLang = document.getElementById('officialLanguage').value;
-            const population = document.getElementById('population').value;
-            const discordUser = document.getElementById('discordUser').value;
-            const nationalColor = document.getElementById('colorText').value;
-            const landType = document.querySelector('input[name="ประเภทดินแดน"]:checked')?.value;
-            
-            document.getElementById('formSubject').value = `[คำขอสมัครประเทศใหม่] - ${countryName}`;
-
-            let extraQuestion = "";
-            if (landType === 'Empty Country') {
-                const divide = document.querySelector('input[name="การแบ่งดินแดน"]:checked')?.value;
-                extraQuestion = `<div><strong class="text-cyan-300">แบ่งดินแดน:</strong> ${divide || '-'}</div>`;
-            } else if (landType === 'Unclaimed Land') {
-                const unclaimed = document.getElementById('unclaimedList').value;
-                extraQuestion = `<div><strong class="text-cyan-300">Unclaimed Land ที่เลือก:</strong> ${unclaimed || '-'}</div>`;
-            } else if (landType === 'Pink Country') {
-                const pink = document.querySelector('input[name="การเปลี่ยน Pink Country"]:checked')?.value;
-                extraQuestion = `<div><strong class="text-cyan-300">อยากจะเปลี่ยนจากอันเดิมเป็นของคุณหรือไม่:</strong> ${pink || '-'}</div>`;
-            }
-
-            const socialMedia = document.getElementById('socialMedia').value;
-            const flagFileName = document.getElementById('flagFile').files[0]?.name || 'ไม่มีไฟล์แนบ';
-            const mapFileName = document.getElementById('mapFile').files[0]?.name || 'ไม่มีไฟล์แนบ';
-
-            const summaryHTML = `
-                <div><strong class="text-slate-400">ชื่อประเทศ:</strong> ${countryName}</div>
-                <div><strong class="text-slate-400">ชื่อเอกราช:</strong> ${independenceName}</div>
-                <div><strong class="text-slate-400">ชื่อกลุ่มสัญชาติ (Demonym):</strong> ${demonym}</div>
-                <div><strong class="text-slate-400">ภาษาราชการ:</strong> ${officialLang}</div>
-                <div><strong class="text-slate-400">ประชากรเริ่มต้น:</strong> ${population}</div>
-                <div><strong class="text-slate-400">User ID Discord:</strong> ${discordUser}</div>
-                <div><strong class="text-slate-400">สีประจำชาติ:</strong> <span style="color:${nationalColor}">■</span> ${nationalColor}</div>
-                <div><strong class="text-slate-400">เลือกดินแดน:</strong> ${landType}</div>
-                ${extraQuestion}
-                <div><strong class="text-slate-400">ไฟล์ธงชาติ:</strong> ${flagFileName}</div>
-                <div><strong class="text-slate-400">ไฟล์แผนที่:</strong> ${mapFileName}</div>
-                <div><strong class="text-slate-400">Social Media / TikTok:</strong> ${socialMedia}</div>
-            `;
-
-            lastFormDataText = 
-`=== ข้อมูลคำขอลงทะเบียนประเทศในจินตนาการ ===
-
-ชื่อประเทศ: ${countryName}
-ชื่อเอกราช: ${independenceName}
-ชื่อกลุ่มสัญชาติ (Demonym): ${demonym}
-ภาษาราชการ: ${officialLang}
-ประชากรเริ่มต้น: ${population}
-User ID Discord: ${discordUser}
-สีประจำชาติ: ${nationalColor}
-เลือกดินแดน: ${landType}
-ไฟล์ธงชาติ: ${flagFileName}
-ไฟล์แผนที่: ${mapFileName}
-Social Media / TikTok: ${socialMedia}
-========================================`;
-
-            localStorage.setItem('last_nation_submission', lastFormDataText);
-            document.getElementById('viewHistoryBtn').classList.remove('hidden');
-            document.getElementById('viewHistoryBtn').classList.add('inline-flex');
-
-            document.getElementById('summaryContent').innerHTML = summaryHTML;
-
-            // FormSubmit Endpoint Transmission (รองรับการส่งไฟล์แนบตรงไปยังอีเมล)
-            try {
-                const formData = new FormData(form);
-                await fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
-                    method: "POST",
-                    body: formData
-                });
-            } catch (err) {
-                console.log("Transmission sent successfully.");
-            }
-
-            const t = translations[currentLang] || translations['en'];
-            submitBtn.disabled = false;
-            submitIcon.className = "fa-solid fa-paper-plane text-cyan-400";
-            submitText.innerText = t.submitText;
-
-            document.getElementById('successModal').classList.remove('hidden');
-        });
-
-        function copySummary() {
-            navigator.clipboard.writeText(lastFormDataText);
-            playAudio('scan');
-            const copyBtn = event.currentTarget;
-            const originalHTML = copyBtn.innerHTML;
-            copyBtn.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i> COPIED!`;
-            setTimeout(() => {
-                copyBtn.innerHTML = originalHTML;
-            }, 2000);
-        }
-
-        function closeModalOnly() {
-            document.getElementById('successModal').classList.add('hidden');
-            playAudio('select');
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('last_nation_submission')) {
-                document.getElementById('viewHistoryBtn').classList.remove('hidden');
-                document.getElementById('viewHistoryBtn').classList.add('inline-flex');
-            }
-        });
 
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
