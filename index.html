@@ -12,1234 +12,1175 @@
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome 6 for Sci-Fi Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-neon: #6366f1;
+            --cyan-glow: #06b6d4;
+            --rose-glow: #f43f5e;
+            --national-color: #3b82f6;
+        }
 
-<style>
-    :root {
-        --primary-neon: #6366f1;
-        --cyan-glow: #06b6d4;
-        --rose-glow: #f43f5e;
-        --national-color: #3b82f6;
-    }
+        body {
+            font-family: 'Google Sans', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #030712;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
 
-    body {
-        font-family: 'Google Sans', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
-        background-color: #030712;
-        color: #f3f4f6;
-        overflow-x: hidden;
-    }
+        .font-googlesans {
+            font-family: 'Google Sans', 'Noto Sans Thai', sans-serif;
+        }
 
-    .font-googlesans {
-        font-family: 'Google Sans', 'Noto Sans Thai', sans-serif;
-    }
+        /* Sci-Fi Canvas Ambient Background */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
 
-    /* Sci-Fi Canvas Ambient Background */
-    #bgCanvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 0;
-        pointer-events: none;
-    }
+        /* Cyberpunk Glass HUD Container */
+        .hud-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(99, 102, 241, 0.08);
+            position: relative;
+        }
 
-    /* Cyberpunk Glass HUD Container */
-    .hud-card {
-        background: rgba(15, 23, 42, 0.75);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(99, 102, 241, 0.25);
-        box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(99, 102, 241, 0.08);
-        position: relative;
-    }
+        /* Corner Tech Decorators */
+        .hud-card::before, .hud-card::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-color: var(--cyan-glow);
+            pointer-events: none;
+        }
+        .hud-card::before {
+            top: -1px; left: -1px;
+            border-top: 3px solid var(--cyan-glow);
+            border-left: 3px solid var(--cyan-glow);
+            border-top-left-radius: 8px;
+        }
+        .hud-card::after {
+            bottom: -1px; right: -1px;
+            border-bottom: 3px solid var(--cyan-glow);
+            border-right: 3px solid var(--cyan-glow);
+            border-bottom-right-radius: 8px;
+        }
 
-    /* Corner Tech Decorators */
-    .hud-card::before, .hud-card::after {
-        content: '';
-        position: absolute;
-        width: 16px;
-        height: 16px;
-        border-color: var(--cyan-glow);
-        pointer-events: none;
-    }
-    .hud-card::before {
-        top: -1px; left: -1px;
-        border-top: 3px solid var(--cyan-glow);
-        border-left: 3px solid var(--cyan-glow);
-        border-top-left-radius: 8px;
-    }
-    .hud-card::after {
-        bottom: -1px; right: -1px;
-        border-bottom: 3px solid var(--cyan-glow);
-        border-right: 3px solid var(--cyan-glow);
-        border-bottom-right-radius: 8px;
-    }
+        /* Glow Animations */
+        .glow-text {
+            text-shadow: 0 0 12px rgba(99, 102, 241, 0.6), 0 0 20px rgba(6, 182, 212, 0.4);
+        }
 
-    /* Glow Animations */
-    .glow-text {
-        text-shadow: 0 0 12px rgba(99, 102, 241, 0.6), 0 0 20px rgba(6, 182, 212, 0.4);
-    }
+        .glow-box-cyan {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        }
 
-    .glow-box-cyan {
-        box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
-    }
+        /* Input Cyber Style */
+        .cyber-input {
+            background: rgba(3, 7, 18, 0.8);
+            border: 1px solid rgba(75, 85, 99, 0.6);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cyber-input:focus {
+            border-color: var(--cyan-glow);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.35);
+            background: rgba(15, 23, 42, 0.95);
+            outline: none;
+        }
 
-    /* Input Cyber Style */
-    .cyber-input {
-        background: rgba(3, 7, 18, 0.8);
-        border: 1px solid rgba(75, 85, 99, 0.6);
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .cyber-input:focus {
-        border-color: var(--cyan-glow);
-        box-shadow: 0 0 15px rgba(6, 182, 212, 0.35);
-        background: rgba(15, 23, 42, 0.95);
-        outline: none;
-    }
+        /* Scanline Overlay */
+        .scanline {
+            position: relative;
+            overflow: hidden;
+        }
+        .scanline::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.4;
+        }
 
-    /* Scanline Overlay */
-    .scanline {
-        position: relative;
-        overflow: hidden;
-    }
-    .scanline::after {
-        content: " ";
-        display: block;
-        position: absolute;
-        top: 0; left: 0; bottom: 0; right: 0;
-        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-        background-size: 100% 4px;
-        z-index: 2;
-        pointer-events: none;
-        opacity: 0.4;
-    }
+        /* Custom Radio Card Active state */
+        .land-card-input:checked + .land-card {
+            border-color: var(--cyan-glow);
+            background: rgba(14, 116, 144, 0.25);
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.3);
+            transform: translateY(-2px);
+        }
 
-    /* Custom Radio Card Active state */
-    .land-card-input:checked + .land-card {
-        border-color: var(--cyan-glow);
-        background: rgba(14, 116, 144, 0.25);
-        box-shadow: 0 0 25px rgba(6, 182, 212, 0.3);
-        transform: translateY(-2px);
-    }
-
-    .fade-in {
-        animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-12px) scale(0.98); }
-        to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    /* Pulsing Dot Status */
-    .pulse-online {
-        animation: pulseGlow 2s infinite;
-    }
-    @keyframes pulseGlow {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.4; transform: scale(0.85); }
-    }
-</style>
+        .fade-in {
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-12px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+    </style>
 </head>
 <body class="min-h-screen text-slate-100 py-8 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center relative font-googlesans">
 
-<!-- Interactive Particle Web Background -->
-<canvas id="bgCanvas"></canvas>
+    <!-- Interactive Particle Web Background -->
+    <canvas id="bgCanvas"></canvas>
 
-<div class="max-w-3xl w-full mx-auto relative z-10">
-    
-    <!-- Header Section: Holographic Emblem & Cyber Title & Language Selector -->
-    <div class="text-center mb-8 relative">
+    <div class="max-w-3xl w-full mx-auto relative z-10">
+        
+        <!-- Header Section -->
+        <div class="text-center mb-8 relative">
 
-        <!-- Top Action Bar: Language & History Button -->
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-            <!-- ปุ่มดูประวัติล่าสุด (ซ่อนจนกว่าจะมีการส่งข้อมูลอย่างน้อย 1 ครั้ง) -->
-            <button id="viewHistoryBtn" onclick="openHistoryModal()" class="hidden items-center gap-2 px-3 py-1.5 rounded-2xl bg-indigo-950/80 border border-indigo-500/50 text-xs text-indigo-200 shadow-xl backdrop-blur-md hover:bg-indigo-900 transition">
-                <i class="fa-solid fa-clock-rotate-left text-indigo-400"></i>
-                <span id="lbl_viewHistory">ดูประวัติคำตอบล่าสุด</span>
-            </button>
+            <!-- Top Action Bar: Language & History Button -->
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                <button id="viewHistoryBtn" onclick="openHistoryModal()" class="hidden items-center gap-2 px-3 py-1.5 rounded-2xl bg-indigo-950/80 border border-indigo-500/50 text-xs text-indigo-200 shadow-xl backdrop-blur-md hover:bg-indigo-900 transition">
+                    <i class="fa-solid fa-clock-rotate-left text-indigo-400"></i>
+                    <span id="lbl_viewHistory">ดูประวัติคำตอบล่าสุด</span>
+                </button>
 
-            <!-- Language Switcher Bar -->
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-900/90 border border-cyan-500/40 text-xs text-cyan-300 shadow-xl backdrop-blur-md ml-auto">
-                <i class="fa-solid fa-globe text-cyan-400"></i>
-                <span class="font-mono text-[11px] font-semibold text-slate-400">LANGUAGE:</span>
-                <select id="langSelector" onchange="changeLanguage(this.value)" 
-                    class="bg-slate-950 text-white font-medium text-xs rounded-lg px-2.5 py-1 border border-slate-700/80 focus:outline-none focus:border-cyan-400 cursor-pointer">
-                    <option value="th" selected>🇹🇭 ไทย (TH)</option>
-                    <option value="en">🇬🇧 English (EN)</option>
-                    <option value="ru">🇷🇺 Русский (RU)</option>
-                    <option value="zh">🇨🇳 中文 (ZH)</option>
-                    <option value="es">🇪🇸 Español (ES)</option>
-                    <option value="other">🌐 อื่นๆ / Other</option>
+                <!-- Language Switcher Bar -->
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-900/90 border border-cyan-500/40 text-xs text-cyan-300 shadow-xl backdrop-blur-md ml-auto">
+                    <i class="fa-solid fa-globe text-cyan-400"></i>
+                    <span class="font-mono text-[11px] font-semibold text-slate-400">LANGUAGE:</span>
+                    <select id="langSelector" onchange="changeLanguage(this.value)" 
+                        class="bg-slate-950 text-white font-medium text-xs rounded-lg px-2.5 py-1 border border-slate-700/80 focus:outline-none focus:border-cyan-400 cursor-pointer">
+                        <option value="th" selected>🇹🇭 ไทย (TH)</option>
+                        <option value="en">🇬🇧 English (EN)</option>
+                        <option value="ru">🇷🇺 Русский (RU)</option>
+                        <option value="zh">🇨🇳 中文 (ZH)</option>
+                        <option value="es">🇪🇸 Español (ES)</option>
+                        <option value="other">🌐 อื่นๆ / Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Emblem Box (ลบข้อความเวอร์ชันและป้ายสเตตัสด้านบนออกเรียบร้อย) -->
+            <div class="relative inline-block group cursor-pointer mt-2" onclick="playAudio('scan')">
+                <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 rounded-3xl blur-md opacity-40 group-hover:opacity-80 transition duration-500"></div>
+                <div class="relative p-2 rounded-2xl bg-slate-950 border border-slate-700/80 shadow-2xl overflow-hidden backdrop-blur-xl">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&auto=format&fit=crop&q=80" alt="ตราสัญลักษณ์ประจำประเทศ" class="h-28 sm:h-36 w-auto object-contain rounded-xl shadow-inner border border-white/10 group-hover:scale-105 transition duration-300" />
+                    <div class="absolute inset-x-0 h-1 bg-cyan-400/80 shadow-[0_0_15px_#06b6d4] top-0 animate-[ping_3s_infinite]"></div>
+                </div>
+            </div>
+
+            <h1 id="txt_title" class="text-3xl sm:text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-indigo-300 mt-4 mb-2 font-googlesans glow-text">
+                ลงทะเบียนประเทศในจินตนาการ
+            </h1>
+            <p id="txt_subtitle" class="text-slate-400 text-xs sm:text-sm font-normal max-w-lg mx-auto">
+                แบบฟอร์มยื่นคำขออนุมัติดินแดนและประกาศอธิปไตยประเทศในจินตนาการ
+            </p>
+        </div>
+
+        <!-- Main Form Terminal -->
+        <form id="nationForm" action="https://formsubmit.co/karrieyolanno@gmail.com" method="POST" class="hud-card scanline rounded-3xl p-6 sm:p-10 shadow-2xl space-y-6">
+
+            <input type="hidden" name="_subject" id="formSubject" value="[คำขอสมัครประเทศใหม่]">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            
+            <!-- 1. ชื่อประเทศ -->
+            <div class="space-y-1">
+                <label for="countryName" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
+                    <span><i class="fa-solid fa-monument text-indigo-400 mr-2"></i><span id="lbl_countryName">ชื่อประเทศ</span></span>
+                    <span id="lbl_req1" class="text-rose-400 font-sans">* จำเป็น</span>
+                </label>
+                <input type="text" name="ชื่อประเทศ" id="countryName" required oninput="updateLiveBadge()"
+                    placeholder="เช่น จักรวรรดิออโรรา (Empire of Aurora)"
+                    class="cyber-input w-full rounded-xl px-4 py-3.5 text-white text-sm placeholder-slate-600">
+            </div>
+
+            <!-- 2. ชื่อเอกราช -->
+            <div class="space-y-1">
+                <label for="independenceName" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
+                    <span><i class="fa-solid fa-crown text-amber-400 mr-2"></i><span id="lbl_independence">ชื่อเอกราช (Independence Title)</span></span>
+                    <span id="lbl_req2" class="text-rose-400 font-sans">* จำเป็น</span>
+                </label>
+                <input type="text" name="ชื่อเอกราช" id="independenceName" required oninput="updateLiveBadge()"
+                    placeholder="เช่น สาธารณรัฐเสรี, สหพันธรัฐอิสระ"
+                    class="cyber-input w-full rounded-xl px-4 py-3.5 text-white text-sm placeholder-slate-600">
+            </div>
+
+            <!-- 3. ชื่อกลุ่มสัญชาติ -->
+            <div class="space-y-1">
+                <label for="demonym" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
+                    <span><i class="fa-solid fa-users-gear text-cyan-400 mr-2"></i><span id="lbl_demonym">ชื่อกลุ่มสัญชาติ (Demonym)</span></span>
+                    <span id="lbl_req3" class="text-rose-400 font-sans">* จำเป็น</span>
+                </label>
+                <input type="text" name="ชื่อกลุ่มสัญชาติ_(Demonym)" id="demonym" required oninput="updateLiveBadge()"
+                    placeholder="เช่น Auroran, ชาวออโรเรียน"
+                    class="cyber-input w-full rounded-xl px-4 py-3.5 text-white text-sm placeholder-slate-600">
+            </div>
+
+            <!-- 4. ภาษาราชการ -->
+            <div class="space-y-1">
+                <label for="officialLanguage" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
+                    <span><i class="fa-solid fa-language text-purple-400 mr-2"></i><span id="lbl_officialLanguage">ภาษาราชการ</span></span>
+                    <span id="lbl_req12" class="text-rose-400 font-sans">* จำเป็น</span>
+                </label>
+                <div class="relative">
+                    <input type="text" name="ภาษาราชการ" id="officialLanguage" required oninput="updateLiveBadge()"
+                        placeholder="เช่น ภาษาไทย, ภาษาอังกฤษ, ภาษาออโรเรียน (สร้างเอง)"
+                        class="cyber-input w-full rounded-xl pl-10 pr-4 py-3.5 text-white text-sm placeholder-slate-600">
+                    <i class="fa-solid fa-language absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500"></i>
+                </div>
+                <p id="lbl_officialLangHelp" class="text-[11px] text-slate-500 pt-0.5">ใช้ภาษาอะไรก็ได้จากทั่วโลก หรือ ใช้ภาษาที่คุณสร้างมาเอง</p>
+            </div>
+
+            <!-- 5. ประชากรเริ่มต้น -->
+            <div class="space-y-1">
+                <label for="population" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
+                    <span><i class="fa-solid fa-users-line text-emerald-400 mr-2"></i><span id="lbl_population">ประชากรเริ่มต้น (ไม่จำกัด)</span></span>
+                    <span id="lbl_req4" class="text-rose-400 font-sans">* จำเป็น</span>
+                </label>
+                <div class="relative">
+                    <input type="text" name="ประชากรเริ่มต้น" id="population" required oninput="updateLiveBadge()"
+                        placeholder="เช่น 5,000,000 คน หรือ ไม่จำกัด"
+                        class="cyber-input w-full rounded-xl pl-10 pr-4 py-3.5 text-white text-sm placeholder-slate-600">
+                    <i class="fa-solid fa-people-group absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500"></i>
+                </div>
+            </div>
+
+            <!-- 6. User ID Discord -->
+            <div class="space-y-1">
+                <label for="discordUser" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
+                    <span><i class="fa-brands fa-discord text-indigo-400 mr-2"></i><span id="lbl_discord">User ID Discord</span></span>
+                    <span id="lbl_req5" class="text-rose-400 font-sans">* จำเป็น</span>
+                </label>
+                <div class="relative">
+                    <input type="text" name="Discord_User_ID" id="discordUser" required
+                        placeholder="เช่น 123456789012345678"
+                        class="cyber-input w-full rounded-xl pl-10 pr-4 py-3.5 text-white text-sm placeholder-slate-600 font-mono">
+                    <i class="fa-brands fa-discord absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500"></i>
+                </div>
+                <p id="lbl_discordHelp" class="text-[11px] text-slate-500 pt-0.5">ตัวเลข User ID ของ Discord (ตัวอย่าง: 987654321098765432)</p>
+            </div>
+
+            <!-- 7. สีประจำชาติ -->
+            <div class="space-y-2">
+                <label for="nationalColor" class="block text-xs font-semibold text-slate-300 tracking-wider">
+                    <i class="fa-solid fa-palette text-fuchsia-400 mr-2"></i><span id="lbl_color">สีประจำชาติ</span> <span id="lbl_req6" class="text-rose-400 font-sans">*</span>
+                </label>
+                <div class="flex items-center gap-4 bg-slate-950/60 p-2.5 rounded-2xl border border-slate-800">
+                    <input type="color" id="nationalColor" value="#3b82f6" onchange="updateColorText(this.value)"
+                        class="h-12 w-20 bg-transparent border-0 cursor-pointer rounded-xl">
+                    <div class="flex-1">
+                        <input type="text" name="สีประจำชาติ" id="colorText" value="#3b82f6" readonly
+                            class="bg-slate-900 border border-slate-700/80 rounded-xl px-4 py-2 text-cyan-400 font-mono text-center font-bold text-sm w-36">
+                    </div>
+                    <div class="text-xs text-slate-500 pr-3 font-mono hidden sm:block">COLOR HEX CODE</div>
+                </div>
+            </div>
+
+            <!-- 8. เลือกดินแดน -->
+            <div class="space-y-2">
+                <label class="block text-xs font-semibold text-slate-300 tracking-wider">
+                    <i class="fa-solid fa-earth-americas text-emerald-400 mr-2"></i><span id="lbl_land">เลือกดินแดน</span> <span id="lbl_req7" class="text-rose-400 font-sans">*</span>
+                </label>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    
+                    <label class="relative cursor-pointer group" onclick="playAudio('select')">
+                        <input type="radio" name="ประเภทดินแดน" value="Unclaimed Land" required onchange="handleLandChange()" class="sr-only land-card-input">
+                        <div class="land-card p-4 rounded-2xl bg-slate-900/60 border border-slate-800 transition duration-300 flex flex-col justify-between h-full hover:border-slate-600">
+                            <div class="flex items-center justify-between mb-2">
+                                <i class="fa-solid fa-flag text-cyan-400 text-lg"></i>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300">TYPE A</span>
+                            </div>
+                            <div>
+                                <div class="font-bold text-sm text-white font-googlesans group-hover:text-cyan-400 transition">Unclaimed Land</div>
+                                <div id="lbl_land1Desc" class="text-[11px] text-slate-400 mt-0.5">ดินแดนที่ยังไม่มีผู้ครอบครอง</div>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="relative cursor-pointer group" onclick="playAudio('select')">
+                        <input type="radio" name="ประเภทดินแดน" value="Empty Country" onchange="handleLandChange()" class="sr-only land-card-input">
+                        <div class="land-card p-4 rounded-2xl bg-slate-900/60 border border-slate-800 transition duration-300 flex flex-col justify-between h-full hover:border-slate-600">
+                            <div class="flex items-center justify-between mb-2">
+                                <i class="fa-solid fa-border-none text-indigo-400 text-lg"></i>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-indigo-300">TYPE B</span>
+                            </div>
+                            <div>
+                                <div class="font-bold text-sm text-white font-googlesans group-hover:text-indigo-400 transition">Empty Country</div>
+                                <div id="lbl_land2Desc" class="text-[11px] text-slate-400 mt-0.5">ประเทศว่างเปล่า</div>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="relative cursor-pointer group" onclick="playAudio('select')">
+                        <input type="radio" name="ประเภทดินแดน" value="Pink Country" onchange="handleLandChange()" class="sr-only land-card-input">
+                        <div class="land-card p-4 rounded-2xl bg-slate-900/60 border border-slate-800 transition duration-300 flex flex-col justify-between h-full hover:border-slate-600">
+                            <div class="flex items-center justify-between mb-2">
+                                <i class="fa-solid fa-map-pin text-rose-400 text-lg"></i>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-rose-300">TYPE C</span>
+                            </div>
+                            <div>
+                                <div class="font-bold text-sm text-white font-googlesans group-hover:text-rose-400 transition">Pink Country</div>
+                                <div id="lbl_land3Desc" class="text-[11px] text-slate-400 mt-0.5">ประเทศสีชมพู</div>
+                            </div>
+                        </div>
+                    </label>
+
+                </div>
+
+                <!-- Miro Map Link Box -->
+                <div id="miroLinkContainer" class="hidden fade-in pt-2">
+                    <a href="https://miro.com/app/board/uXjVHRKxwhw=/?share_link_id=263765196044" target="_blank" 
+                       class="flex items-center justify-between p-3.5 rounded-xl bg-cyan-950/50 border border-cyan-500/40 hover:border-cyan-400 text-cyan-300 hover:text-white transition group shadow-md">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center border border-cyan-500/30 group-hover:scale-110 transition">
+                                <i class="fa-solid fa-map-location-dot"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-cyan-200" id="lbl_miroTitle">ไม่รู้จะเลือกพิกัดไหน? เปิดดูแผนที่ Miro Board</div>
+                                <div class="text-[11px] text-slate-400" id="lbl_miroSubtitle">คลิกที่นี่เพื่อสำรวจและเลือกตำแหน่งดินแดนบนแผนที่</div>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Dynamic Question 9: Empty Country -->
+            <div id="q9_section" class="hidden fade-in p-5 bg-indigo-950/40 border border-indigo-500/40 rounded-2xl space-y-3">
+                <label class="block text-xs font-semibold text-indigo-300 tracking-wider">
+                    <i class="fa-solid fa-diagram-project mr-2"></i><span id="lbl_divideLand">การแบ่งดินแดน</span> <span id="lbl_req8" class="text-rose-400 font-sans">*</span>
+                </label>
+                <div class="flex gap-6">
+                    <label class="inline-flex items-center cursor-pointer text-sm text-slate-200 hover:text-white">
+                        <input type="radio" name="การแบ่งดินแดน" value="แบ่ง" class="accent-indigo-500 w-4 h-4">
+                        <span id="opt_split" class="ml-2 font-medium">แบ่ง</span>
+                    </label>
+                    <label class="inline-flex items-center cursor-pointer text-sm text-slate-200 hover:text-white">
+                        <input type="radio" name="การแบ่งดินแดน" value="ไม่แบ่ง" class="accent-indigo-500 w-4 h-4">
+                        <span id="opt_noSplit" class="ml-2 font-medium">ไม่แบ่ง</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Dynamic Question 10: Unclaimed Land Dropdown -->
+            <div id="q10_section" class="hidden fade-in p-5 bg-cyan-950/40 border border-cyan-500/40 rounded-2xl space-y-3">
+                <label for="unclaimedList" class="block text-xs font-semibold text-cyan-300 tracking-wider">
+                    <i class="fa-solid fa-list-check mr-2"></i><span id="lbl_unclaimedTitle">หากไม่พบรายชื่อ Unclaimed Land กรุณาเลือกตรงนี้</span> <span id="lbl_req9" class="text-rose-400 font-sans">*</span>
+                </label>
+                <select name="Unclaimed_Land_ที่เลือก" id="unclaimedList" 
+                    class="cyber-input w-full rounded-xl px-4 py-3 text-white text-sm focus:ring-2 focus:ring-cyan-500">
+                    <option value="" disabled selected class="bg-slate-900" id="opt_selectLandPlaceholder">-- เลือกรายชื่อดินแดนในระบบ --</option>
+                    <option value="Persaka" class="bg-slate-900">Persaka</option>
+                    <option value="Veskov" class="bg-slate-900">Veskov</option>
+                    <option value="Skovland" class="bg-slate-900">Skovland</option>
+                    <option value="Cripskov Island" class="bg-slate-900">Cripskov Island</option>
+                    <option value="Chikhavaak" class="bg-slate-900">Chikhavaak</option>
+                    <option value="Ashkomen" class="bg-slate-900">Ashkomen</option>
+                    <option value="Byenchkiland" class="bg-slate-900">Byenchkiland</option>
+                    <option value="Zemnitztak" class="bg-slate-900">Zemnitztak</option>
+                    <option value="Ego-Chikhavaak" class="bg-slate-900">Ego-Chikhavaak</option>
                 </select>
             </div>
-        </div>
-        
-        <!-- Tech Status Badge -->
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/80 border border-cyan-500/30 text-[11px] font-mono text-cyan-400 mb-4 shadow-lg backdrop-blur-md">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-online"></span>
-            <span>GLOBAL GEOPOLITICAL REGISTRY TERMINAL v7.5</span>
-        </div>
 
-        <!-- Emblem Box with Sci-Fi Scanner Frame -->
-        <div class="relative inline-block group cursor-pointer" onclick="playAudio('scan')">
-            <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 rounded-3xl blur-md opacity-40 group-hover:opacity-80 transition duration-500"></div>
-            <div class="relative p-2 rounded-2xl bg-slate-950 border border-slate-700/80 shadow-2xl overflow-hidden backdrop-blur-xl">
-                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&auto=format&fit=crop&q=80" alt="ตราสัญลักษณ์ประจำประเทศ" class="h-28 sm:h-36 w-auto object-contain rounded-xl shadow-inner border border-white/10 group-hover:scale-105 transition duration-300" />
-                <!-- Laser Scanner Line -->
-                <div class="absolute inset-x-0 h-1 bg-cyan-400/80 shadow-[0_0_15px_#06b6d4] top-0 animate-[ping_3s_infinite]"></div>
-            </div>
-        </div>
-
-        <h1 id="txt_title" class="text-3xl sm:text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-indigo-300 mt-4 mb-2 font-googlesans glow-text">
-            ลงทะเบียนประเทศในจินตนาการ
-        </h1>
-        <p id="txt_subtitle" class="text-slate-400 text-xs sm:text-sm font-normal max-w-lg mx-auto">
-            แบบฟอร์มยื่นคำขออนุมัติดินแดนและประกาศอธิปไตยประเทศในจินตนาการ
-        </p>
-    </div>
-
-    <!-- Main Form Terminal -->
-    <form id="nationForm" action="https://formsubmit.co/karrieyolanno@gmail.com" method="POST" class="hud-card scanline rounded-3xl p-6 sm:p-10 shadow-2xl space-y-6">
-
-        <!-- Hidden System Inputs -->
-        <input type="hidden" name="_subject" id="formSubject" value="[คำขอสมัครประเทศใหม่]">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
-        
-        <!-- Field 1: ชื่อประเทศ -->
-        <div class="space-y-1">
-            <label for="countryName" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
-                <span><i class="fa-solid fa-monument text-indigo-400 mr-2"></i><span id="lbl_countryName">ชื่อประเทศ</span></span>
-                <span id="lbl_req1" class="text-rose-400 font-sans">* จำเป็น</span>
-            </label>
-            <input type="text" name="ชื่อประเทศ" id="countryName" required oninput="updateLiveBadge()"
-                placeholder="เช่น จักรวรรดิออโรรา (Empire of Aurora)"
-                class="cyber-input w-full rounded-xl px-4 py-3.5 text-white text-sm placeholder-slate-600">
-        </div>
-
-        <!-- Field 2: ชื่อเอกราช -->
-        <div class="space-y-1">
-            <label for="independenceName" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
-                <span><i class="fa-solid fa-crown text-amber-400 mr-2"></i><span id="lbl_independence">ชื่อเอกราช (Independence Title)</span></span>
-                <span id="lbl_req2" class="text-rose-400 font-sans">* จำเป็น</span>
-            </label>
-            <input type="text" name="ชื่อเอกราช" id="independenceName" required oninput="updateLiveBadge()"
-                placeholder="เช่น สาธารณรัฐเสรี, สหพันธรัฐอิสระ"
-                class="cyber-input w-full rounded-xl px-4 py-3.5 text-white text-sm placeholder-slate-600">
-        </div>
-
-        <!-- Field 3: Demonym -->
-        <div class="space-y-1">
-            <label for="demonym" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
-                <span><i class="fa-solid fa-users-gear text-cyan-400 mr-2"></i><span id="lbl_demonym">ชื่อกลุ่มสัญชาติ (Demonym)</span></span>
-                <span id="lbl_req3" class="text-rose-400 font-sans">* จำเป็น</span>
-            </label>
-            <input type="text" name="ชื่อกลุ่มสัญชาติ_(Demonym)" id="demonym" required oninput="updateLiveBadge()"
-                placeholder="เช่น Auroran, ชาวออโรเรียน"
-                class="cyber-input w-full rounded-xl px-4 py-3.5 text-white text-sm placeholder-slate-600">
-        </div>
-
-        <!-- Field 4: ภาษาราชการ -->
-        <div class="space-y-1">
-            <label for="officialLanguage" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
-                <span><i class="fa-solid fa-language text-purple-400 mr-2"></i><span id="lbl_officialLanguage">ภาษาราชการ</span></span>
-                <span id="lbl_req12" class="text-rose-400 font-sans">* จำเป็น</span>
-            </label>
-            <div class="relative">
-                <input type="text" name="ภาษาราชการ" id="officialLanguage" required oninput="updateLiveBadge()"
-                    placeholder="เช่น ภาษาไทย, ภาษาอังกฤษ, ภาษาออโรเรียน (สร้างเอง)"
-                    class="cyber-input w-full rounded-xl pl-10 pr-4 py-3.5 text-white text-sm placeholder-slate-600">
-                <i class="fa-solid fa-language absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500"></i>
-            </div>
-            <p id="lbl_officialLangHelp" class="text-[11px] text-slate-500 pt-0.5">ใช้ภาษาอะไรก็ได้จากทั่วโลก หรือ ใช้ภาษาที่คุณสร้างมาเอง</p>
-        </div>
-
-        <!-- Field 5: ประชากรเริ่มต้น -->
-        <div class="space-y-1">
-            <label for="population" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
-                <span><i class="fa-solid fa-users-line text-emerald-400 mr-2"></i><span id="lbl_population">ประชากรเริ่มต้น (ไม่จำกัด)</span></span>
-                <span id="lbl_req4" class="text-rose-400 font-sans">* จำเป็น</span>
-            </label>
-            <div class="relative">
-                <input type="text" name="ประชากรเริ่มต้น" id="population" required oninput="updateLiveBadge()"
-                    placeholder="เช่น 5,000,000 คน หรือ ไม่จำกัด"
-                    class="cyber-input w-full rounded-xl pl-10 pr-4 py-3.5 text-white text-sm placeholder-slate-600">
-                <i class="fa-solid fa-people-group absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500"></i>
-            </div>
-        </div>
-
-        <!-- Field 6: User ID Discord -->
-        <div class="space-y-1">
-            <label for="discordUser" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
-                <span><i class="fa-brands fa-discord text-indigo-400 mr-2"></i><span id="lbl_discord">User ID Discord</span></span>
-                <span id="lbl_req5" class="text-rose-400 font-sans">* จำเป็น</span>
-            </label>
-            <div class="relative">
-                <input type="text" name="Discord_User_ID" id="discordUser" required
-                    placeholder="เช่น 123456789012345678"
-                    class="cyber-input w-full rounded-xl pl-10 pr-4 py-3.5 text-white text-sm placeholder-slate-600 font-mono">
-                <i class="fa-brands fa-discord absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500"></i>
-            </div>
-            <p id="lbl_discordHelp" class="text-[11px] text-slate-500 pt-0.5">ตัวเลข User ID ของ Discord (ตัวอย่าง: 987654321098765432)</p>
-        </div>
-
-        <!-- Field 7: สีประจำชาติ -->
-        <div class="space-y-2">
-            <label for="nationalColor" class="block text-xs font-semibold text-slate-300 tracking-wider">
-                <i class="fa-solid fa-palette text-fuchsia-400 mr-2"></i><span id="lbl_color">สีประจำชาติ</span> <span id="lbl_req6" class="text-rose-400 font-sans">*</span>
-            </label>
-            <div class="flex items-center gap-4 bg-slate-950/60 p-2.5 rounded-2xl border border-slate-800">
-                <input type="color" id="nationalColor" value="#3b82f6" onchange="updateColorText(this.value)"
-                    class="h-12 w-20 bg-transparent border-0 cursor-pointer rounded-xl">
-                <div class="flex-1">
-                    <input type="text" name="สีประจำชาติ" id="colorText" value="#3b82f6" readonly
-                        class="bg-slate-900 border border-slate-700/80 rounded-xl px-4 py-2 text-cyan-400 font-mono text-center font-bold text-sm w-36">
+            <!-- Dynamic Question 11: Pink Country -->
+            <div id="q11_section" class="hidden fade-in p-5 bg-rose-950/40 border border-rose-500/40 rounded-2xl space-y-3">
+                <label class="block text-xs font-semibold text-rose-300 tracking-wider">
+                    <i class="fa-solid fa-repeat mr-2"></i><span id="lbl_changePinkTitle">ต้องการเปลี่ยนจากอันเดิมเป็นของคุณหรือไม่</span> <span id="lbl_req10" class="text-rose-400 font-sans">*</span>
+                </label>
+                <div class="flex gap-6">
+                    <label class="inline-flex items-center cursor-pointer text-sm text-slate-200 hover:text-white">
+                        <input type="radio" name="การเปลี่ยน Pink Country" value="เปลี่ยนเป็นของตนเอง" class="accent-rose-500 w-4 h-4">
+                        <span id="opt_changeSelf" class="ml-2 font-medium">เปลี่ยนเป็นของตนเอง</span>
+                    </label>
+                    <label class="inline-flex items-center cursor-pointer text-sm text-slate-200 hover:text-white">
+                        <input type="radio" name="การเปลี่ยน Pink Country" value="ใช้อันเดิม" class="accent-rose-500 w-4 h-4">
+                        <span id="opt_keepOriginal" class="ml-2 font-medium">ใช้อันเดิม</span>
+                    </label>
                 </div>
-                <div class="text-xs text-slate-500 pr-3 font-mono hidden sm:block">COLOR HEX CODE</div>
             </div>
-        </div>
 
-        <!-- Field 8: เลือกดินแดน -->
-        <div class="space-y-2">
-            <label class="block text-xs font-semibold text-slate-300 tracking-wider">
-                <i class="fa-solid fa-earth-americas text-emerald-400 mr-2"></i><span id="lbl_land">เลือกดินแดน</span> <span id="lbl_req7" class="text-rose-400 font-sans">*</span>
-            </label>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                
-                <label class="relative cursor-pointer group" onclick="playAudio('select')">
-                    <input type="radio" name="ประเภทดินแดน" value="Unclaimed Land" required onchange="handleLandChange()" class="sr-only land-card-input">
-                    <div class="land-card p-4 rounded-2xl bg-slate-900/60 border border-slate-800 transition duration-300 flex flex-col justify-between h-full hover:border-slate-600">
-                        <div class="flex items-center justify-between mb-2">
-                            <i class="fa-solid fa-flag text-cyan-400 text-lg"></i>
-                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300">TYPE A</span>
-                        </div>
-                        <div>
-                            <div class="font-bold text-sm text-white font-googlesans group-hover:text-cyan-400 transition">Unclaimed Land</div>
-                            <div id="lbl_land1Desc" class="text-[11px] text-slate-400 mt-0.5">ดินแดนที่ยังไม่มีผู้ครอบครอง</div>
-                        </div>
-                    </div>
+            <!-- Field 12: TikTok & Social Media -->
+            <div class="space-y-1">
+                <label for="socialMedia" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
+                    <span><i class="fa-brands fa-tiktok text-fuchsia-400 mr-2"></i><span id="lbl_social">User TikTok หรือโซเชียลมีเดียอื่นๆ</span></span>
+                    <span id="lbl_req11" class="text-rose-400 font-sans">* จำเป็น</span>
                 </label>
-
-                <label class="relative cursor-pointer group" onclick="playAudio('select')">
-                    <input type="radio" name="ประเภทดินแดน" value="Empty Country" onchange="handleLandChange()" class="sr-only land-card-input">
-                    <div class="land-card p-4 rounded-2xl bg-slate-900/60 border border-slate-800 transition duration-300 flex flex-col justify-between h-full hover:border-slate-600">
-                        <div class="flex items-center justify-between mb-2">
-                            <i class="fa-solid fa-border-none text-indigo-400 text-lg"></i>
-                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-indigo-300">TYPE B</span>
-                        </div>
-                        <div>
-                            <div class="font-bold text-sm text-white font-googlesans group-hover:text-indigo-400 transition">Empty Country</div>
-                            <div id="lbl_land2Desc" class="text-[11px] text-slate-400 mt-0.5">ประเทศว่างเปล่า</div>
-                        </div>
-                    </div>
-                </label>
-
-                <label class="relative cursor-pointer group" onclick="playAudio('select')">
-                    <input type="radio" name="ประเภทดินแดน" value="Pink Country" onchange="handleLandChange()" class="sr-only land-card-input">
-                    <div class="land-card p-4 rounded-2xl bg-slate-900/60 border border-slate-800 transition duration-300 flex flex-col justify-between h-full hover:border-slate-600">
-                        <div class="flex items-center justify-between mb-2">
-                            <i class="fa-solid fa-map-pin text-rose-400 text-lg"></i>
-                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-rose-300">TYPE C</span>
-                        </div>
-                        <div>
-                            <div class="font-bold text-sm text-white font-googlesans group-hover:text-rose-400 transition">Pink Country</div>
-                            <div id="lbl_land3Desc" class="text-[11px] text-slate-400 mt-0.5">ประเทศสีชมพู</div>
-                        </div>
-                    </div>
-                </label>
-
-            </div>
-
-            <!-- Miro Map Link Box (แสดงก็ต่อเมื่อมีการเลือกดินแดนแล้วทั้ง 3 แบบ) -->
-            <div id="miroLinkContainer" class="hidden fade-in pt-2">
-                <a href="https://miro.com/app/board/uXjVHRKxwhw=/?share_link_id=263765196044" target="_blank" 
-                   class="flex items-center justify-between p-3.5 rounded-xl bg-cyan-950/50 border border-cyan-500/40 hover:border-cyan-400 text-cyan-300 hover:text-white transition group shadow-md">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center border border-cyan-500/30 group-hover:scale-110 transition">
-                            <i class="fa-solid fa-map-location-dot"></i>
-                        </div>
-                        <div>
-                            <div class="text-xs font-bold text-cyan-200" id="lbl_miroTitle">ไม่รู้จะเลือกพิกัดไหน? เปิดดูแผนที่ Miro Board</div>
-                            <div class="text-[11px] text-slate-400" id="lbl_miroSubtitle">คลิกที่นี่เพื่อสำรวจและเลือกตำแหน่งดินแดนบนแผนที่</div>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
-                </a>
-            </div>
-        </div>
-
-        <!-- Dynamic Question 9: Empty Country -->
-        <div id="q9_section" class="hidden fade-in p-5 bg-indigo-950/40 border border-indigo-500/40 rounded-2xl space-y-3">
-            <label class="block text-xs font-semibold text-indigo-300 tracking-wider">
-                <i class="fa-solid fa-diagram-project mr-2"></i><span id="lbl_divideLand">การแบ่งดินแดน</span> <span id="lbl_req8" class="text-rose-400 font-sans">*</span>
-            </label>
-            <div class="flex gap-6">
-                <label class="inline-flex items-center cursor-pointer text-sm text-slate-200 hover:text-white">
-                    <input type="radio" name="การแบ่งดินแดน" value="แบ่ง" class="accent-indigo-500 w-4 h-4">
-                    <span id="opt_split" class="ml-2 font-medium">แบ่ง</span>
-                </label>
-                <label class="inline-flex items-center cursor-pointer text-sm text-slate-200 hover:text-white">
-                    <input type="radio" name="การแบ่งดินแดน" value="ไม่แบ่ง" class="accent-indigo-500 w-4 h-4">
-                    <span id="opt_noSplit" class="ml-2 font-medium">ไม่แบ่ง</span>
-                </label>
-            </div>
-        </div>
-
-        <!-- Dynamic Question 10: Unclaimed Land Dropdown -->
-        <div id="q10_section" class="hidden fade-in p-5 bg-cyan-950/40 border border-cyan-500/40 rounded-2xl space-y-3">
-            <label for="unclaimedList" class="block text-xs font-semibold text-cyan-300 tracking-wider">
-                <i class="fa-solid fa-list-check mr-2"></i><span id="lbl_unclaimedTitle">หากไม่พบรายชื่อ Unclaimed Land กรุณาเลือกตรงนี้</span> <span id="lbl_req9" class="text-rose-400 font-sans">*</span>
-            </label>
-            <select name="Unclaimed_Land_ที่เลือก" id="unclaimedList" 
-                class="cyber-input w-full rounded-xl px-4 py-3 text-white text-sm focus:ring-2 focus:ring-cyan-500">
-                <option value="" disabled selected class="bg-slate-900" id="opt_selectLandPlaceholder">-- เลือกรายชื่อดินแดนในระบบ --</option>
-                <option value="Persaka" class="bg-slate-900">Persaka</option>
-                <option value="Veskov" class="bg-slate-900">Veskov</option>
-                <option value="Skovland" class="bg-slate-900">Skovland</option>
-                <option value="Cripskov Island" class="bg-slate-900">Cripskov Island</option>
-                <option value="Chikhavaak" class="bg-slate-900">Chikhavaak</option>
-                <option value="Ashkomen" class="bg-slate-900">Ashkomen</option>
-                <option value="Byenchkiland" class="bg-slate-900">Byenchkiland</option>
-                <option value="Zemnitztak" class="bg-slate-900">Zemnitztak</option>
-                <option value="Ego-Chikhavaak" class="bg-slate-900">Ego-Chikhavaak</option>
-            </select>
-        </div>
-
-        <!-- Dynamic Question 11: Pink Country -->
-        <div id="q11_section" class="hidden fade-in p-5 bg-rose-950/40 border border-rose-500/40 rounded-2xl space-y-3">
-            <label class="block text-xs font-semibold text-rose-300 tracking-wider">
-                <i class="fa-solid fa-repeat mr-2"></i><span id="lbl_changePinkTitle">ต้องการเปลี่ยนจากอันเดิมเป็นของคุณหรือไม่</span> <span id="lbl_req10" class="text-rose-400 font-sans">*</span>
-            </label>
-            <div class="flex gap-6">
-                <label class="inline-flex items-center cursor-pointer text-sm text-slate-200 hover:text-white">
-                    <input type="radio" name="การเปลี่ยน Pink Country" value="เปลี่ยนเป็นของตนเอง" class="accent-rose-500 w-4 h-4">
-                    <span id="opt_changeSelf" class="ml-2 font-medium">เปลี่ยนเป็นของตนเอง</span>
-                </label>
-                <label class="inline-flex items-center cursor-pointer text-sm text-slate-200 hover:text-white">
-                    <input type="radio" name="การเปลี่ยน Pink Country" value="ใช้อันเดิม" class="accent-rose-500 w-4 h-4">
-                    <span id="opt_keepOriginal" class="ml-2 font-medium">ใช้อันเดิม</span>
-                </label>
-            </div>
-        </div>
-
-        <!-- Field 12: TikTok & Social Media -->
-        <div class="space-y-1">
-            <label for="socialMedia" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
-                <span><i class="fa-brands fa-tiktok text-fuchsia-400 mr-2"></i><span id="lbl_social">User TikTok หรือโซเชียลมีเดียอื่นๆ</span></span>
-                <span id="lbl_req11" class="text-rose-400 font-sans">* จำเป็น</span>
-            </label>
-            <div class="relative">
-                <input type="text" name="TikTok_SocialMedia" id="socialMedia" required
-                    placeholder="เช่น @your_tiktok หรือ Link ช่องทางติดต่อเพิ่มเติม"
-                    class="cyber-input w-full rounded-xl pl-10 pr-4 py-3.5 text-white text-sm placeholder-slate-600">
-                <i class="fa-brands fa-tiktok absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500"></i>
-            </div>
-        </div>
-
-        <!-- Live Digital Passport Review Card -->
-        <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
-            <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-2">
-                <span class="flex items-center gap-1.5"><i class="fa-solid fa-id-card text-cyan-400"></i> <span id="lbl_badgeTitle">สรุปข้อมูลลงทะเบียนเรียลไทม์</span></span>
-                <span id="badgeColorPreview" class="w-3 h-3 rounded-full border border-white/20" style="background-color: #3b82f6;"></span>
-            </div>
-            <div class="grid grid-cols-2 gap-2 text-xs font-googlesans">
-                <div><span class="text-slate-500" id="lbl_badgeCountry">ประเทศ:</span> <span id="previewNation" class="text-cyan-300 font-semibold">-</span></div>
-                <div><span class="text-slate-500" id="lbl_badgeTitleTxt">เอกราช:</span> <span id="previewTitle" class="text-white font-semibold">-</span></div>
-                <div><span class="text-slate-500" id="lbl_badgeDemonym">สัญชาติ:</span> <span id="previewDemonym" class="text-white font-semibold">-</span></div>
-                <div><span class="text-slate-500" id="lbl_badgeLang">ภาษา:</span> <span id="previewLang" class="text-purple-300 font-semibold">-</span></div>
-                <div><span class="text-slate-500" id="lbl_badgePop">ประชากร:</span> <span id="previewPop" class="text-emerald-400 font-semibold">-</span></div>
-            </div>
-        </div>
-
-        <!-- Tactical Image Attachment Directive Notice Box -->
-        <div class="p-4 sm:p-5 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border-l-4 border-amber-400 rounded-r-2xl space-y-2 text-amber-200 fade-in backdrop-blur-md">
-            <div class="flex items-center gap-2 font-bold text-amber-300 text-xs sm:text-sm tracking-wide">
-                <i class="fa-solid fa-triangle-exclamation text-amber-400 animate-pulse"></i>
-                <span id="lbl_noticeHeader">คำแนะนำการส่งไฟล์รูปภาพแนบ</span>
-            </div>
-            <div id="imageNoticeBox" class="text-xs sm:text-sm text-slate-300 space-y-1.5 leading-relaxed"></div>
-        </div>
-
-        <!-- Submit Button -->
-        <div class="pt-2">
-            <button type="submit" id="submitBtn" onclick="playAudio('submit')"
-                class="relative group w-full overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-600 via-cyan-600 to-indigo-600 p-[2px] transition duration-300 hover:scale-[1.01] active:scale-[0.99] shadow-xl shadow-indigo-500/20">
-                <div class="relative w-full bg-slate-950 hover:bg-transparent transition duration-300 rounded-[14px] py-4 px-6 flex items-center justify-center gap-3 text-white font-bold tracking-wide font-googlesans">
-                    <i class="fa-solid fa-paper-plane text-cyan-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition duration-300" id="submitIcon"></i>
-                    <span id="submitText">ยื่นคำขอและส่งข้อมูลไปยังระบบ</span>
+                <div class="relative">
+                    <input type="text" name="TikTok_SocialMedia" id="socialMedia" required
+                        placeholder="เช่น @your_tiktok หรือ Link ช่องทางติดต่อเพิ่มเติม"
+                        class="cyber-input w-full rounded-xl pl-10 pr-4 py-3.5 text-white text-sm placeholder-slate-600">
+                    <i class="fa-brands fa-tiktok absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500"></i>
                 </div>
-            </button>
-        </div>
-
-    </form>
-
-    <!-- Cyberpunk Success Modal with Close Button (X) -->
-    <div id="successModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-xl flex items-center justify-center p-4 z-50">
-        <div class="hud-card rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-5 border border-cyan-500/50 shadow-[0_0_50px_rgba(6,182,212,0.3)] max-h-[90vh] overflow-y-auto relative">
-            
-            <!-- Close Button (X) -->
-            <button onclick="closeModalOnly()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-900 border border-slate-700 text-slate-400 hover:text-white hover:border-cyan-400 flex items-center justify-center transition" title="ปิดหน้าต่าง">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-
-            <div class="w-16 h-16 bg-cyan-500/20 text-cyan-400 rounded-2xl flex items-center justify-center mx-auto border border-cyan-500/40 glow-box-cyan">
-                <i class="fa-solid fa-satellite-dish text-3xl animate-bounce"></i>
             </div>
 
-            <div class="text-center">
-                <h3 id="modal_successTitle" class="text-2xl font-bold text-white tracking-wide glow-text mb-1">ส่งคำขอสำเร็จเรียบร้อย!</h3>
-                <p id="modal_successDesc" class="text-slate-300 text-xs sm:text-sm">
-                    ส่งคำขอสำเร็จ ข้อมูลการสถาปนาประเทศของคุณถูกจัดส่งไปยังระบบเรียบร้อยแล้ว
-                </p>
-            </div>
-
-            <div class="bg-amber-500/10 border border-amber-500/30 p-3.5 rounded-2xl text-amber-200 text-xs space-y-1">
-                <div class="flex items-center gap-2 font-bold text-amber-300">
-                    <i class="fa-solid fa-bell"></i>
-                    <span id="modal_reminderHeader">อย่าลืมส่งรูปภาพแนบตามมาทางอีเมล!</span>
+            <!-- Live Digital Passport Review Card -->
+            <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
+                <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-2">
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-id-card text-cyan-400"></i> <span id="lbl_badgeTitle">สรุปข้อมูลลงทะเบียนเรียลไทม์</span></span>
+                    <span id="badgeColorPreview" class="w-3 h-3 rounded-full border border-white/20" style="background-color: #3b82f6;"></span>
                 </div>
-                <p id="modalImageReminder" class="text-slate-300 leading-relaxed"></p>
+                <div class="grid grid-cols-2 gap-2 text-xs font-googlesans">
+                    <div><span class="text-slate-500" id="lbl_badgeCountry">ประเทศ:</span> <span id="previewNation" class="text-cyan-300 font-semibold">-</span></div>
+                    <div><span class="text-slate-500" id="lbl_badgeTitleTxt">เอกราช:</span> <span id="previewTitle" class="text-white font-semibold">-</span></div>
+                    <div><span class="text-slate-500" id="lbl_badgeDemonym">สัญชาติ:</span> <span id="previewDemonym" class="text-white font-semibold">-</span></div>
+                    <div><span class="text-slate-500" id="lbl_badgeLang">ภาษา:</span> <span id="previewLang" class="text-purple-300 font-semibold">-</span></div>
+                    <div><span class="text-slate-500" id="lbl_badgePop">ประชากร:</span> <span id="previewPop" class="text-emerald-400 font-semibold">-</span></div>
+                </div>
             </div>
 
-            <!-- สรุปข้อมูลที่จัดส่งไป -->
-            <div class="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 text-left text-xs space-y-2 text-slate-300">
-                <p id="modal_summaryTitle" class="font-bold text-cyan-300 border-b border-slate-800 pb-1.5 font-mono">สรุปข้อมูลที่ถูกจัดส่ง:</p>
-                <div id="summaryContent" class="space-y-1.5 font-googlesans leading-relaxed"></div>
+            <!-- Tactical Image Attachment Directive Notice Box -->
+            <div class="p-4 sm:p-5 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border-l-4 border-amber-400 rounded-r-2xl space-y-2 text-amber-200 fade-in backdrop-blur-md">
+                <div class="flex items-center gap-2 font-bold text-amber-300 text-xs sm:text-sm tracking-wide">
+                    <i class="fa-solid fa-triangle-exclamation text-amber-400 animate-pulse"></i>
+                    <span id="lbl_noticeHeader">คำแนะนำการส่งไฟล์รูปภาพแนบ</span>
+                </div>
+                <div id="imageNoticeBox" class="text-xs sm:text-sm text-slate-300 space-y-1.5 leading-relaxed"></div>
             </div>
 
-            <div class="flex gap-3 pt-2">
-                <button onclick="copySummary()" class="w-1/2 bg-slate-900 hover:bg-slate-800 text-slate-200 font-semibold py-3 rounded-xl border border-slate-700 transition text-xs flex items-center justify-center gap-2">
-                    <i class="fa-regular fa-copy"></i> <span id="modal_btnCopy">คัดลอกสรุปคำตอบ</span>
+            <!-- Submit Button -->
+            <div class="pt-2">
+                <button type="submit" id="submitBtn" onclick="playAudio('submit')"
+                    class="relative group w-full overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-600 via-cyan-600 to-indigo-600 p-[2px] transition duration-300 hover:scale-[1.01] active:scale-[0.99] shadow-xl shadow-indigo-500/20">
+                    <div class="relative w-full bg-slate-950 hover:bg-transparent transition duration-300 rounded-[14px] py-4 px-6 flex items-center justify-center gap-3 text-white font-bold tracking-wide font-googlesans">
+                        <i class="fa-solid fa-paper-plane text-cyan-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition duration-300" id="submitIcon"></i>
+                        <span id="submitText">ยื่นคำขอและส่งข้อมูลไปยังระบบ</span>
+                    </div>
                 </button>
-                <!-- ปุ่ม Send Information -->
-                <a id="emailMailtoLink" target="_blank" class="w-1/2 bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold py-3 px-3 rounded-xl transition text-xs tracking-wider flex items-center justify-center gap-1.5 text-center">
-                    <i class="fa-solid fa-envelope"></i> <span>Send Information</span>
-                </a>
             </div>
 
+        </form>
+
+        <!-- Cyberpunk Success Modal -->
+        <div id="successModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-xl flex items-center justify-center p-4 z-50">
+            <div class="hud-card rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-5 border border-cyan-500/50 shadow-[0_0_50px_rgba(6,182,212,0.3)] max-h-[90vh] overflow-y-auto relative">
+                
+                <!-- Close Button (X) -->
+                <button onclick="closeModalOnly()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-900 border border-slate-700 text-slate-400 hover:text-white hover:border-cyan-400 flex items-center justify-center transition" title="ปิดหน้าต่าง">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+
+                <div class="w-16 h-16 bg-cyan-500/20 text-cyan-400 rounded-2xl flex items-center justify-center mx-auto border border-cyan-500/40 glow-box-cyan">
+                    <i class="fa-solid fa-satellite-dish text-3xl animate-bounce"></i>
+                </div>
+
+                <div class="text-center">
+                    <h3 id="modal_successTitle" class="text-2xl font-bold text-white tracking-wide glow-text mb-1">ส่งคำขอสำเร็จเรียบร้อย!</h3>
+                    <p id="modal_successDesc" class="text-slate-300 text-xs sm:text-sm">
+                        ส่งคำขอสำเร็จ ข้อมูลการสถาปนาประเทศของคุณถูกจัดส่งไปยังระบบเรียบร้อยแล้ว
+                    </p>
+                </div>
+
+                <div class="bg-amber-500/10 border border-amber-500/30 p-3.5 rounded-2xl text-amber-200 text-xs space-y-1">
+                    <div class="flex items-center gap-2 font-bold text-amber-300">
+                        <i class="fa-solid fa-bell"></i>
+                        <span id="modal_reminderHeader">อย่าลืมส่งรูปภาพแนบตามมาทางอีเมล!</span>
+                    </div>
+                    <p id="modalImageReminder" class="text-slate-300 leading-relaxed"></p>
+                </div>
+
+                <div class="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 text-left text-xs space-y-2 text-slate-300">
+                    <p id="modal_summaryTitle" class="font-bold text-cyan-300 border-b border-slate-800 pb-1.5 font-mono">สรุปข้อมูลที่ถูกจัดส่ง:</p>
+                    <div id="summaryContent" class="space-y-1.5 font-googlesans leading-relaxed"></div>
+                </div>
+
+                <div class="flex gap-3 pt-2">
+                    <button onclick="copySummary()" class="w-1/2 bg-slate-900 hover:bg-slate-800 text-slate-200 font-semibold py-3 rounded-xl border border-slate-700 transition text-xs flex items-center justify-center gap-2">
+                        <i class="fa-regular fa-copy"></i> <span id="modal_btnCopy">คัดลอกสรุปคำตอบ</span>
+                    </button>
+                    <a id="emailMailtoLink" target="_blank" class="w-1/2 bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold py-3 px-3 rounded-xl transition text-xs tracking-wider flex items-center justify-center gap-1.5 text-center">
+                        <i class="fa-solid fa-envelope"></i> <span>Send Information</span>
+                    </a>
+                </div>
+
+            </div>
         </div>
+
     </div>
 
-</div>
+    <!-- Translations & Logic Scripts -->
+    <script>
+        const ADMIN_EMAIL = "karrieyolanno@gmail.com";
+        let currentLang = "th";
+        let lastFormDataText = "";
 
-<!-- Translations & Logic Scripts -->
-<script>
-    const ADMIN_EMAIL = "karrieyolanno@gmail.com";
-    let currentLang = "th";
-    let lastFormDataText = "";
-
-    const translations = {
-        th: {
-            title: "ลงทะเบียนประเทศในจินตนาการ",
-            subtitle: "แบบฟอร์มยื่นคำขออนุมัติดินแดนและประกาศอธิปไตยประเทศในจินตนาการ",
-            req: "* จำเป็น",
-            countryName: "ชื่อประเทศ",
-            countryPlaceholder: "เช่น จักรวรรดิออโรรา (Empire of Aurora)",
-            independence: "ชื่อเอกราช (Independence Title)",
-            independencePlaceholder: "เช่น สาธารณรัฐเสรี, สหพันธรัฐอิสระ",
-            demonym: "ชื่อกลุ่มสัญชาติ (Demonym)",
-            demonymPlaceholder: "เช่น Auroran, ชาวออโรเรียน",
-            officialLanguage: "ภาษาราชการ",
-            officialLangPlaceholder: "เช่น ภาษาไทย, ภาษาอังกฤษ, ภาษาออโรเรียน (สร้างเอง)",
-            officialLangHelp: "ใช้ภาษาอะไรก็ได้จากทั่วโลก หรือ ใช้ภาษาที่คุณสร้างมาเอง",
-            population: "ประชากรเริ่มต้น (ไม่จำกัด)",
-            popPlaceholder: "เช่น 5,000,000 คน หรือ ไม่จำกัด",
-            discord: "User ID Discord",
-            discordHelp: "ตัวเลข User ID ของ Discord (ตัวอย่าง: 987654321098765432)",
-            color: "สีประจำชาติ",
-            land: "เลือกดินแดน",
-            land1Desc: "ดินแดนที่ยังไม่มีผู้ครอบครอง",
-            land2Desc: "ประเทศว่างเปล่า",
-            land3Desc: "ประเทศสีชมพู",
-            miroTitle: "ไม่รู้จะเลือกพิกัดไหน? เปิดดูแผนที่ Miro Board",
-            miroSubtitle: "คลิกที่นี่เพื่อสำรวจและเลือกตำแหน่งดินแดนบนแผนที่",
-            divideLand: "การแบ่งดินแดน",
-            split: "แบ่ง",
-            noSplit: "ไม่แบ่ง",
-            unclaimedTitle: "หากไม่พบรายชื่อ Unclaimed Land กรุณาเลือกตรงนี้",
-            unclaimedPlaceholder: "-- เลือกรายชื่อดินแดนในระบบ --",
-            changePinkTitle: "ต้องการเปลี่ยนจากอันเดิมเป็นของคุณหรือไม่",
-            changeSelf: "เปลี่ยนเป็นของตนเอง",
-            keepOriginal: "ใช้อันเดิม",
-            social: "User TikTok หรือโซเชียลมีเดียอื่นๆ",
-            badgeTitle: "สรุปข้อมูลลงทะเบียนเรียลไทม์",
-            badgeCountry: "ประเทศ:",
-            badgeTitleTxt: "เอกราช:",
-            badgeDemonym: "สัญชาติ:",
-            badgeLang: "ภาษา:",
-            badgePop: "ประชากร:",
-            noticeHeader: "คำแนะนำการส่งไฟล์รูปภาพแนบ",
-            noticeUnclaimed: "📌 สำหรับตัวเลือก <strong class='text-cyan-300'>Unclaimed Land</strong>:<br>กรุณาส่งเฉพาะไฟล์รูปภาพ <strong class='text-white underline'>'ธงชาติ'</strong> เพียงอย่างเดียวมาทางอีเมลของผู้รับ (ไม่ต้องแนบแผนที่)",
-            noticeOther: "📌 สำหรับตัวเลือก <strong class='text-cyan-300'>{LAND}</strong>:<br>กรุณาส่งไฟล์รูปภาพทั้ง <strong class='text-white underline'>'แผนที่'</strong> และ <strong class='text-white underline'>'ธงชาติ'</strong> มาทางอีเมลของผู้รับ",
-            noticeDefault: "📌 กรุณาส่งไฟล์รูปภาพตามมาทางอีเมลของผู้รับดังนี้:<ul class='list-disc pl-5 space-y-1 text-slate-300 mt-1'><li>กรณีเลือก <strong class='text-rose-300'>Pink Country</strong> หรือ <strong class='text-indigo-300'>Empty Country</strong> : แนบภาพทั้ง <strong class='text-white'>'แผนที่'</strong> และ <strong class='text-white'>'ธงชาติ'</strong></li><li>กรณีเลือก <strong class='text-cyan-300'>Unclaimed Land</strong> : แนบเฉพาะภาพ <strong class='text-white'>'ธงชาติ'</strong> เท่านั้น (ไม่ต้องแนบแผนที่)</li></ul>",
-            submitText: "ยื่นคำขอและส่งข้อมูลไปยังระบบ",
-            successTitle: "ส่งคำขอสำเร็จเรียบร้อย!",
-            successDesc: "ส่งคำขอสำเร็จ ข้อมูลการสถาปนาประเทศของคุณถูกจัดส่งไปยังระบบเรียบร้อยแล้ว",
-            modalReminderHeader: "อย่าลืมส่งรูปภาพแนบตามมาทางอีเมล!",
-            modalSummaryTitle: "สรุปข้อมูลที่ถูกจัดส่ง:",
-            btnCopy: "คัดลอกสรุปคำตอบ",
-            viewHistory: "ดูประวัติคำตอบล่าสุด"
-        },
-        en: {
-            title: "Fictional Nation Registration",
-            subtitle: "Official Application Form for Fictional Territory Approval and Sovereignty Declaration",
-            req: "* Required",
-            countryName: "Country Name",
-            countryPlaceholder: "e.g., Empire of Aurora",
-            independence: "Independence Title",
-            independencePlaceholder: "e.g., Free Republic, Independent Federation",
-            demonym: "Demonym",
-            demonymPlaceholder: "e.g., Auroran",
-            officialLanguage: "Official Language",
-            officialLangPlaceholder: "e.g., English, Thai, Auroran (Custom Language)",
-            officialLangHelp: "Use any language from around the world, or use a custom language you created.",
-            population: "Initial Population (Unlimited)",
-            popPlaceholder: "e.g., 5,000,000 or Unlimited",
-            discord: "Discord User ID",
-            discordHelp: "Discord Numeric User ID (Example: 987654321098765432)",
-            color: "National Color",
-            land: "Territory Selection",
-            land1Desc: "Unclaimed land area",
-            land2Desc: "Empty nation territory",
-            land3Desc: "Pink country territory",
-            miroTitle: "Don't know where? Open Miro Board Map",
-            miroSubtitle: "Click here to explore and select territory coordinates",
-            divideLand: "Land Division",
-            split: "Divide",
-            noSplit: "Do Not Divide",
-            unclaimedTitle: "If Unclaimed Land is not listed, select here",
-            unclaimedPlaceholder: "-- Select Territory from System --",
-            changePinkTitle: "Do you want to change from original to yours?",
-            changeSelf: "Change to Own",
-            keepOriginal: "Keep Original",
-            social: "TikTok Handle or Other Social Media",
-            badgeTitle: "REAL-TIME PASSPORT REVIEW",
-            badgeCountry: "Nation:",
-            badgeTitleTxt: "Title:",
-            badgeDemonym: "Demonym:",
-            badgeLang: "Language:",
-            badgePop: "Population:",
-            noticeHeader: "ATTACHMENT INSTRUCTIONS",
-            noticeUnclaimed: "📌 For <strong class='text-cyan-300'>Unclaimed Land</strong>:<br>Please send ONLY the <strong class='text-white underline'>'National Flag'</strong> image via email (No map required).",
-            noticeOther: "📌 For <strong class='text-cyan-300'>{LAND}</strong>:<br>Please send both <strong class='text-white underline'>'Map'</strong> and <strong class='text-white underline'>'National Flag'</strong> images via email.",
-            noticeDefault: "📌 Please email image attachments:<ul class='list-disc pl-5 space-y-1 text-slate-300 mt-1'><li>For <strong class='text-rose-300'>Pink Country</strong> or <strong class='text-indigo-300'>Empty Country</strong>: Attach both 'Map' & 'Flag'</li><li>For <strong class='text-cyan-300'>Unclaimed Land</strong>: Attach 'Flag' ONLY</li></ul>",
-            submitText: "SUBMIT APPLICATION & TRANSMIT DATA",
-            successTitle: "TRANSMISSION SUCCESSFUL",
-            successDesc: "Application submitted! Your nation data has been transmitted to the system.",
-            modalReminderHeader: "DON'T FORGET TO EMAIL YOUR IMAGES!",
-            modalSummaryTitle: "TRANSMITTED SUMMARY:",
-            btnCopy: "COPY PAYLOAD",
-            viewHistory: "View Last Submission"
-        },
-        ru: {
-            title: "Регистрация Вымышленной Страны",
-            subtitle: "Официальная форма заявки на утверждение территории и суверенитета",
-            req: "* Обязательно",
-            countryName: "Название страны",
-            countryPlaceholder: "Например: Империя Аврора",
-            independence: "Название независимости",
-            independencePlaceholder: "Например: Свободная Республика",
-            demonym: "Демоним (Национальность)",
-            demonymPlaceholder: "Например: Аврорец",
-            officialLanguage: "Официальный язык",
-            officialLangPlaceholder: "Например: Русский, Английский, Аврорский",
-            officialLangHelp: "Используйте любой язык мира или вымышленный язык собственного сочинения.",
-            population: "Начальное население (Без ограничений)",
-            popPlaceholder: "Например: 5,000,000 или Неограниченно",
-            discord: "User ID Discord",
-            discordHelp: "Числовой ID пользователя Discord (Пример: 987654321098765432)",
-            color: "Национальный цвет",
-            land: "Выбор территории",
-            land1Desc: "Никем не занятая территория",
-            land2Desc: "Пустующая страна",
-            land3Desc: "Розовая страна",
-            miroTitle: "Не знаете куда? Откройте карту Miro Board",
-            miroSubtitle: "Нажмите здесь для выбора координат на карте",
-            divideLand: "Деление территории",
-            split: "Разделить",
-            noSplit: "Не делить",
-            unclaimedTitle: "Если нет в списке Unclaimed Land, выберите здесь",
-            unclaimedPlaceholder: "-- Выберите территорию --",
-            changePinkTitle: "Хотите изменить исходное на свое?",
-            changeSelf: "Изменить на свое",
-            keepOriginal: "Оставить как есть",
-            social: "TikTok или соцсети",
-            badgeTitle: "ОБЗОР В реальном времени",
-            badgeCountry: "Страна:",
-            badgeTitleTxt: "Статус:",
-            badgeDemonym: "Демоним:",
-            badgeLang: "Язык:",
-            badgePop: "Население:",
-            noticeHeader: "ИНСТРУКЦИЯ ПО ВЛОЖЕНИЯМ",
-            noticeUnclaimed: "📌 Для <strong class='text-cyan-300'>Unclaimed Land</strong>:<br>Отправьте ТОЛЬКО фото <strong class='text-white underline'>'Флага'</strong> по email.",
-            noticeOther: "📌 Для <strong class='text-cyan-300'>{LAND}</strong>:<br>Отправьте фото <strong class='text-white underline'>'Карты'</strong> и <strong class='text-white underline'>'Флага'</strong> по email.",
-            noticeDefault: "📌 Отправьте изображения по email.",
-            submitText: "ОТПРАВИТЬ ЗАЯВКУ В СИСТЕМУ",
-            successTitle: "ОТПРАВКА УСПЕШНА",
-            successDesc: "Заявка отправлена! Данные переведены в систему.",
-            modalReminderHeader: "НЕ ЗАБУДЬТЕ ОТПРАВИТЬ ФОТО НА EMAIL!",
-            modalSummaryTitle: "ИТОГОВЫЕ ДАННЫЕ:",
-            btnCopy: "СКОПИРОВАТЬ ДАННЫЕ",
-            viewHistory: "Посмотреть историю"
-        },
-        zh: {
-            title: "虚构国家注册申请表",
-            subtitle: "国家领土批准与主权宣告官方申请表",
-            req: "* 必填",
-            countryName: "国家名称",
-            countryPlaceholder: "例如：极光帝国 (Empire of Aurora)",
-            independence: "独立称号 (Independence Title)",
-            independencePlaceholder: "例如：自由共和国、独立联邦",
-            demonym: "国民称谓 (Demonym)",
-            demonymPlaceholder: "例如：Auroran",
-            officialLanguage: "官方语言",
-            officialLangPlaceholder: "例如：中文、英语、自创极光语",
-            officialLangHelp: "可使用全球任何真实语言，或您自创的语言。",
-            population: "初始人口 (无限制)",
-            popPlaceholder: "例如：5,000,000人 或 无限制",
-            discord: "Discord User ID",
-            discordHelp: "Discord 数字用户 ID (例如：987654321098765432)",
-            color: "代表颜色",
-            land: "选择领土",
-            land1Desc: "尚未有人占领的无主之地",
-            land2Desc: "无人的空置国家",
-            land3Desc: "粉红国家",
-            miroTitle: "不知道坐标？打开 Miro Board 地图",
-            miroSubtitle: "点击此处在地图上探索并选择领土位置",
-            divideLand: "划分领土",
-            split: "划分",
-            noSplit: "不划分",
-            unclaimedTitle: "若未找到 Unclaimed Land 名称，请在此选择",
-            unclaimedPlaceholder: "-- 请选择领土 --",
-            changePinkTitle: "是否要将原有领土更改为您的？",
-            changeSelf: "更改为自己的",
-            keepOriginal: "保持原样",
-            social: "TikTok 或其他社交媒体",
-            badgeTitle: "实时注册数据预览",
-            badgeCountry: "国家:",
-            badgeTitleTxt: "称号:",
-            badgeDemonym: "国民:",
-            badgeLang: "语言:",
-            badgePop: "人口:",
-            noticeHeader: "图片发送指引",
-            noticeUnclaimed: "📌 若选择 <strong class='text-cyan-300'>Unclaimed Land</strong>：<br>请仅将<strong class='text-white underline'>“国旗”</strong>图片通过邮箱发送",
-            noticeOther: "📌 若选择 <strong class='text-cyan-300'>{LAND}</strong>：<br>请将<strong class='text-white underline'>“地图”</strong>和<strong class='text-white underline'>“国旗”</strong>图片通过邮箱发送",
-            noticeDefault: "📌 请通过邮箱发送相关图片",
-            submitText: "提交申请并发送数据",
-            successTitle: "提交成功！",
-            successDesc: "申请已成功发送，您的数据已成功提交至系统。",
-            modalReminderHeader: "切记通过邮箱发送图片！",
-            modalSummaryTitle: "已发送数据摘要：",
-            btnCopy: "复制摘要",
-            viewHistory: "查看历史记录"
-        },
-        es: {
-            title: "Registro de Nación Imaginaria",
-            subtitle: "Formulario Oficial de Solicitud de Aprobación Territorial y Soberanía",
-            req: "* Requerido",
-            countryName: "Nombre del País",
-            countryPlaceholder: "Ej: Imperio de Aurora",
-            independence: "Título de Independencia",
-            independencePlaceholder: "Ej: República Libre",
-            demonym: "Gentilicio (Demonym)",
-            demonymPlaceholder: "Ej: Auroriano",
-            officialLanguage: "Idioma Oficial",
-            officialLangPlaceholder: "Ej: Español, Inglés, Idioma Propio",
-            officialLangHelp: "Usa cualquier idioma del mundo o uno que hayas creado.",
-            population: "Población Inicial (Sin límite)",
-            popPlaceholder: "Ej: 5.000.000 o Ilimitado",
-            discord: "User ID de Discord",
-            discordHelp: "ID Numérico de Usuario de Discord (Ej: 987654321098765432)",
-            color: "Color Nacional",
-            land: "Selección de Territorio",
-            land1Desc: "Tierra no reclamada",
-            land2Desc: "País vacío",
-            land3Desc: "País rosa",
-            miroTitle: "¿No sabe dónde? Abrir mapa de Miro Board",
-            miroSubtitle: "Haga clic aquí para explorar y elegir coordenadas",
-            divideLand: "División Territorial",
-            split: "Dividir",
-            noSplit: "No Dividir",
-            unclaimedTitle: "Si no encuentra el territorio, seleccione aquí",
-            unclaimedPlaceholder: "-- Seleccionar Territorio --",
-            changePinkTitle: "¿Desea cambiar el original por el suyo?",
-            changeSelf: "Cambiar al propio",
-            keepOriginal: "Mantener original",
-            social: "TikTok o Redes Sociales",
-            badgeTitle: "VISTA PREVIA EN TIEMPO REAL",
-            badgeCountry: "País:",
-            badgeTitleTxt: "Título:",
-            badgeDemonym: "Gentilicio:",
-            badgeLang: "Idioma:",
-            badgePop: "Población:",
-            noticeHeader: "INSTRUCCIONES DE IMÁGENES",
-            noticeUnclaimed: "📌 Para <strong class='text-cyan-300'>Unclaimed Land</strong>:<br>Envíe SOLO la imagen de la <strong class='text-white underline'>'Bandera'</strong> por correo.",
-            noticeOther: "📌 Para <strong class='text-cyan-300'>{LAND}</strong>:<br>Envíe imágenes del <strong class='text-white underline'>'Mapa'</strong> y la <strong class='text-white underline'>'Bandera'</strong> por correo.",
-            noticeDefault: "📌 Por favor envíe las imágenes requeridas por correo.",
-            submitText: "ENVIAR SOLICITUD Y DATOS",
-            successTitle: "TRANSMISIÓN EXITOSA",
-            successDesc: "¡Solicitud enviada! Sus datos han sido procesados en el sistema.",
-            modalReminderHeader: "¡NO OLVIDE ENVIAR SUS IMÁGENES POR CORREO!",
-            modalSummaryTitle: "RESUMEN TRANSMITIDO:",
-            btnCopy: "COPIAR DATOS",
-            viewHistory: "Ver historial"
-        },
-        other: {
-            title: "Fictional Nation Registration / 国际注册",
-            subtitle: "Global Application Form / แบบฟอร์มสถาปนาประเทศ",
-            req: "* Required / จำเป็น",
-            countryName: "Country Name / ชื่อประเทศ",
-            countryPlaceholder: "Name of your fictional nation",
-            independence: "Independence Title / ชื่อเอกราช",
-            independencePlaceholder: "Title or regime type",
-            demonym: "Demonym / ชื่อกลุ่มสัญชาติ",
-            demonymPlaceholder: "e.g., Citizen name",
-            officialLanguage: "Official Language / ภาษาราชการ",
-            officialLangPlaceholder: "e.g., Any real or custom language",
-            officialLangHelp: "Use any language from around the world or custom created language.",
-            population: "Population / ประชากรเริ่มต้น",
-            popPlaceholder: "Initial Population (Unlimited)",
-            discord: "Discord User ID",
-            discordHelp: "Numeric Discord User ID (Example: 123456789)",
-            color: "National Color / สีประจำชาติ",
-            land: "Territory / เลือกดินแดน",
-            land1Desc: "Unclaimed land",
-            land2Desc: "Empty nation",
-            land3Desc: "Pink country",
-            miroTitle: "Open Miro Board Map",
-            miroSubtitle: "Click here to view territory map",
-            divideLand: "Land Division / การแบ่งดินแดน",
-            split: "Divide / แบ่ง",
-            noSplit: "No / ไม่แบ่ง",
-            unclaimedTitle: "Unclaimed Land List",
-            unclaimedPlaceholder: "-- Select Territory --",
-            changePinkTitle: "Change from original? / เปลี่ยนจากอันเดิมหรือไม่",
-            changeSelf: "Change / เปลี่ยน",
-            keepOriginal: "Keep / ใช้อันเดิม",
-            social: "Social Media / TikTok",
-            badgeTitle: "REAL-TIME REVIEW",
-            badgeCountry: "Nation:",
-            badgeTitleTxt: "Title:",
-            badgeDemonym: "Demonym:",
-            badgeLang: "Language:",
-            badgePop: "Population:",
-            noticeHeader: "ATTACHMENT DIRECTIVE",
-            noticeUnclaimed: "📌 For <strong class='text-cyan-300'>Unclaimed Land</strong>:<br>Send ONLY <strong class='text-white underline'>'Flag'</strong> image via email.",
-            noticeOther: "📌 For <strong class='text-cyan-300'>{LAND}</strong>:<br>Send both <strong class='text-white underline'>'Map'</strong> & <strong class='text-white underline'>'Flag'</strong> images via email.",
-            noticeDefault: "📌 Send required images via email.",
-            submitText: "SUBMIT APPLICATION / ยื่นคำขอ",
-            successTitle: "SUCCESSFUL / สำเร็จ",
-            successDesc: "Application submitted to system.",
-            modalReminderHeader: "SEND IMAGES VIA EMAIL!",
-            modalSummaryTitle: "SUMMARY:",
-            btnCopy: "COPY PAYLOAD",
-            viewHistory: "View History"
-        }
-    };
-
-    function changeLanguage(langKey) {
-        currentLang = langKey;
-        const t = translations[langKey] || translations['en'];
-
-        playAudio('scan');
-
-        document.getElementById('txt_title').innerText = t.title;
-        document.getElementById('txt_subtitle').innerText = t.subtitle;
-
-        ['req1','req2','req3','req4','req5','req6','req7','req8','req9','req10','req11','req12'].forEach(id => {
-            const el = document.getElementById(`lbl_${id}`);
-            if (el) el.innerText = t.req;
-        });
-
-        document.getElementById('lbl_countryName').innerText = t.countryName;
-        document.getElementById('countryName').placeholder = t.countryPlaceholder;
-
-        document.getElementById('lbl_independence').innerText = t.independence;
-        document.getElementById('independenceName').placeholder = t.independencePlaceholder;
-
-        document.getElementById('lbl_demonym').innerText = t.demonym;
-        document.getElementById('demonym').placeholder = t.demonymPlaceholder;
-
-        document.getElementById('lbl_officialLanguage').innerText = t.officialLanguage;
-        document.getElementById('officialLanguage').placeholder = t.officialLangPlaceholder;
-        document.getElementById('lbl_officialLangHelp').innerText = t.officialLangHelp;
-
-        document.getElementById('lbl_population').innerText = t.population;
-        document.getElementById('population').placeholder = t.popPlaceholder;
-
-        document.getElementById('lbl_discord').innerText = t.discord;
-        document.getElementById('lbl_discordHelp').innerText = t.discordHelp;
-
-        document.getElementById('lbl_color').innerText = t.color;
-        document.getElementById('lbl_land').innerText = t.land;
-
-        document.getElementById('lbl_land1Desc').innerText = t.land1Desc;
-        document.getElementById('lbl_land2Desc').innerText = t.land2Desc;
-        document.getElementById('lbl_land3Desc').innerText = t.land3Desc;
-
-        document.getElementById('lbl_miroTitle').innerText = t.miroTitle;
-        document.getElementById('lbl_miroSubtitle').innerText = t.miroSubtitle;
-
-        document.getElementById('lbl_divideLand').innerText = t.divideLand;
-        document.getElementById('opt_split').innerText = t.split;
-        document.getElementById('opt_noSplit').innerText = t.noSplit;
-
-        document.getElementById('lbl_unclaimedTitle').innerText = t.unclaimedTitle;
-        document.getElementById('opt_selectLandPlaceholder').innerText = t.unclaimedPlaceholder;
-
-        document.getElementById('lbl_changePinkTitle').innerText = t.changePinkTitle;
-        document.getElementById('opt_changeSelf').innerText = t.changeSelf;
-        document.getElementById('opt_keepOriginal').innerText = t.keepOriginal;
-
-        document.getElementById('lbl_social').innerText = t.social;
-
-        document.getElementById('lbl_badgeTitle').innerText = t.badgeTitle;
-        document.getElementById('lbl_badgeCountry').innerText = t.badgeCountry;
-        document.getElementById('lbl_badgeTitleTxt').innerText = t.badgeTitleTxt;
-        document.getElementById('lbl_badgeDemonym').innerText = t.badgeDemonym;
-        document.getElementById('lbl_badgeLang').innerText = t.badgeLang;
-        document.getElementById('lbl_badgePop').innerText = t.badgePop;
-
-        document.getElementById('lbl_noticeHeader').innerText = t.noticeHeader;
-        document.getElementById('submitText').innerText = t.submitText;
-
-        document.getElementById('modal_successTitle').innerText = t.successTitle;
-        document.getElementById('modal_successDesc').innerText = t.successDesc;
-        document.getElementById('modal_reminderHeader').innerText = t.modalReminderHeader;
-        document.getElementById('modal_summaryTitle').innerText = t.modalSummaryTitle;
-        document.getElementById('modal_btnCopy').innerText = t.btnCopy;
-        document.getElementById('lbl_viewHistory').innerText = t.viewHistory;
-
-        handleLandChange();
-    }
-
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    
-    function playAudio(type) {
-        if (audioCtx.state === 'suspended') {
-            audioCtx.resume();
-        }
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
-        const now = audioCtx.currentTime;
-
-        if (type === 'select') {
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(600, now);
-            osc.frequency.exponentialRampToValueAtTime(1200, now + 0.08);
-            gain.gain.setValueAtTime(0.15, now);
-            gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
-            osc.start(now);
-            osc.stop(now + 0.08);
-        } else if (type === 'scan') {
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(300, now);
-            osc.frequency.linearRampToValueAtTime(900, now + 0.15);
-            gain.gain.setValueAtTime(0.2, now);
-            gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
-            osc.start(now);
-            osc.stop(now + 0.15);
-        } else if (type === 'submit') {
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(200, now);
-            osc.frequency.exponentialRampToValueAtTime(800, now + 0.25);
-            gain.gain.setValueAtTime(0.2, now);
-            gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
-            osc.start(now);
-            osc.stop(now + 0.25);
-        }
-    }
-
-    function updateLiveBadge() {
-        const countryName = document.getElementById('countryName').value;
-        const independenceName = document.getElementById('independenceName').value;
-        const demonym = document.getElementById('demonym').value;
-        const officialLang = document.getElementById('officialLanguage').value;
-        const population = document.getElementById('population').value;
-
-        document.getElementById('previewNation').innerText = countryName.trim() || '-';
-        document.getElementById('previewTitle').innerText = independenceName.trim() || '-';
-        document.getElementById('previewDemonym').innerText = demonym.trim() || '-';
-        document.getElementById('previewLang').innerText = officialLang.trim() || '-';
-        document.getElementById('previewPop').innerText = population.trim() || '-';
-    }
-
-    function updateColorText(val) {
-        document.getElementById('colorText').value = val;
-        document.getElementById('badgeColorPreview').style.backgroundColor = val;
-        document.documentElement.style.setProperty('--national-color', val);
-        playAudio('select');
-    }
-
-    function handleLandChange() {
-        const selectedLand = document.querySelector('input[name="ประเภทดินแดน"]:checked')?.value;
-        const t = translations[currentLang] || translations['en'];
-        
-        const q9 = document.getElementById('q9_section');
-        const q10 = document.getElementById('q10_section');
-        const q11 = document.getElementById('q11_section');
-        const noticeBox = document.getElementById('imageNoticeBox');
-        const miroContainer = document.getElementById('miroLinkContainer');
-
-        q9.classList.add('hidden');
-        q10.classList.add('hidden');
-        q11.classList.add('hidden');
-
-        setRequired('การแบ่งดินแดน', false);
-        setRequired('UnclaimedList', false, true);
-        setRequired('การเปลี่ยน Pink Country', false);
-
-        if (selectedLand) {
-            miroContainer.classList.remove('hidden');
-        } else {
-            miroContainer.classList.add('hidden');
-        }
-
-        if (selectedLand === 'Unclaimed Land') {
-            q10.classList.remove('hidden');
-            setRequired('UnclaimedList', true, true);
-            noticeBox.innerHTML = t.noticeUnclaimed;
-        } else if (selectedLand === 'Empty Country' || selectedLand === 'Pink Country') {
-            if (selectedLand === 'Empty Country') {
-                q9.classList.remove('hidden');
-                setRequired('การแบ่งดินแดน', true);
-            } else if (selectedLand === 'Pink Country') {
-                q11.classList.remove('hidden');
-                setRequired('การเปลี่ยน Pink Country', true);
+        const translations = {
+            th: {
+                title: "ลงทะเบียนประเทศในจินตนาการ",
+                subtitle: "แบบฟอร์มยื่นคำขออนุมัติดินแดนและประกาศอธิปไตยประเทศในจินตนาการ",
+                req: "* จำเป็น",
+                countryName: "ชื่อประเทศ",
+                countryPlaceholder: "เช่น จักรวรรดิออโรรา (Empire of Aurora)",
+                independence: "ชื่อเอกราช (Independence Title)",
+                independencePlaceholder: "เช่น สาธารณรัฐเสรี, สหพันธรัฐอิสระ",
+                demonym: "ชื่อกลุ่มสัญชาติ (Demonym)",
+                demonymPlaceholder: "เช่น Auroran, ชาวออโรเรียน",
+                officialLanguage: "ภาษาราชการ",
+                officialLangPlaceholder: "เช่น ภาษาไทย, ภาษาอังกฤษ, ภาษาออโรเรียน (สร้างเอง)",
+                officialLangHelp: "ใช้ภาษาอะไรก็ได้จากทั่วโลก หรือ ใช้ภาษาที่คุณสร้างมาเอง",
+                population: "ประชากรเริ่มต้น (ไม่จำกัด)",
+                popPlaceholder: "เช่น 5,000,000 คน หรือ ไม่จำกัด",
+                discord: "User ID Discord",
+                discordHelp: "ตัวเลข User ID ของ Discord (ตัวอย่าง: 987654321098765432)",
+                color: "สีประจำชาติ",
+                land: "เลือกดินแดน",
+                land1Desc: "ดินแดนที่ยังไม่มีผู้ครอบครอง",
+                land2Desc: "ประเทศว่างเปล่า",
+                land3Desc: "ประเทศสีชมพู",
+                miroTitle: "ไม่รู้จะเลือกพิกัดไหน? เปิดดูแผนที่ Miro Board",
+                miroSubtitle: "คลิกที่นี่เพื่อสำรวจและเลือกตำแหน่งดินแดนบนแผนที่",
+                divideLand: "การแบ่งดินแดน",
+                split: "แบ่ง",
+                noSplit: "ไม่แบ่ง",
+                unclaimedTitle: "หากไม่พบรายชื่อ Unclaimed Land กรุณาเลือกตรงนี้",
+                unclaimedPlaceholder: "-- เลือกรายชื่อดินแดนในระบบ --",
+                changePinkTitle: "ต้องการเปลี่ยนจากอันเดิมเป็นของคุณหรือไม่",
+                changeSelf: "เปลี่ยนเป็นของตนเอง",
+                keepOriginal: "ใช้อันเดิม",
+                social: "User TikTok หรือโซเชียลมีเดียอื่นๆ",
+                badgeTitle: "สรุปข้อมูลลงทะเบียนเรียลไทม์",
+                badgeCountry: "ประเทศ:",
+                badgeTitleTxt: "เอกราช:",
+                badgeDemonym: "สัญชาติ:",
+                badgeLang: "ภาษา:",
+                badgePop: "ประชากร:",
+                noticeHeader: "คำแนะนำการส่งไฟล์รูปภาพแนบ",
+                noticeUnclaimed: "📌 สำหรับตัวเลือก <strong class='text-cyan-300'>Unclaimed Land</strong>:<br>กรุณาส่งเฉพาะไฟล์รูปภาพ <strong class='text-white underline'>'ธงชาติ'</strong> เพียงอย่างเดียวมาทางอีเมลของผู้รับ (ไม่ต้องแนบแผนที่)",
+                noticeOther: "📌 สำหรับตัวเลือก <strong class='text-cyan-300'>{LAND}</strong>:<br>กรุณาส่งไฟล์รูปภาพทั้ง <strong class='text-white underline'>'แผนที่'</strong> และ <strong class='text-white underline'>'ธงชาติ'</strong> มาทางอีเมลของผู้รับ",
+                noticeDefault: "📌 กรุณาส่งไฟล์รูปภาพตามมาทางอีเมลของผู้รับดังนี้:<ul class='list-disc pl-5 space-y-1 text-slate-300 mt-1'><li>กรณีเลือก <strong class='text-rose-300'>Pink Country</strong> หรือ <strong class='text-indigo-300'>Empty Country</strong> : แนบภาพทั้ง <strong class='text-white'>'แผนที่'</strong> และ <strong class='text-white'>'ธงชาติ'</strong></li><li>กรณีเลือก <strong class='text-cyan-300'>Unclaimed Land</strong> : แนบเฉพาะภาพ <strong class='text-white'>'ธงชาติ'</strong> เท่านั้น (ไม่ต้องแนบแผนที่)</li></ul>",
+                submitText: "ยื่นคำขอและส่งข้อมูลไปยังระบบ",
+                successTitle: "ส่งคำขอสำเร็จเรียบร้อย!",
+                successDesc: "ส่งคำขอสำเร็จ ข้อมูลการสถาปนาประเทศของคุณถูกจัดส่งไปยังระบบเรียบร้อยแล้ว",
+                modalReminderHeader: "อย่าลืมส่งรูปภาพแนบตามมาทางอีเมล!",
+                modalSummaryTitle: "สรุปข้อมูลที่ถูกจัดส่ง:",
+                btnCopy: "คัดลอกสรุปคำตอบ",
+                viewHistory: "ดูประวัติคำตอบล่าสุด"
+            },
+            en: {
+                title: "Fictional Nation Registration",
+                subtitle: "Official Application Form for Fictional Territory Approval and Sovereignty Declaration",
+                req: "* Required",
+                countryName: "Country Name",
+                countryPlaceholder: "e.g., Empire of Aurora",
+                independence: "Independence Title",
+                independencePlaceholder: "e.g., Free Republic, Independent Federation",
+                demonym: "Demonym",
+                demonymPlaceholder: "e.g., Auroran",
+                officialLanguage: "Official Language",
+                officialLangPlaceholder: "e.g., English, Thai, Auroran (Custom Language)",
+                officialLangHelp: "Use any language from around the world, or use a custom language you created.",
+                population: "Initial Population (Unlimited)",
+                popPlaceholder: "e.g., 5,000,000 or Unlimited",
+                discord: "Discord User ID",
+                discordHelp: "Discord Numeric User ID (Example: 987654321098765432)",
+                color: "National Color",
+                land: "Territory Selection",
+                land1Desc: "Unclaimed land area",
+                land2Desc: "Empty nation territory",
+                land3Desc: "Pink country territory",
+                miroTitle: "Don't know where? Open Miro Board Map",
+                miroSubtitle: "Click here to explore and select territory coordinates",
+                divideLand: "Land Division",
+                split: "Divide",
+                noSplit: "Do Not Divide",
+                unclaimedTitle: "If Unclaimed Land is not listed, select here",
+                unclaimedPlaceholder: "-- Select Territory from System --",
+                changePinkTitle: "Do you want to change from original to yours?",
+                changeSelf: "Change to Own",
+                keepOriginal: "Keep Original",
+                social: "TikTok Handle or Other Social Media",
+                badgeTitle: "REAL-TIME PASSPORT REVIEW",
+                badgeCountry: "Nation:",
+                badgeTitleTxt: "Title:",
+                badgeDemonym: "Demonym:",
+                badgeLang: "Language:",
+                badgePop: "Population:",
+                noticeHeader: "ATTACHMENT INSTRUCTIONS",
+                noticeUnclaimed: "📌 For <strong class='text-cyan-300'>Unclaimed Land</strong>:<br>Please send ONLY the <strong class='text-white underline'>'National Flag'</strong> image via email (No map required).",
+                noticeOther: "📌 For <strong class='text-cyan-300'>{LAND}</strong>:<br>Please send both <strong class='text-white underline'>'Map'</strong> and <strong class='text-white underline'>'National Flag'</strong> images via email.",
+                noticeDefault: "📌 Please email image attachments:<ul class='list-disc pl-5 space-y-1 text-slate-300 mt-1'><li>For <strong class='text-rose-300'>Pink Country</strong> or <strong class='text-indigo-300'>Empty Country</strong>: Attach both 'Map' & 'Flag'</li><li>For <strong class='text-cyan-300'>Unclaimed Land</strong>: Attach 'Flag' ONLY</li></ul>",
+                submitText: "SUBMIT APPLICATION & TRANSMIT DATA",
+                successTitle: "TRANSMISSION SUCCESSFUL",
+                successDesc: "Application submitted! Your nation data has been transmitted to the system.",
+                modalReminderHeader: "DON'T FORGET TO EMAIL YOUR IMAGES!",
+                modalSummaryTitle: "TRANSMITTED SUMMARY:",
+                btnCopy: "COPY PAYLOAD",
+                viewHistory: "View Last Submission"
+            },
+            ru: {
+                title: "Регистрация Вымышленной Страны",
+                subtitle: "Официальная форма заявки на утверждение территории и суверенитета",
+                req: "* Обязательно",
+                countryName: "Название страны",
+                countryPlaceholder: "Например: Империя Аврора",
+                independence: "Название независимости",
+                independencePlaceholder: "Например: Свободная Республика",
+                demonym: "Демоним (Национальность)",
+                demonymPlaceholder: "Например: Аврорец",
+                officialLanguage: "Официальный язык",
+                officialLangPlaceholder: "Например: Русский, Английский, Аврорский",
+                officialLangHelp: "Используйте любой язык мира или вымышленный язык собственного сочинения.",
+                population: "Начальное население (Без ограничений)",
+                popPlaceholder: "Например: 5,000,000 или Неограниченно",
+                discord: "User ID Discord",
+                discordHelp: "Числовой ID пользователя Discord (Пример: 987654321098765432)",
+                color: "Национальный цвет",
+                land: "Выбор территории",
+                land1Desc: "Никем не занятая территория",
+                land2Desc: "Пустующая страна",
+                land3Desc: "Розовая страна",
+                miroTitle: "Не знаете куда? Откройте карту Miro Board",
+                miroSubtitle: "Нажмите здесь для выбора координат на карте",
+                divideLand: "Деление территории",
+                split: "Разделить",
+                noSplit: "Не делить",
+                unclaimedTitle: "Если нет в списке Unclaimed Land, выберите здесь",
+                unclaimedPlaceholder: "-- Выберите территорию --",
+                changePinkTitle: "Хотите изменить исходное на свое?",
+                changeSelf: "Изменить на свое",
+                keepOriginal: "Оставить как есть",
+                social: "TikTok или соцсети",
+                badgeTitle: "ОБЗОР В реальном времени",
+                badgeCountry: "Страна:",
+                badgeTitleTxt: "Статус:",
+                badgeDemonym: "Демоним:",
+                badgeLang: "Язык:",
+                badgePop: "Население:",
+                noticeHeader: "ИНСТРУКЦИЯ ПО ВЛОЖЕНИЯМ",
+                noticeUnclaimed: "📌 Для <strong class='text-cyan-300'>Unclaimed Land</strong>:<br>Отправьте ТОЛЬКО фото <strong class='text-white underline'>'Флага'</strong> по email.",
+                noticeOther: "📌 Для <strong class='text-cyan-300'>{LAND}</strong>:<br>Отправьте фото <strong class='text-white underline'>'Карты'</strong> и <strong class='text-white underline'>'Флага'</strong> по email.",
+                noticeDefault: "📌 Отправьте изображения по email.",
+                submitText: "ОТПРАВИТЬ ЗАЯВКУ В СИСТЕМУ",
+                successTitle: "ОТПРАВКА УСПЕШНА",
+                successDesc: "Заявка отправлена! Данные переведены в систему.",
+                modalReminderHeader: "НЕ ЗАБУДЬТЕ ОТПРАВИТЬ ФОТО НА EMAIL!",
+                modalSummaryTitle: "ИТОГОВЫЕ ДАННЫЕ:",
+                btnCopy: "СКОПИРОВАТЬ ДАННЫЕ",
+                viewHistory: "Посмотреть историю"
+            },
+            zh: {
+                title: "虚构国家注册申请表",
+                subtitle: "国家领土批准与主权宣告官方申请表",
+                req: "* 必填",
+                countryName: "国家名称",
+                countryPlaceholder: "例如：极光帝国 (Empire of Aurora)",
+                independence: "独立称号 (Independence Title)",
+                independencePlaceholder: "例如：自由共和国、独立联邦",
+                demonym: "国民称谓 (Demonym)",
+                demonymPlaceholder: "例如：Auroran",
+                officialLanguage: "官方语言",
+                officialLangPlaceholder: "例如：中文、英语、自创极光语",
+                officialLangHelp: "可使用全球任何真实语言，或您自创的语言。",
+                population: "初始人口 (无限制)",
+                popPlaceholder: "例如：5,000,000人 或 无限制",
+                discord: "Discord User ID",
+                discordHelp: "Discord 数字用户 ID (例如：987654321098765432)",
+                color: "代表颜色",
+                land: "选择领土",
+                land1Desc: "尚未有人占领的无主之地",
+                land2Desc: "无人的空置国家",
+                land3Desc: "粉红国家",
+                miroTitle: "不知道坐标？打开 Miro Board 地图",
+                miroSubtitle: "点击此处在地图上探索并选择领土位置",
+                divideLand: "划分领土",
+                split: "划分",
+                noSplit: "不划分",
+                unclaimedTitle: "若未找到 Unclaimed Land 名称，请在此选择",
+                unclaimedPlaceholder: "-- 请选择领土 --",
+                changePinkTitle: "是否要将原有领土更改为您的？",
+                changeSelf: "更改为自己的",
+                keepOriginal: "保持原样",
+                social: "TikTok 或其他社交媒体",
+                badgeTitle: "实时注册数据预览",
+                badgeCountry: "国家:",
+                badgeTitleTxt: "称号:",
+                badgeDemonym: "国民:",
+                badgeLang: "语言:",
+                badgePop: "人口:",
+                noticeHeader: "图片发送指引",
+                noticeUnclaimed: "📌 若选择 <strong class='text-cyan-300'>Unclaimed Land</strong>：<br>请仅将<strong class='text-white underline'>“国旗”</strong>图片通过邮箱发送",
+                noticeOther: "📌 若选择 <strong class='text-cyan-300'>{LAND}</strong>：<br>请将<strong class='text-white underline'>“地图”</strong>和<strong class='text-white underline'>“国旗”</strong>图片通过邮箱发送",
+                noticeDefault: "📌 请通过邮箱发送相关图片",
+                submitText: "提交申请并发送数据",
+                successTitle: "提交成功！",
+                successDesc: "申请已成功发送，您的数据已成功提交至系统。",
+                modalReminderHeader: "切记通过邮箱发送图片！",
+                modalSummaryTitle: "已发送数据摘要：",
+                btnCopy: "复制摘要",
+                viewHistory: "查看历史记录"
+            },
+            es: {
+                title: "Registro de Nación Imaginaria",
+                subtitle: "Formulario Oficial de Solicitud de Aprobación Territorial y Soberanía",
+                req: "* Requerido",
+                countryName: "Nombre del País",
+                countryPlaceholder: "Ej: Imperio de Aurora",
+                independence: "Título de Independencia",
+                independencePlaceholder: "Ej: República Libre",
+                demonym: "Gentilicio (Demonym)",
+                demonymPlaceholder: "Ej: Auroriano",
+                officialLanguage: "Idioma Oficial",
+                officialLangPlaceholder: "Ej: Español, Inglés, Idioma Propio",
+                officialLangHelp: "Usa cualquier idioma del mundo o uno que hayas creado.",
+                population: "Población Inicial (Sin límite)",
+                popPlaceholder: "Ej: 5.000.000 o Ilimitado",
+                discord: "User ID de Discord",
+                discordHelp: "ID Numérico de Usuario de Discord (Ej: 987654321098765432)",
+                color: "Color Nacional",
+                land: "Selección de Territorio",
+                land1Desc: "Tierra no reclamada",
+                land2Desc: "País vacío",
+                land3Desc: "País rosa",
+                miroTitle: "¿No sabe dónde? Abrir mapa de Miro Board",
+                miroSubtitle: "Haga clic aquí para explorar y elegir coordenadas",
+                divideLand: "División Territorial",
+                split: "Dividir",
+                noSplit: "No Dividir",
+                unclaimedTitle: "Si no encuentra el territorio, seleccione aquí",
+                unclaimedPlaceholder: "-- Seleccionar Territorio --",
+                changePinkTitle: "¿Desea cambiar el original por el suyo?",
+                changeSelf: "Cambiar al propio",
+                keepOriginal: "Mantener original",
+                social: "TikTok o Redes Sociales",
+                badgeTitle: "VISTA PREVIA EN TIEMPO REAL",
+                badgeCountry: "País:",
+                badgeTitleTxt: "Título:",
+                badgeDemonym: "Gentilicio:",
+                badgeLang: "Idioma:",
+                badgePop: "Población:",
+                noticeHeader: "INSTRUCCIONES DE IMÁGENES",
+                noticeUnclaimed: "📌 Para <strong class='text-cyan-300'>Unclaimed Land</strong>:<br>Envíe SOLO la imagen de la <strong class='text-white underline'>'Bandera'</strong> por correo.",
+                noticeOther: "📌 Para <strong class='text-cyan-300'>{LAND}</strong>:<br>Envíe imágenes del <strong class='text-white underline'>'Mapa'</strong> y la <strong class='text-white underline'>'Bandera'</strong> por correo.",
+                noticeDefault: "📌 Por favor envíe las imágenes requeridas por correo.",
+                submitText: "ENVIAR SOLICITUD Y DATOS",
+                successTitle: "TRANSMISIÓN EXITOSA",
+                successDesc: "¡Solicitud enviada! Sus datos han sido procesados en el sistema.",
+                modalReminderHeader: "¡NO OLVIDE ENVIAR SUS IMÁGENES POR CORREO!",
+                modalSummaryTitle: "RESUMEN TRANSMITIDO:",
+                btnCopy: "COPIAR DATOS",
+                viewHistory: "Ver historial"
+            },
+            other: {
+                title: "Fictional Nation Registration / 国际注册",
+                subtitle: "Global Application Form / แบบฟอร์มสถาปนาประเทศ",
+                req: "* Required / จำเป็น",
+                countryName: "Country Name / ชื่อประเทศ",
+                countryPlaceholder: "Name of your fictional nation",
+                independence: "Independence Title / ชื่อเอกราช",
+                independencePlaceholder: "Title or regime type",
+                demonym: "Demonym / ชื่อกลุ่มสัญชาติ",
+                demonymPlaceholder: "e.g., Citizen name",
+                officialLanguage: "Official Language / ภาษาราชการ",
+                officialLangPlaceholder: "e.g., Any real or custom language",
+                officialLangHelp: "Use any language from around the world or custom created language.",
+                population: "Population / ประชากรเริ่มต้น",
+                popPlaceholder: "Initial Population (Unlimited)",
+                discord: "Discord User ID",
+                discordHelp: "Numeric Discord User ID (Example: 123456789)",
+                color: "National Color / สีประจำชาติ",
+                land: "Territory / เลือกดินแดน",
+                land1Desc: "Unclaimed land",
+                land2Desc: "Empty nation",
+                land3Desc: "Pink country",
+                miroTitle: "Open Miro Board Map",
+                miroSubtitle: "Click here to view territory map",
+                divideLand: "Land Division / การแบ่งดินแดน",
+                split: "Divide / แบ่ง",
+                noSplit: "No / ไม่แบ่ง",
+                unclaimedTitle: "Unclaimed Land List",
+                unclaimedPlaceholder: "-- Select Territory --",
+                changePinkTitle: "Change from original? / เปลี่ยนจากอันเดิมหรือไม่",
+                changeSelf: "Change / เปลี่ยน",
+                keepOriginal: "Keep / ใช้อันเดิม",
+                social: "Social Media / TikTok",
+                badgeTitle: "REAL-TIME REVIEW",
+                badgeCountry: "Nation:",
+                badgeTitleTxt: "Title:",
+                badgeDemonym: "Demonym:",
+                badgeLang: "Language:",
+                badgePop: "Population:",
+                noticeHeader: "ATTACHMENT DIRECTIVE",
+                noticeUnclaimed: "📌 For <strong class='text-cyan-300'>Unclaimed Land</strong>:<br>Send ONLY <strong class='text-white underline'>'Flag'</strong> image via email.",
+                noticeOther: "📌 For <strong class='text-cyan-300'>{LAND}</strong>:<br>Send both <strong class='text-white underline'>'Map'</strong> & <strong class='text-white underline'>'Flag'</strong> images via email.",
+                noticeDefault: "📌 Send required images via email.",
+                submitText: "SUBMIT APPLICATION / ยื่นคำขอ",
+                successTitle: "SUCCESSFUL / สำเร็จ",
+                successDesc: "Application submitted to system.",
+                modalReminderHeader: "SEND IMAGES VIA EMAIL!",
+                modalSummaryTitle: "SUMMARY:",
+                btnCopy: "COPY PAYLOAD",
+                viewHistory: "View History"
             }
-            noticeBox.innerHTML = t.noticeOther.replace('{LAND}', selectedLand);
-        } else {
-            noticeBox.innerHTML = t.noticeDefault;
-        }
-    }
+        };
 
-    function setRequired(nameOrId, isRequired, isSelect = false) {
-        if (isSelect) {
-            const el = document.getElementById('unclaimedList');
-            if (el) el.required = isRequired;
-        } else {
-            const radios = document.querySelectorAll(`input[name="${nameOrId}"]`);
-            radios.forEach(r => r.required = isRequired);
-        }
-    }
+        function changeLanguage(langKey) {
+            currentLang = langKey;
+            const t = translations[langKey] || translations['en'];
 
-    document.getElementById('nationForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        const form = this;
-        const submitBtn = document.getElementById('submitBtn');
-        const submitIcon = document.getElementById('submitIcon');
-        const submitText = document.getElementById('submitText');
-
-        submitBtn.disabled = true;
-        submitIcon.className = "fa-solid fa-spinner fa-spin text-cyan-400";
-        submitText.innerText = "Transmitting / กำลังส่งข้อมูล...";
-
-        const countryName = document.getElementById('countryName').value;
-        const independenceName = document.getElementById('independenceName').value;
-        const demonym = document.getElementById('demonym').value;
-        const officialLang = document.getElementById('officialLanguage').value;
-        const population = document.getElementById('population').value;
-        const discordUser = document.getElementById('discordUser').value;
-        const nationalColor = document.getElementById('colorText').value;
-        const landType = document.querySelector('input[name="ประเภทดินแดน"]:checked')?.value;
-        
-        document.getElementById('formSubject').value = `[คำขอสมัครประเทศใหม่] - ${countryName}`;
-
-        let extraQuestion = "";
-        let extraQuestionMail = "";
-        if (landType === 'Empty Country') {
-            const divide = document.querySelector('input[name="การแบ่งดินแดน"]:checked')?.value;
-            extraQuestion = `<div><strong class="text-cyan-300">แบ่งดินแดน:</strong> ${divide || '-'}</div>`;
-            extraQuestionMail = `แบ่งดินแดน: ${divide || '-'}\n`;
-        } else if (landType === 'Unclaimed Land') {
-            const unclaimed = document.getElementById('unclaimedList').value;
-            extraQuestion = `<div><strong class="text-cyan-300">Unclaimed Land ที่เลือก:</strong> ${unclaimed || '-'}</div>`;
-            extraQuestionMail = `Unclaimed Land ที่เลือก: ${unclaimed || '-'}\n`;
-        } else if (landType === 'Pink Country') {
-            const pink = document.querySelector('input[name="การเปลี่ยน Pink Country"]:checked')?.value;
-            extraQuestion = `<div><strong class="text-cyan-300">อยากจะเปลี่ยนจากอันเดิมเป็นของคุณหรือไม่:</strong> ${pink || '-'}</div>`;
-            extraQuestionMail = `อยากจะเปลี่ยนจากอันเดิมเป็นของคุณหรือไม่: ${pink || '-'}\n`;
-        }
-
-        const socialMedia = document.getElementById('socialMedia').value;
-
-        const modalReminder = document.getElementById('modalImageReminder');
-        if (landType === 'Unclaimed Land') {
-            modalReminder.innerText = "เนื่องจากคุณเลือก Unclaimed Land กรุณาส่งเฉพาะรูปภาพ 'ธงชาติ' เพียงอย่างเดียวแนบมาทางอีเมล";
-        } else {
-            modalReminder.innerText = `เนื่องจากคุณเลือก ${landType} กรุณาส่งรูปภาพทั้ง 'แผนที่' และ 'ธงชาติ' แนบมาทางอีเมล`;
-        }
-
-        const summaryHTML = `
-            <div><strong class="text-slate-400">ชื่อประเทศ:</strong> ${countryName}</div>
-            <div><strong class="text-slate-400">ชื่อเอกราช:</strong> ${independenceName}</div>
-            <div><strong class="text-slate-400">ชื่อกลุ่มสัญชาติ (Demonym):</strong> ${demonym}</div>
-            <div><strong class="text-slate-400">ภาษาราชการ:</strong> ${officialLang}</div>
-            <div><strong class="text-slate-400">ประชากรเริ่มต้น:</strong> ${population}</div>
-            <div><strong class="text-slate-400">User ID Discord:</strong> ${discordUser}</div>
-            <div><strong class="text-slate-400">สีประจำชาติ:</strong> <span style="color:${nationalColor}">■</span> ${nationalColor}</div>
-            <div><strong class="text-slate-400">เลือกดินแดน:</strong> ${landType}</div>
-            ${extraQuestion}
-            <div><strong class="text-slate-400">Social Media / TikTok:</strong> ${socialMedia}</div>
-        `;
-
-        lastFormDataText = 
-`= ข้อมูลคำขอลงทะเบียนประเทศในจินตนาการ =
-
-ชื่อประเทศ: ${countryName} 
-ชื่อเอกราช: ${independenceName} 
-ชื่อกลุ่มสัญชาติ (Demonym): ${demonym} 
-ภาษาราชการ: ${officialLang} 
-ประชากรเริ่มต้น: ${population} 
-User ID Discord: ${discordUser} 
-สีประจำชาติ: ${nationalColor} 
-เลือกดินแดน: ${landType} 
-${extraQuestionMail}Social Media / TikTok: ${socialMedia} 
-`;
-
-        // บันทึกประวัติลง LocalStorage เพื่อให้เรียกดูย้อนหลังได้
-        localStorage.setItem('last_nation_submission', lastFormDataText);
-        document.getElementById('viewHistoryBtn').classList.remove('hidden');
-        document.getElementById('viewHistoryBtn').classList.add('inline-flex');
-
-        document.getElementById('summaryContent').innerHTML = summaryHTML;
-
-        const mailtoSubject = encodeURIComponent(`[คำขอสมัครประเทศใหม่] - ${countryName}`);
-        const formattedMailBody = lastFormDataText.replace(/\n/g, '%0D%0A');
-        document.getElementById('emailMailtoLink').href = `mailto:${ADMIN_EMAIL}?subject=${mailtoSubject}&body=${formattedMailBody}`;
-
-        try {
-            const formData = new FormData(form);
-            await fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
-                method: "POST",
-                body: formData
-            });
-        } catch (err) {
-            console.log("Transmission sent successfully.");
-        }
-
-        const t = translations[currentLang] || translations['en'];
-        submitBtn.disabled = false;
-        submitIcon.className = "fa-solid fa-paper-plane text-cyan-400";
-        submitText.innerText = t.submitText;
-
-        document.getElementById('successModal').classList.remove('hidden');
-    });
-
-    function copySummary() {
-        navigator.clipboard.writeText(lastFormDataText);
-        playAudio('scan');
-        const copyBtn = event.currentTarget;
-        const originalHTML = copyBtn.innerHTML;
-        copyBtn.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i> COPIED!`;
-        setTimeout(() => {
-            copyBtn.innerHTML = originalHTML;
-        }, 2000);
-    }
-
-    // เปิดดูประวัติคำตอบล่าสุดที่เคยส่ง
-    function openHistoryModal() {
-        const savedData = localStorage.getItem('last_nation_submission');
-        if (savedData) {
-            lastFormDataText = savedData;
-            // แปลงข้อความประวัติให้อยู่ในรูป HTML สำหรับแสดงใน Modal
-            const formattedHtml = savedData.replace(/\n/g, '<br>');
-            document.getElementById('summaryContent').innerHTML = `<div class="text-slate-200">${formattedHtml}</div>`;
-            
-            const mailtoSubject = encodeURIComponent(`[คำขอสมัครประเทศใหม่ - ประวัติล่าสุด]`);
-            const formattedMailBody = savedData.replace(/\n/g, '%0D%0A');
-            document.getElementById('emailMailtoLink').href = `mailto:${ADMIN_EMAIL}?subject=${mailtoSubject}&body=${formattedMailBody}`;
-            
             playAudio('scan');
-            document.getElementById('successModal').classList.remove('hidden');
+
+            document.getElementById('txt_title').innerText = t.title;
+            document.getElementById('txt_subtitle').innerText = t.subtitle;
+
+            ['req1','req2','req3','req4','req5','req6','req7','req8','req9','req10','req11','req12'].forEach(id => {
+                const el = document.getElementById(`lbl_${id}`);
+                if (el) el.innerText = t.req;
+            });
+
+            document.getElementById('lbl_countryName').innerText = t.countryName;
+            document.getElementById('countryName').placeholder = t.countryPlaceholder;
+
+            document.getElementById('lbl_independence').innerText = t.independence;
+            document.getElementById('independenceName').placeholder = t.independencePlaceholder;
+
+            document.getElementById('lbl_demonym').innerText = t.demonym;
+            document.getElementById('demonym').placeholder = t.demonymPlaceholder;
+
+            document.getElementById('lbl_officialLanguage').innerText = t.officialLanguage;
+            document.getElementById('officialLanguage').placeholder = t.officialLangPlaceholder;
+            document.getElementById('lbl_officialLangHelp').innerText = t.officialLangHelp;
+
+            document.getElementById('lbl_population').innerText = t.population;
+            document.getElementById('population').placeholder = t.popPlaceholder;
+
+            document.getElementById('lbl_discord').innerText = t.discord;
+            document.getElementById('lbl_discordHelp').innerText = t.discordHelp;
+
+            document.getElementById('lbl_color').innerText = t.color;
+            document.getElementById('lbl_land').innerText = t.land;
+
+            document.getElementById('lbl_land1Desc').innerText = t.land1Desc;
+            document.getElementById('lbl_land2Desc').innerText = t.land2Desc;
+            document.getElementById('lbl_land3Desc').innerText = t.land3Desc;
+
+            document.getElementById('lbl_miroTitle').innerText = t.miroTitle;
+            document.getElementById('lbl_miroSubtitle').innerText = t.miroSubtitle;
+
+            document.getElementById('lbl_divideLand').innerText = t.divideLand;
+            document.getElementById('opt_split').innerText = t.split;
+            document.getElementById('opt_noSplit').innerText = t.noSplit;
+
+            document.getElementById('lbl_unclaimedTitle').innerText = t.unclaimedTitle;
+            document.getElementById('opt_selectLandPlaceholder').innerText = t.unclaimedPlaceholder;
+
+            document.getElementById('lbl_changePinkTitle').innerText = t.changePinkTitle;
+            document.getElementById('opt_changeSelf').innerText = t.changeSelf;
+            document.getElementById('opt_keepOriginal').innerText = t.keepOriginal;
+
+            document.getElementById('lbl_social').innerText = t.social;
+
+            document.getElementById('lbl_badgeTitle').innerText = t.badgeTitle;
+            document.getElementById('lbl_badgeCountry').innerText = t.badgeCountry;
+            document.getElementById('lbl_badgeTitleTxt').innerText = t.badgeTitleTxt;
+            document.getElementById('lbl_badgeDemonym').innerText = t.badgeDemonym;
+            document.getElementById('lbl_badgeLang').innerText = t.badgeLang;
+            document.getElementById('lbl_badgePop').innerText = t.badgePop;
+
+            document.getElementById('lbl_noticeHeader').innerText = t.noticeHeader;
+            document.getElementById('submitText').innerText = t.submitText;
+
+            document.getElementById('modal_successTitle').innerText = t.successTitle;
+            document.getElementById('modal_successDesc').innerText = t.successDesc;
+            document.getElementById('modal_reminderHeader').innerText = t.modalReminderHeader;
+            document.getElementById('modal_summaryTitle').innerText = t.modalSummaryTitle;
+            document.getElementById('modal_btnCopy').innerText = t.btnCopy;
+            document.getElementById('lbl_viewHistory').innerText = t.viewHistory;
+
+            handleLandChange();
         }
-    }
 
-    function closeModalOnly() {
-        document.getElementById('successModal').classList.add('hidden');
-        playAudio('select');
-    }
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playAudio(type) {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
 
-    // ตรวจสอบประวัติที่มีอยู่ตอนโหลดหน้าเว็บ
-    window.addEventListener('DOMContentLoaded', () => {
-        if (localStorage.getItem('last_nation_submission')) {
+            const now = audioCtx.currentTime;
+
+            if (type === 'select') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, now);
+                osc.frequency.exponentialRampToValueAtTime(1200, now + 0.08);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
+                osc.start(now);
+                osc.stop(now + 0.08);
+            } else if (type === 'scan') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(300, now);
+                osc.frequency.linearRampToValueAtTime(900, now + 0.15);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
+                osc.start(now);
+                osc.stop(now + 0.15);
+            } else if (type === 'submit') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(200, now);
+                osc.frequency.exponentialRampToValueAtTime(800, now + 0.25);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            }
+        }
+
+        function updateLiveBadge() {
+            const countryName = document.getElementById('countryName').value;
+            const independenceName = document.getElementById('independenceName').value;
+            const demonym = document.getElementById('demonym').value;
+            const officialLang = document.getElementById('officialLanguage').value;
+            const population = document.getElementById('population').value;
+
+            document.getElementById('previewNation').innerText = countryName.trim() || '-';
+            document.getElementById('previewTitle').innerText = independenceName.trim() || '-';
+            document.getElementById('previewDemonym').innerText = demonym.trim() || '-';
+            document.getElementById('previewLang').innerText = officialLang.trim() || '-';
+            document.getElementById('previewPop').innerText = population.trim() || '-';
+        }
+
+        function updateColorText(val) {
+            document.getElementById('colorText').value = val;
+            document.getElementById('badgeColorPreview').style.backgroundColor = val;
+            document.documentElement.style.setProperty('--national-color', val);
+            playAudio('select');
+        }
+
+        function handleLandChange() {
+            const selectedLand = document.querySelector('input[name="ประเภทดินแดน"]:checked')?.value;
+            const t = translations[currentLang] || translations['en'];
+            
+            const q9 = document.getElementById('q9_section');
+            const q10 = document.getElementById('q10_section');
+            const q11 = document.getElementById('q11_section');
+            const noticeBox = document.getElementById('imageNoticeBox');
+            const miroContainer = document.getElementById('miroLinkContainer');
+
+            q9.classList.add('hidden');
+            q10.classList.add('hidden');
+            q11.classList.add('hidden');
+
+            setRequired('การแบ่งดินแดน', false);
+            setRequired('UnclaimedList', false, true);
+            setRequired('การเปลี่ยน Pink Country', false);
+
+            if (selectedLand) {
+                miroContainer.classList.remove('hidden');
+            } else {
+                miroContainer.classList.add('hidden');
+            }
+
+            if (selectedLand === 'Unclaimed Land') {
+                q10.classList.remove('hidden');
+                setRequired('UnclaimedList', true, true);
+                noticeBox.innerHTML = t.noticeUnclaimed;
+            } else if (selectedLand === 'Empty Country' || selectedLand === 'Pink Country') {
+                if (selectedLand === 'Empty Country') {
+                    q9.classList.remove('hidden');
+                    setRequired('การแบ่งดินแดน', true);
+                } else if (selectedLand === 'Pink Country') {
+                    q11.classList.remove('hidden');
+                    setRequired('การเปลี่ยน Pink Country', true);
+                }
+                noticeBox.innerHTML = t.noticeOther.replace('{LAND}', selectedLand);
+            } else {
+                noticeBox.innerHTML = t.noticeDefault;
+            }
+        }
+
+        function setRequired(nameOrId, isRequired, isSelect = false) {
+            if (isSelect) {
+                const el = document.getElementById('unclaimedList');
+                if (el) el.required = isRequired;
+            } else {
+                const radios = document.querySelectorAll(`input[name="${nameOrId}"]`);
+                radios.forEach(r => r.required = isRequired);
+            }
+        }
+
+        document.getElementById('nationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const form = this;
+            const submitBtn = document.getElementById('submitBtn');
+            const submitIcon = document.getElementById('submitIcon');
+            const submitText = document.getElementById('submitText');
+
+            submitBtn.disabled = true;
+            submitIcon.className = "fa-solid fa-spinner fa-spin text-cyan-400";
+            submitText.innerText = "Transmitting / กำลังส่งข้อมูล...";
+
+            const countryName = document.getElementById('countryName').value;
+            const independenceName = document.getElementById('independenceName').value;
+            const demonym = document.getElementById('demonym').value;
+            const officialLang = document.getElementById('officialLanguage').value;
+            const population = document.getElementById('population').value;
+            const discordUser = document.getElementById('discordUser').value;
+            const nationalColor = document.getElementById('colorText').value;
+            const landType = document.querySelector('input[name="ประเภทดินแดน"]:checked')?.value;
+            
+            document.getElementById('formSubject').value = `[คำขอสมัครประเทศใหม่] - ${countryName}`;
+
+            let extraQuestion = "";
+            let extraQuestionMail = "";
+            if (landType === 'Empty Country') {
+                const divide = document.querySelector('input[name="การแบ่งดินแดน"]:checked')?.value;
+                extraQuestion = `<div><strong class="text-cyan-300">แบ่งดินแดน:</strong> ${divide || '-'}</div>`;
+                extraQuestionMail = `แบ่งดินแดน: ${divide || '-'}\n`;
+            } else if (landType === 'Unclaimed Land') {
+                const unclaimed = document.getElementById('unclaimedList').value;
+                extraQuestion = `<div><strong class="text-cyan-300">Unclaimed Land ที่เลือก:</strong> ${unclaimed || '-'}</div>`;
+                extraQuestionMail = `Unclaimed Land ที่เลือก: ${unclaimed || '-'}\n`;
+            } else if (landType === 'Pink Country') {
+                const pink = document.querySelector('input[name="การเปลี่ยน Pink Country"]:checked')?.value;
+                extraQuestion = `<div><strong class="text-cyan-300">อยากจะเปลี่ยนจากอันเดิมเป็นของคุณหรือไม่:</strong> ${pink || '-'}</div>`;
+                extraQuestionMail = `อยากจะเปลี่ยนจากอันเดิมเป็นของคุณหรือไม่: ${pink || '-'}\n`;
+            }
+
+            const socialMedia = document.getElementById('socialMedia').value;
+
+            const modalReminder = document.getElementById('modalImageReminder');
+            if (landType === 'Unclaimed Land') {
+                modalReminder.innerText = "เนื่องจากคุณเลือก Unclaimed Land กรุณาส่งเฉพาะรูปภาพ 'ธงชาติ' เพียงอย่างเดียวแนบมาทางอีเมล";
+            } else {
+                modalReminder.innerText = `เนื่องจากคุณเลือก ${landType} กรุณาส่งรูปภาพทั้ง 'แผนที่' และ 'ธงชาติ' แนบมาทางอีเมล`;
+            }
+
+            const summaryHTML = `
+                <div><strong class="text-slate-400">ชื่อประเทศ:</strong> ${countryName}</div>
+                <div><strong class="text-slate-400">ชื่อเอกราช:</strong> ${independenceName}</div>
+                <div><strong class="text-slate-400">ชื่อกลุ่มสัญชาติ (Demonym):</strong> ${demonym}</div>
+                <div><strong class="text-slate-400">ภาษาราชการ:</strong> ${officialLang}</div>
+                <div><strong class="text-slate-400">ประชากรเริ่มต้น:</strong> ${population}</div>
+                <div><strong class="text-slate-400">User ID Discord:</strong> ${discordUser}</div>
+                <div><strong class="text-slate-400">สีประจำชาติ:</strong> <span style="color:${nationalColor}">■</span> ${nationalColor}</div>
+                <div><strong class="text-slate-400">เลือกดินแดน:</strong> ${landType}</div>
+                ${extraQuestion}
+                <div><strong class="text-slate-400">Social Media / TikTok:</strong> ${socialMedia}</div>
+            `;
+
+            lastFormDataText = 
+`=== ข้อมูลคำขอลงทะเบียนประเทศในจินตนาการ ===
+
+ชื่อประเทศ: ${countryName}
+ชื่อเอกราช: ${independenceName}
+ชื่อกลุ่มสัญชาติ (Demonym): ${demonym}
+ภาษาราชการ: ${officialLang}
+ประชากรเริ่มต้น: ${population}
+User ID Discord: ${discordUser}
+สีประจำชาติ: ${nationalColor}
+เลือกดินแดน: ${landType}
+${extraQuestionMail}Social Media / TikTok: ${socialMedia}
+========================================`;
+
+            localStorage.setItem('last_nation_submission', lastFormDataText);
             document.getElementById('viewHistoryBtn').classList.remove('hidden');
             document.getElementById('viewHistoryBtn').classList.add('inline-flex');
-        }
-    });
 
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
+            document.getElementById('summaryContent').innerHTML = summaryHTML;
 
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+            const mailtoSubject = encodeURIComponent(`[คำขอสมัครประเทศใหม่] - ${countryName}`);
+            const formattedMailBody = lastFormDataText.replace(/\n/g, '%0D%0A');
+            document.getElementById('emailMailtoLink').href = `mailto:${ADMIN_EMAIL}?subject=${mailtoSubject}&body=${formattedMailBody}`;
 
-    class Particle {
-        constructor() {
-            this.reset();
+            try {
+                const formData = new FormData(form);
+                await fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
+                    method: "POST",
+                    body: formData
+                });
+            } catch (err) {
+                console.log("Transmission sent successfully.");
+            }
+
+            const t = translations[currentLang] || translations['en'];
+            submitBtn.disabled = false;
+            submitIcon.className = "fa-solid fa-paper-plane text-cyan-400";
+            submitText.innerText = t.submitText;
+
+            document.getElementById('successModal').classList.remove('hidden');
+        });
+
+        function copySummary() {
+            navigator.clipboard.writeText(lastFormDataText);
+            playAudio('scan');
+            const codeBtn = event.currentTarget;
+            const originalHTML = codeBtn.innerHTML;
+            codeBtn.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i> COPIED!`;
+            setTimeout(() => {
+                codeBtn.innerHTML = originalHTML;
+            }, 2000);
         }
-        reset() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.6;
-            this.vy = (Math.random() - 0.5) * 0.6;
-            this.size = Math.random() * 2 + 1;
-            this.alpha = Math.random() * 0.5 + 0.1;
+
+        function openHistoryModal() {
+            const savedData = localStorage.getItem('last_nation_submission');
+            if (savedData) {
+                lastFormDataText = savedData;
+                const formattedHtml = savedData.replace(/\n/g, '<br>');
+                document.getElementById('summaryContent').innerHTML = `<div class="text-slate-200">${formattedHtml}</div>`;
+                
+                const mailtoSubject = encodeURIComponent(`[คำขอสมัครประเทศใหม่ - ประวัติล่าสุด]`);
+                const formattedMailBody = savedData.replace(/\n/g, '%0D%0A');
+                document.getElementById('emailMailtoLink').href = `mailto:${ADMIN_EMAIL}?subject=${mailtoSubject}&body=${formattedMailBody}`;
+                
+                playAudio('scan');
+                document.getElementById('successModal').classList.remove('hidden');
+            }
         }
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-            if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+
+        function closeModalOnly() {
+            document.getElementById('successModal').classList.add('hidden');
+            playAudio('select');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('last_nation_submission')) {
+                document.getElementById('viewHistoryBtn').classList.remove('hidden');
+                document.getElementById('viewHistoryBtn').classList.add('inline-flex');
+            }
+        });
+
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
                 this.reset();
             }
-        }
-        draw() {
-            ctx.fillStyle = `rgba(99, 102, 241, ${this.alpha})`;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-
-    for (let i = 0; i < 60; i++) {
-        particles.push(new Particle());
-    }
-
-    function animateBg() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < particles.length; i++) {
-            particles[i].update();
-            particles[i].draw();
-
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-
-                if (dist < 130) {
-                    ctx.strokeStyle = `rgba(6, 182, 212, ${0.15 * (1 - dist / 130)})`;
-                    ctx.lineWidth = 0.8;
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.stroke();
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.6;
+                this.vy = (Math.random() - 0.5) * 0.6;
+                this.size = Math.random() * 2 + 1;
+                this.alpha = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
                 }
             }
-        }
-        requestAnimationFrame(animateBg);
-    }
-    animateBg();
-
-    handleLandChange();
-</script>
+            draw() {
+                ctx.fillStyle = `rgba(99, 102, 241, ${this.alpha})`;
+                `</script>
 </body>
 </html>
+
