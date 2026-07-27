@@ -138,24 +138,41 @@
 
     <div class="max-w-3xl w-full mx-auto relative z-10">
         
-        <!-- Header Section: Featured Image & Title & Language Selector -->
+        <!-- Header Section: Featured Image & Title & Custom Language Selector -->
         <div class="text-center mb-8 relative">
 
-            <!-- Language Switcher Bar -->
-            <div class="flex justify-end mb-4">
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-900/90 border border-cyan-500/40 text-xs text-cyan-300 shadow-xl backdrop-blur-md">
-                    <i class="fa-solid fa-globe text-cyan-400"></i>
-                    <span class="font-mono text-[11px] font-semibold text-slate-400">LANGUAGE:</span>
-                    <select id="langSelector" onchange="changeLanguage(this.value)" 
-                        class="bg-slate-950 text-white font-medium text-xs rounded-lg px-2.5 py-1 border border-slate-700/80 focus:outline-none focus:border-cyan-400 cursor-pointer">
-                        <option value="th" selected>🇹🇭 ไทย (TH)</option>
-                        <option value="en">🇬🇧 English (EN)</option>
-                        <option value="zormi">🌐 Zormi (ซอร์มี)</option>
-                        <option value="ru">🇷🇺 Русский (RU)</option>
-                        <option value="zh">🇨🇳 中文 (ZH)</option>
-                        <option value="es">🇪🇸 Español (ES)</option>
-                        <option value="other">🌐 อื่นๆ / Other</option>
-                    </select>
+            <!-- Custom Cyberpunk Language Selector UI -->
+            <div class="flex justify-end mb-4 relative">
+                <div class="relative inline-block text-left">
+                    <button type="button" onclick="toggleLangMenu()" 
+                        class="inline-flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-slate-900/90 border border-cyan-500/50 text-xs text-cyan-300 shadow-xl backdrop-blur-md hover:border-cyan-400 transition cursor-pointer">
+                        <i class="fa-solid fa-globe text-cyan-400 text-sm"></i>
+                        <span class="font-mono text-[11px] font-semibold text-slate-400">LANGUAGE:</span>
+                        <span id="currentLangLabel" class="font-bold text-white">🇹🇭 ไทย (TH)</span>
+                        <i class="fa-solid fa-chevron-down text-[10px] text-cyan-400 ml-1 transition-transform duration-200" id="langChevron"></i>
+                    </button>
+
+                    <!-- Custom Dropdown Menu Panel -->
+                    <div id="langDropdownMenu" class="hidden absolute right-0 mt-2 w-48 rounded-2xl bg-slate-950/95 border border-cyan-500/40 shadow-2xl backdrop-blur-xl z-50 overflow-hidden fade-in py-1">
+                        <button onclick="selectLanguage('th', '🇹🇭 ไทย (TH)')" class="w-full text-left px-4 py-2.5 text-xs text-slate-300 hover:bg-cyan-950/60 hover:text-cyan-300 flex items-center gap-2 transition">
+                            <span>🇹🇭</span> <span>ไทย (TH)</span>
+                        </button>
+                        <button onclick="selectLanguage('en', '🇬🇧 English (EN)')" class="w-full text-left px-4 py-2.5 text-xs text-slate-300 hover:bg-cyan-950/60 hover:text-cyan-300 flex items-center gap-2 transition">
+                            <span>🇬🇧</span> <span>English (EN)</span>
+                        </button>
+                        <button onclick="selectLanguage('ru', '🇷🇺 Русский (RU)')" class="w-full text-left px-4 py-2.5 text-xs text-slate-300 hover:bg-cyan-950/60 hover:text-cyan-300 flex items-center gap-2 transition">
+                            <span>🇷🇺</span> <span>Русский (RU)</span>
+                        </button>
+                        <button onclick="selectLanguage('zh', '🇨🇳 中文 (ZH)')" class="w-full text-left px-4 py-2.5 text-xs text-slate-300 hover:bg-cyan-950/60 hover:text-cyan-300 flex items-center gap-2 transition">
+                            <span>🇨🇳</span> <span>中文 (ZH)</span>
+                        </button>
+                        <button onclick="selectLanguage('es', '🇪🇸 Español (ES)')" class="w-full text-left px-4 py-2.5 text-xs text-slate-300 hover:bg-cyan-950/60 hover:text-cyan-300 flex items-center gap-2 transition">
+                            <span>🇪🇸</span> <span>Español (ES)</span>
+                        </button>
+                        <button onclick="selectLanguage('other', '🌐 อื่นๆ / Other')" class="w-full text-left px-4 py-2.5 text-xs text-slate-300 hover:bg-cyan-950/60 hover:text-cyan-300 flex items-center gap-2 transition border-t border-slate-800/80">
+                            <span>🌐</span> <span>อื่นๆ / Other</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -164,7 +181,7 @@
                 <div class="relative group max-w-lg w-full">
                     <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 rounded-2xl blur-md opacity-50 group-hover:opacity-80 transition duration-500"></div>
                     <div class="relative rounded-xl overflow-hidden border border-cyan-500/40 shadow-2xl bg-slate-950 p-2">
-                        <img src="uploaded:image.png-bec24101-bdfc-41ec-950c-05ae8e776422" alt="ธงชาติประจำประเทศ" class="w-full h-auto max-h-72 object-contain rounded-lg group-hover:scale-105 transition duration-500" />
+                        <img src="uploaded:image.png-bec24101-bdfc-41ec-950c-05ae8e776422" alt="" class="w-full h-auto max-h-72 object-contain rounded-lg group-hover:scale-105 transition duration-500" />
                     </div>
                 </div>
             </div>
@@ -517,44 +534,6 @@
                 submitText: "ยื่นคำขอและส่งข้อมูลไปยังระบบ",
                 contactHeader: "ช่องทางการติดต่อและคอมมูนิตี้"
             },
-            zormi: {
-                title: "Зормистанум Рєспубліга",
-                subtitle: "Лізважҷы Зормі Зю Лізважҷы Бѐшѐст Нё Зормістан",
-                req: "* Кязд",
-                countryName: "Дөвлєт Ады",
-                countryPlaceholder: "Мәсәлән: Аврора Емпірєсі",
-                independence: "Єкєрач Ады",
-                independencePlaceholder: "Мәсәлән: Свобода Рєспублігасы",
-                demonym: "Миллєт Ады",
-                demonymPlaceholder: "Мәсәлән: Аврориан",
-                officialLanguage: "Ресми Дил",
-                officialLangPlaceholder: "Мәсәлән: Зорми, Түрк, Инглиз",
-                officialLangHelp: "Дүнүянын һєр бір дилини вә я сәхин өзинүзин дилини үлләндиң.",
-                population: "Нәфүс (Һіч бір синир ёх)",
-                popPlaceholder: "Мәсәлән: 5,000,000 вә я Шіңір (Шексиз)",
-                discord: "Діскорд Юзєр ID",
-                discordHelp: "Діскорд рақәмли ID (Мәсәлән: 123456789)",
-                color: "Миллєт Рєңки",
-                land: "Топрақ Сәчмәк",
-                land1Desc: "Бош топрақ (Unclaimed Land)",
-                land2Desc: "Бош дөвлєт (Empty Country)",
-                land3Desc: "Пыңк дөвлєт (Pink Country)",
-                miroTitle: "Миро Боард Хәритасыны Көрмәк",
-                miroSubtitle: "Хәрита үстүндән топрақ сечмәк үçүн бураға бас",
-                divideLand: "Топрағы Бөлмәк",
-                split: "Бөлмәк",
-                noSplit: "Бөлмәмәк",
-                unclaimedTitle: " Unclaimed Land тапылмаса бурадан сечиң",
-                unclaimedPlaceholder: "-- Топрақ сечиң --",
-                changePinkTitle: "Әскини өз үстүңізә чевирмәк истәрисиңиз ми?",
-                changeSelf: "Өзүмә чевирмәк",
-                keepOriginal: "Әски киби қалсын",
-                flagUpload: "Байрақ Рәсимини Юкламақ (National Flag)",
-                mapUpload: "Хәрита Рәсимини Юкламақ (Territory Map)",
-                social: "ТыкТок вә я Сосиал Мєдиа",
-                submitText: "Мәлүүматлары Системә Иолдамақ",
-                contactHeader: "Илатималат вә Коммүнити"
-            },
             en: {
                 title: "Fictional Nation Registration",
                 subtitle: "Official Application Form for Fictional Territory Approval and Sovereignty Declaration",
@@ -642,7 +621,7 @@
                 demonym: "国民称谓 (Demonym)",
                 demonymPlaceholder: "例如：Auroran",
                 officialLanguage: "官方语言",
-                officialLangPlaceholder: "例如：中文、英语、自创极光语",
+                officialLanguagePlaceholder: "例如：中文、英语、自创极光语",
                 officialLangHelp: "可使用全球任何真实语言，或您自创的语言。",
                 population: "初始人口 (无限制)",
                 popPlaceholder: "例如：5,000,000人 或 无限制",
@@ -747,10 +726,32 @@
             }
         };
 
-        function changeLanguage(langKey) {
-            currentLang = langKey;
-            const t = translations[langKey] || translations['en'];
+        // Custom Language Menu Toggle & Selection Logic
+        function toggleLangMenu() {
+            const menu = document.getElementById('langDropdownMenu');
+            const chevron = document.getElementById('langChevron');
+            menu.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+            playAudio('select');
+        }
 
+        // Close menu when clicking outside
+        window.addEventListener('click', function(e) {
+            const menu = document.getElementById('langDropdownMenu');
+            const chevron = document.getElementById('langChevron');
+            if (!e.target.closest('#langDropdownMenu') && !e.target.closest('button[onclick="toggleLangMenu()"]')) {
+                menu.classList.add('hidden');
+                chevron.classList.remove('rotate-180');
+            }
+        });
+
+        function selectLanguage(langKey, langDisplayLabel) {
+            currentLang = langKey;
+            document.getElementById('currentLangLabel').innerText = langDisplayLabel;
+            document.getElementById('langDropdownMenu').classList.add('hidden');
+            document.getElementById('langChevron').classList.remove('rotate-180');
+
+            const t = translations[langKey] || translations['en'];
             playAudio('scan');
 
             document.getElementById('txt_title').innerText = t.title;
