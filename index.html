@@ -138,7 +138,7 @@
 
     <div class="max-w-3xl w-full mx-auto relative z-10">
         
-        <!-- Header Section: Embedded Flag Image & Title & Language Selector -->
+        <!-- Header Section: Featured Image & Title & Language Selector -->
         <div class="text-center mb-8 relative">
 
             <!-- Language Switcher Bar -->
@@ -158,12 +158,12 @@
                 </div>
             </div>
 
-            <!-- Embedded User Flag Image (Base64) -->
+            <!-- Embedded User Flag Image -->
             <div class="mb-6 flex justify-center">
                 <div class="relative group max-w-lg w-full">
                     <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 rounded-2xl blur-md opacity-50 group-hover:opacity-80 transition duration-500"></div>
                     <div class="relative rounded-xl overflow-hidden border border-cyan-500/40 shadow-2xl bg-slate-950 p-2">
-                        <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&auto=format&fit=crop&q=80" alt="ธงชาติประจำประเทศ" class="w-full h-auto max-h-72 object-contain rounded-lg group-hover:scale-105 transition duration-500" />
+                        <img src="uploaded:image.png-bec24101-bdfc-41ec-950c-05ae8e776422" alt="ธงชาติประจำประเทศ" class="w-full h-auto max-h-72 object-contain rounded-lg group-hover:scale-105 transition duration-500" />
                     </div>
                 </div>
             </div>
@@ -411,7 +411,7 @@
 
             <!-- Field: อัปโหลดแผนที่ (Map Upload - แสดงเฉพาะเมื่อเลือก Pink Country หรือ Empty Country) -->
             <div id="mapUploadSection" class="hidden fade-in space-y-2 p-4 bg-slate-900/60 border border-rose-500/30 rounded-2xl">
-                <label for="mapFile" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
+                <label for="mapFile" class="flex items-center justify-between text-xs font-semibold text-rose-300 tracking-wider">
                     <span><i class="fa-solid fa-map text-rose-400 mr-2"></i><span id="lbl_mapUpload">อัปโหลดรูปภาพแผนที่ (Territory Map)</span></span>
                     <span class="text-rose-400 font-sans">* จำเป็น</span>
                 </label>
@@ -445,6 +445,31 @@
             </div>
 
         </form>
+
+        <!-- Social Media Contact Links Footer -->
+        <div class="mt-8 pt-6 border-t border-slate-800/80 text-center space-y-3">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-widest" id="lbl_contactHeader">ช่องทางการติดต่อและคอมมูนิตี้</p>
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <!-- Discord -->
+                <a href="https://discord.gg/RmcXygShjf" target="_blank" 
+                   class="flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-950/60 border border-indigo-500/40 text-indigo-200 text-xs hover:bg-indigo-900/80 hover:text-white transition shadow-md">
+                    <i class="fa-brands fa-discord text-indigo-400 text-sm"></i>
+                    <span>Discord Server</span>
+                </a>
+                <!-- TikTok -->
+                <a href="https://www.tiktok.com/@smoliland9999?_r=1&_t=ZS-98N21ZJle3Z" target="_blank" 
+                   class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/60 border border-slate-700 text-slate-200 text-xs hover:bg-slate-800 hover:text-white transition shadow-md">
+                    <i class="fa-brands fa-tiktok text-fuchsia-400 text-sm"></i>
+                    <span>TikTok Channel</span>
+                </a>
+                <!-- Email -->
+                <a href="mailto:karrieyolanno@gmail.com" 
+                   class="flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-950/60 border border-cyan-500/40 text-cyan-200 text-xs hover:bg-cyan-900/80 hover:text-white transition shadow-md">
+                    <i class="fa-solid fa-envelope text-cyan-400 text-sm"></i>
+                    <span>karrieyolanno@gmail.com</span>
+                </a>
+            </div>
+        </div>
 
     </div>
 
@@ -488,7 +513,8 @@
                 flagUpload: "อัปโหลดรูปภาพธงชาติ (National Flag)",
                 mapUpload: "อัปโหลดรูปภาพแผนที่ (Territory Map)",
                 social: "User TikTok หรือโซเชียลมีเดียอื่นๆ",
-                submitText: "ยื่นคำขอและส่งข้อมูลไปยังระบบ"
+                submitText: "ยื่นคำขอและส่งข้อมูลไปยังระบบ",
+                contactHeader: "ช่องทางการติดต่อและคอมมูนิตี้"
             },
             en: {
                 title: "Fictional Nation Registration",
@@ -525,7 +551,8 @@
                 flagUpload: "Upload National Flag Image",
                 mapUpload: "Upload Territory Map Image",
                 social: "TikTok Handle or Other Social Media",
-                submitText: "SUBMIT APPLICATION & TRANSMIT DATA"
+                submitText: "SUBMIT APPLICATION & TRANSMIT DATA",
+                contactHeader: "COMMUNITY & CONTACT LINKS"
             },
             ru: {
                 title: "Регистрация Вымышленной Страны",
@@ -562,7 +589,8 @@
                 flagUpload: "Загрузить фото флага",
                 mapUpload: "Загрузить фото карты",
                 social: "TikTok или соцсети",
-                submitText: "ОТПРАВИТЬ ЗАЯВКУ В СИСТЕМУ"
+                submitText: "ОТПРАВИТЬ ЗАЯВКУ В СИСТЕМУ",
+                contactHeader: "КОНТАКТЫ И СООБЩЕСТВО"
             },
             zh: {
                 title: "虚构国家注册申请表",
@@ -599,7 +627,8 @@
                 flagUpload: "上传国旗图片",
                 mapUpload: "上传地图图片",
                 social: "TikTok 或其他社交媒体",
-                submitText: "提交申请并发送数据"
+                submitText: "提交申请并发送数据",
+                contactHeader: "社区与联系方式"
             },
             es: {
                 title: "Registro de Nación Imaginaria",
@@ -636,7 +665,8 @@
                 flagUpload: "Subir imagen de bandera",
                 mapUpload: "Subir imagen de mapa",
                 social: "TikTok o Redes Sociales",
-                submitText: "ENVIAR SOLICITUD Y DATOS"
+                submitText: "ENVIAR SOLICITUD Y DATOS",
+                contactHeader: "ENLACES DE CONTACTO Y COMUNIDAD"
             },
             other: {
                 title: "Fictional Nation Registration / 国际注册",
@@ -673,7 +703,8 @@
                 flagUpload: "Upload Flag Image",
                 mapUpload: "Upload Map Image",
                 social: "Social Media / TikTok",
-                submitText: "SUBMIT APPLICATION / ยื่นคำขอ"
+                submitText: "SUBMIT APPLICATION / ยื่นคำขอ",
+                contactHeader: "COMMUNITY & CONTACT LINKS"
             }
         };
 
@@ -736,6 +767,7 @@
 
             document.getElementById('lbl_social').innerText = t.social;
             document.getElementById('submitText').innerText = t.submitText;
+            document.getElementById('lbl_contactHeader').innerText = t.contactHeader;
 
             handleLandChange();
         }
