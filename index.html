@@ -149,6 +149,7 @@
                     <select id="langSelector" onchange="changeLanguage(this.value)" 
                         class="bg-slate-950 text-white font-medium text-xs rounded-lg px-2.5 py-1 border border-slate-700/80 focus:outline-none focus:border-cyan-400 cursor-pointer">
                         <option value="th" selected>🇹🇭 ไทย (TH)</option>
+                        <option value="zormi">🔮 Zormi (ZM)</option>
                         <option value="en">🇬🇧 English (EN)</option>
                         <option value="ru">🇷🇺 Русский (RU)</option>
                         <option value="zh">🇨🇳 中文 (ZH)</option>
@@ -163,7 +164,7 @@
                 <div class="relative group max-w-lg w-full">
                     <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 rounded-2xl blur-md opacity-50 group-hover:opacity-80 transition duration-500"></div>
                     <div class="relative rounded-xl overflow-hidden border border-cyan-500/40 shadow-2xl bg-slate-950 p-2">
-                        <img src="uploaded:image.png-bec24101-bdfc-41ec-950c-05ae8e776422" alt="ธงชาติประจำประเทศ" class="w-full h-auto max-h-72 object-contain rounded-lg group-hover:scale-105 transition duration-500" />
+                        <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&auto=format&fit=crop&q=80" alt="ธงชาติประจำประเทศ" class="w-full h-auto max-h-72 object-contain rounded-lg group-hover:scale-105 transition duration-500" />
                     </div>
                 </div>
             </div>
@@ -411,7 +412,7 @@
 
             <!-- Field: อัปโหลดแผนที่ (Map Upload - แสดงเฉพาะเมื่อเลือก Pink Country หรือ Empty Country) -->
             <div id="mapUploadSection" class="hidden fade-in space-y-2 p-4 bg-slate-900/60 border border-rose-500/30 rounded-2xl">
-                <label for="mapFile" class="flex items-center justify-between text-xs font-semibold text-rose-300 tracking-wider">
+                <label for="mapFile" class="flex items-center justify-between text-xs font-semibold text-slate-300 tracking-wider">
                     <span><i class="fa-solid fa-map text-rose-400 mr-2"></i><span id="lbl_mapUpload">อัปโหลดรูปภาพแผนที่ (Territory Map)</span></span>
                     <span class="text-rose-400 font-sans">* จำเป็น</span>
                 </label>
@@ -515,6 +516,44 @@
                 social: "User TikTok หรือโซเชียลมีเดียอื่นๆ",
                 submitText: "ยื่นคำขอและส่งข้อมูลไปยังระบบ",
                 contactHeader: "ช่องทางการติดต่อและคอมมูนิตี้"
+            },
+            zormi: {
+                title: "Zormi Nation Registration Terminal",
+                subtitle: "Zormi vX-99: Sovereign Territory Application Protocol",
+                req: "* Zormi-Req",
+                countryName: "Zormi Nation Name",
+                countryPlaceholder: "e.g., Zormi Empire",
+                independence: "Zormi Sovereignty Title",
+                independencePlaceholder: "e.g., Zormi Republic",
+                demonym: "Zormi Demonym",
+                demonymPlaceholder: "e.g., Zormian",
+                officialLanguage: "Zormi Official Language",
+                officialLangPlaceholder: "e.g., Zormi Prime, English",
+                officialLangHelp: "Use native Zormi dialect or custom dimension speech.",
+                population: "Zormi Initial Population",
+                popPlaceholder: "e.g., Infinite Zormi Units",
+                discord: "Zormi Discord ID",
+                discordHelp: "Zormi Network Terminal ID",
+                color: "Zormi Core Color",
+                land: "Zormi Territory Zone",
+                land1Desc: "Unclaimed Zormi sector",
+                land2Desc: "Empty Zormi void",
+                land3Desc: "Pink Zormi realm",
+                miroTitle: "Open Zormi Miro Tactical Map",
+                miroSubtitle: "Scan spatial coordinates on Zormi grid",
+                divideLand: "Zormi Sector Division",
+                split: "Split",
+                noSplit: "Unified",
+                unclaimedTitle: "Select Unclaimed Zormi Sector",
+                unclaimedPlaceholder: "-- Choose Zormi Sector --",
+                changePinkTitle: "Override Zormi Pink Territory?",
+                changeSelf: "Claim Override",
+                keepOriginal: "Retain Original",
+                flagUpload: "Upload Zormi Flag Emblem",
+                mapUpload: "Upload Zormi Sector Map",
+                social: "Zormi Social / TikTok ID",
+                submitText: "TRANSMIT ZORMIFY PROTOCOL",
+                contactHeader: "ZORMI NETWORK & NEXUS"
             },
             en: {
                 title: "Fictional Nation Registration",
@@ -641,7 +680,7 @@
                 demonym: "Gentilicio (Demonym)",
                 demonymPlaceholder: "Ej: Auroriano",
                 officialLanguage: "Idioma Oficial",
-                officialLangPlaceholder: "Ej: Español, Inglés, Idioma Propio",
+                officialLanguagePlaceholder: "Ej: Español, Inglés, Idioma Propio",
                 officialLangHelp: "Usa cualquier idioma del mundo o uno que hayas creado.",
                 population: "Población Inicial (Sin límite)",
                 popPlaceholder: "Ej: 5.000.000 o Ilimitado",
@@ -739,7 +778,7 @@
             document.getElementById('population').placeholder = t.popPlaceholder;
 
             document.getElementById('lbl_discord').innerText = t.discord;
-            document.getElementById('lbl_discordHelp').innerText = t.discordHelp;
+            document.getElementById('discordHelp').innerText = t.discordHelp;
 
             document.getElementById('lbl_color').innerText = t.color;
             document.getElementById('lbl_land').innerText = t.land;
