@@ -160,6 +160,9 @@
                         <button onclick="selectLanguage('en', '🇬🇧 English (EN)')" class="w-full text-left px-4 py-2.5 text-xs text-slate-300 hover:bg-cyan-950/60 hover:text-cyan-300 flex items-center gap-2 transition">
                             <span>🇬🇧</span> <span>English (EN)</span>
                         </button>
+                        <button onclick="selectLanguage('zormi', '🌐 Zormi (ซอร์มี)')" class="w-full text-left px-4 py-2.5 text-xs text-slate-300 hover:bg-cyan-950/60 hover:text-cyan-300 flex items-center gap-2 transition">
+                            <span>🌐</span> <span>Zormi (ซอร์มี)</span>
+                        </button>
                         <button onclick="selectLanguage('ru', '🇷🇺 Русский (RU)')" class="w-full text-left px-4 py-2.5 text-xs text-slate-300 hover:bg-cyan-950/60 hover:text-cyan-300 flex items-center gap-2 transition">
                             <span>🇷🇺</span> <span>Русский (RU)</span>
                         </button>
@@ -181,7 +184,7 @@
                 <div class="relative group max-w-lg w-full">
                     <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 rounded-2xl blur-md opacity-50 group-hover:opacity-80 transition duration-500"></div>
                     <div class="relative rounded-xl overflow-hidden border border-cyan-500/40 shadow-2xl bg-slate-950 p-2">
-                        <img src="uploaded:image.png-bec24101-bdfc-41ec-950c-05ae8e776422" alt="" class="w-full h-auto max-h-72 object-contain rounded-lg group-hover:scale-105 transition duration-500" />
+                        
                     </div>
                 </div>
             </div>
@@ -621,7 +624,7 @@
                 demonym: "国民称谓 (Demonym)",
                 demonymPlaceholder: "例如：Auroran",
                 officialLanguage: "官方语言",
-                officialLanguagePlaceholder: "例如：中文、英语、自创极光语",
+                officialLangPlaceholder: "例如：中文、英语、自创极光语",
                 officialLangHelp: "可使用全球任何真实语言，或您自创的语言。",
                 population: "初始人口 (无限制)",
                 popPlaceholder: "例如：5,000,000人 或 无限制",
@@ -779,7 +782,7 @@
             document.getElementById('population').placeholder = t.popPlaceholder;
 
             document.getElementById('lbl_discord').innerText = t.discord;
-            document.getElementById('lbl_discordHelp').innerText = t.discordHelp;
+            document.getElementById('discordHelp').innerText = t.discordHelp;
 
             document.getElementById('lbl_color').innerText = t.color;
             document.getElementById('lbl_land').innerText = t.land;
