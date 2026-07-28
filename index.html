@@ -152,21 +152,21 @@
         <div class="hud-card scanline rounded-3xl p-8 sm:p-12 shadow-2xl space-y-6">
             <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-xs font-mono text-cyan-300 shadow-inner">
                 <i class="fa-solid fa-terminal animate-pulse"></i>
-                <span>GLOBAL GEOPOLITICAL REGISTRY PORTAL</span>
+                <span id="homeBadge">GLOBAL GEOPOLITICAL REGISTRY PORTAL</span>
             </div>
 
-            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-indigo-300 glow-text">
+            <h1 id="homeTitle" class="text-3xl sm:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-indigo-300 glow-text">
                 ยินดีต้อนรับสู่ระบบสถาปนาประเทศ
             </h1>
             
-            <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-lg mx-auto">
+            <p id="homeSubtitle" class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-lg mx-auto">
                 แพลตฟอร์มส่วนกลางสำหรับยื่นคำขออนุมัติดินแดน ประกาศอธิปไตย และลงทะเบียนประเทศในจินตนาการของคุณ เข้าสู่ระบบเพื่อเริ่มต้นสร้างมหาอำนาจใหม่ได้ทันที
             </p>
 
             <div class="pt-4">
                 <button onclick="enterForm()" class="relative group w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-600 via-indigo-600 to-cyan-600 text-white font-bold text-base tracking-wide shadow-xl shadow-cyan-500/25 hover:scale-105 active:scale-95 transition duration-300 cursor-pointer">
                     <i class="fa-solid fa-rocket mr-3 text-cyan-300 group-hover:translate-x-1 transition"></i>
-                    <span>เข้าสู่หน้าลงทะเบียนประเทศ</span>
+                    <span id="homeBtn">เข้าสู่หน้าลงทะเบียนประเทศ</span>
                 </button>
             </div>
         </div>
@@ -554,6 +554,10 @@
 
         const translations = {
             th: {
+                homeBadge: "GLOBAL GEOPOLITICAL REGISTRY PORTAL",
+                homeTitle: "ยินดีต้อนรับสู่ระบบสถาปนาประเทศ",
+                homeSubtitle: "แพลตฟอร์มส่วนกลางสำหรับยื่นคำขออนุมัติดินแดน ประกาศอธิปไตย และลงทะเบียนประเทศในจินตนาการของคุณ เข้าสู่ระบบเพื่อเริ่มต้นสร้างมหาอำนาจใหม่ได้ทันที",
+                homeBtn: "เข้าสู่หน้าลงทะเบียนประเทศ",
                 title: "ลงทะเบียนประเทศในจินตนาการ",
                 subtitle: "แบบฟอร์มยื่นคำขออนุมัติดินแดนและประกาศอธิปไตยประเทศในจินตนาการ",
                 req: "* จำเป็น",
@@ -593,6 +597,10 @@
                 backHome: "กลับหน้าแรก"
             },
             en: {
+                homeBadge: "GLOBAL GEOPOLITICAL REGISTRY PORTAL",
+                homeTitle: "Welcome to the Nation Establishment System",
+                homeSubtitle: "Central platform for submitting territorial approval requests, declaring sovereignty, and registering your fictional nation.",
+                homeBtn: "Enter Nation Registration",
                 title: "Fictional Nation Registration",
                 subtitle: "Official Application Form for Fictional Territory Approval and Sovereignty Declaration",
                 req: "* Required",
@@ -632,6 +640,10 @@
                 backHome: "Back to Home"
             },
             ru: {
+                homeBadge: "GLOBAL GEOPOLITICAL REGISTRY PORTAL",
+                homeTitle: "Добро пожаловать в систему создания наций",
+                homeSubtitle: "Центральная платформа для подачи заявок на одобрение территорий и декларации суверенитета.",
+                homeBtn: "Перейти к регистрации",
                 title: "Регистрация Вымышленной Страны",
                 subtitle: "Официальная форма заявки на утверждение территории и суверенитета",
                 req: "* Обязательно",
@@ -671,6 +683,10 @@
                 backHome: "На главную"
             },
             zh: {
+                homeBadge: "GLOBAL GEOPOLITICAL REGISTRY PORTAL",
+                homeTitle: "欢迎来到建国注册系统",
+                homeSubtitle: "提交领土批准申请、宣告主权以及注册您的虚构国家的中央平台。",
+                homeBtn: "进入国家注册",
                 title: "虚构国家注册申请表",
                 subtitle: "国家领土批准与主权宣告官方申请表",
                 req: "* 必填",
@@ -710,6 +726,10 @@
                 backHome: "返回首页"
             },
             es: {
+                homeBadge: "GLOBAL GEOPOLITICAL REGISTRY PORTAL",
+                homeTitle: "Bienvenido al Sistema de Creación de Naciones",
+                homeSubtitle: "Plataforma central para enviar solicitudes de aprobación territorial y declaraciones de soberanía.",
+                homeBtn: "Entrar al Registro",
                 title: "Registro de Nación Imaginaria",
                 subtitle: "Formulario Oficial de Solicitud de Aprobación Territorial y Soberanía",
                 req: "* Requerido",
@@ -749,6 +769,10 @@
                 backHome: "Volver al inicio"
             },
             other: {
+                homeBadge: "GLOBAL GEOPOLITICAL REGISTRY PORTAL",
+                homeTitle: "Welcome to Nation Establishment System",
+                homeSubtitle: "Central platform for submitting territorial approval requests and declaring sovereignty.",
+                homeBtn: "Enter Registration",
                 title: "Fictional Nation Registration / 国际注册",
                 subtitle: "Global Application Form / แบบฟอร์มสถาปนาประเทศ",
                 req: "* Required / จำเป็น",
@@ -830,6 +854,12 @@
 
             const t = translations[langKey] || translations['en'];
             playAudio('scan');
+
+            // Translate Welcome page elements too
+            document.getElementById('homeBadge').innerText = t.homeBadge;
+            document.getElementById('homeTitle').innerText = t.homeTitle;
+            document.getElementById('homeSubtitle').innerText = t.homeSubtitle;
+            document.getElementById('homeBtn').innerText = t.homeBtn;
 
             document.getElementById('txt_title').innerText = t.title;
             document.getElementById('txt_subtitle').innerText = t.subtitle;
